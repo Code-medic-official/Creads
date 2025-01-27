@@ -1,19 +1,19 @@
 "use client";
 
+import { getThreadComments } from "@/lib/actions/comment.action";
+import { getActiveUser } from "@/lib/actions/user.actions";
+import { iComment } from "@/lib/database/models/comment.model";
 import { iThread } from "@/lib/database/models/thread.model";
-import React, { useEffect, useState } from "react";
-import { Card, CardContent } from "../ui/card";
-import UserCard from "./UserCard";
+import { iUser } from "@/lib/database/models/user.model";
+import { useUser } from "@clerk/nextjs";
 import moment from "moment";
 import { usePathname, useRouter } from "next/navigation";
-import FollowBtn from "../FollowBtn";
-import Engagement from "../Engagement";
+import { useEffect, useState } from "react";
 import AvatarGroup from "../AvatarGroup";
-import { getActiveUser, getUser } from "@/lib/actions/user.actions";
-import { useUser } from "@clerk/nextjs";
-import { iUser } from "@/lib/database/models/user.model";
-import { getThreadComments } from "@/lib/actions/comment.action";
-import { iComment } from "@/lib/database/models/comment.model";
+import Engagement from "../Engagement";
+import FollowBtn from "../FollowBtn";
+import { Card, CardContent } from "../ui/card";
+import UserCard from "./UserCard";
 
 export default function ThreadCard({ thread }: { thread: iThread }) {
 	const [user, setUser] = useState<iUser>();

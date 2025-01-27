@@ -1,13 +1,12 @@
 "use client";
 
+import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
+import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import { Button } from "./ui/button";
-import { LogOut, Search } from "lucide-react";
-import { RightPannelSheet } from "./RightPannel";
 import { useRouter } from "next/navigation";
-import { OrganizationProfile, OrganizationSwitcher, UserButton } from "@clerk/nextjs";
+import { RightPannelSheet } from "./RightPannel";
+import { Button } from "./ui/button";
 
 export default function Navbar() {
 	const router = useRouter();

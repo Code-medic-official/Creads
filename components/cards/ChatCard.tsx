@@ -1,11 +1,10 @@
+import { iMessage } from "@/lib/database/models/message.model";
 import { iUser } from "@/lib/database/models/user.model";
-import React from "react";
+import moment from "moment";
+import Link from "next/link";
+import OnlineBadge from "../OnlineBadge";
 import { Card, CardContent } from "../ui/card";
 import UserCard from "./UserCard";
-import OnlineBadge from "../OnlineBadge";
-import Link from "next/link";
-import { iMessage } from "@/lib/database/models/message.model";
-import moment from "moment";
 
 export default function ChatCard({
 	_user,

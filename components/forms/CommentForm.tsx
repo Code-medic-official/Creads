@@ -1,21 +1,21 @@
 "use client";
 
-import React, { useEffect, useState, useTransition } from "react";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { setRefComment } from "@/Features/commentSlice";
+import { createComment } from "@/lib/actions/comment.action";
+import { iUser } from "@/lib/database/models/user.model";
+import { refCommentSelector } from "@/lib/features/commentSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { commentSchema } from "@/lib/schemas/comment";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
 import { Loader, Send } from "lucide-react";
-import toast from "react-hot-toast";
-import { createComment } from "@/lib/actions/comment.action";
 import { usePathname } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { refCommentSelector } from "@/lib/features/commentSlice";
-import { setRefComment } from "@/Features/commentSlice";
-import { iUser } from "@/lib/database/models/user.model";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { z } from "zod";
+import { Button } from "../ui/button";
+import { Form, FormControl, FormField, FormItem } from "../ui/form";
+import { Textarea } from "../ui/textarea";
 
 export default function CommentForm({
 	threadId,

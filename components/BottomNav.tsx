@@ -4,7 +4,6 @@ import { LEFT_PANNEL_LINKS } from "@/constants";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
 
 export default function BottomNav() {
 	const pathname = usePathname();

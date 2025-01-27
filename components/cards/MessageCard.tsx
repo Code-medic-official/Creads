@@ -1,9 +1,9 @@
+import { getActiveUser } from "@/lib/actions/user.actions";
 import { iMessage, MsgState } from "@/lib/database/models/message.model";
-import { Card, CardContent } from "../ui/card";
 import { cn } from "@/lib/utils";
-import moment from "moment";
 import { Check, CheckCheck } from "lucide-react";
-import { getActiveUser} from "@/lib/actions/user.actions";
+import moment from "moment";
+import { Card, CardContent } from "../ui/card";
 
 export default async function MessageCard({ msg }: { msg: iMessage }) {
 	const user = await getActiveUser();

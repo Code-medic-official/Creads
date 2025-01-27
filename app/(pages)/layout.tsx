@@ -1,18 +1,17 @@
-import type { Metadata } from "next";
-import "../globals.css";
+import BottomNav from "@/components/BottomNav";
+import LeftPannel from "@/components/LeftPannel";
 import Navbar from "@/components/Navbar";
 import RightPannel from "@/components/RightPannel";
-import LeftPannel from "@/components/LeftPannel";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import BottomNav from "@/components/BottomNav";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { createUser, getActiveUser } from "@/lib/actions/user.actions";
+import { ClerkProvider } from "@clerk/nextjs";
+import type { Metadata } from "next";
+import { Poppins } from "next/font/google";
+import { redirect } from "next/navigation";
 import { Toaster } from "react-hot-toast";
 import StoreProvider from "../(root)/StoreProvider";
-import { ClerkProvider } from "@clerk/nextjs";
-import { Poppins } from "next/font/google";
-import { currentUser } from "@clerk/nextjs/server";
-import { createUser, getActiveUser, getUser } from "@/lib/actions/user.actions";
-import { redirect } from "next/navigation";
+import "../globals.css";
 
 const poppinsFont = Poppins({
 	subsets: ["latin"],

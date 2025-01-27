@@ -1,10 +1,7 @@
 import ThreadForm from "@/components/forms/ThreadForm";
-import { getActiveUser, getUser } from "@/lib/actions/user.actions";
-import { currentUser } from "@clerk/nextjs/server";
-import React from "react";
+import { getActiveUser } from "@/lib/actions/user.actions";
 
 export default async function CreateThread({}) {
-	const clerkUser = await currentUser();
 
 	const user = await getActiveUser();
 

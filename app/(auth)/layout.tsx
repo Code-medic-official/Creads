@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Metadata } from "next";
-import "../globals.css";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import { poppinsFont } from "../(root)/layout";
+import "../globals.css";
 
 export const metadata: Metadata = {
 	title: "Onboarding",

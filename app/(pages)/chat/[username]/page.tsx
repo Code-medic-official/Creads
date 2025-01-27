@@ -1,16 +1,12 @@
 import ChatCard from "@/components/cards/ChatCard";
 import ChatForm from "@/components/forms/ChatForm";
 
+import MessageCard from "@/components/cards/MessageCard";
+import { Button } from "@/components/ui/button";
 import { getChatMessages } from "@/lib/actions/message.actions";
 import { getActiveUser, getUser } from "@/lib/actions/user.actions";
-import React from "react";
-import { ChevronLeft, Menu, MenuIcon, Scroll } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import MessageCard from "@/components/cards/MessageCard";
-import { currentUser } from "@clerk/nextjs/server";
-import { pusherClient, pusherServer } from "@/lib/pusher";
-import { iMessage } from "@/lib/database/models/message.model";
 
 export default async function page({
 	params,
@@ -24,13 +20,13 @@ export default async function page({
 	const friend = await getUser(username);
 	const messages = await getChatMessages(user?._id, friend._id);
 
-	const refreshMessagesHandler = (newMsg: iMessage) => {
-		console.log("refreshing");
+	// const refreshMessagesHandler = (newMsg: iMessage) => {
+	// 	console.log("refreshing");
 
-		const existingMsg = messages.find((msg) => msg._id === newMsg._id);
+	// 	const existingMsg = messages.find((msg) => msg._id === newMsg._id);
 
-		if (!existingMsg) messages.push(newMsg);
-	};
+	// 	if (!existingMsg) messages.push(newMsg);
+	// };
 
 	// Pusher
 	// pusherClient.subscribe("user._id");

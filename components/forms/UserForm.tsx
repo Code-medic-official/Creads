@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useTransition } from "react";
+import { Button } from "@/components/ui/button";
 import {
 	Form,
 	FormControl,
@@ -10,18 +10,17 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Loader, User } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { upsertUser } from "@/lib/actions/user.actions";
+import { iUser } from "@/lib/database/models/user.model";
 import { userSchema } from "@/lib/schemas/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUser, upsertUser } from "@/lib/actions/user.actions";
-import { iUser } from "@/lib/database/models/user.model";
-import { Textarea } from "../ui/textarea";
-import { useUser } from "@clerk/nextjs";
-import toast from "react-hot-toast";
+import { Loader, User } from "lucide-react";
 import { redirect } from "next/navigation";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { z } from "zod";
+import { Textarea } from "../ui/textarea";
 
 export default function UserForm({
 	user,
@@ -38,14 +37,6 @@ export default function UserForm({
 			onboarded: true,
 		},
 	});
-
-	// const createUserHandler = async (
-	// 	data: z.infer<typeof userSchema>
-	// ): Promise<void> => {
-	// 	startTransition(() => createUser(data));
-
-	// 	form.reset();
-	// };
 
 	const updateUserHandler = (
 		data: z.infer<typeof userSchema>

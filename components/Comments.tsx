@@ -1,9 +1,8 @@
 import { getThreadComments } from "@/lib/actions/comment.action";
-import { iComment } from "@/lib/database/models/comment.model";
-import React, { useState } from "react";
-import CommentForm from "./forms/CommentForm";
-import CommentCard from "./cards/CommentCard";
 import { getActiveUser } from "@/lib/actions/user.actions";
+import { iComment } from "@/lib/database/models/comment.model";
+import CommentCard from "./cards/CommentCard";
+import CommentForm from "./forms/CommentForm";
 
 export default async function Comments({ threadId }: { threadId: string }) {
 	const comments: iComment[] = await getThreadComments(threadId);

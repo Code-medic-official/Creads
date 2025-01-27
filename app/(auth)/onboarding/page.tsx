@@ -1,10 +1,7 @@
 import UserForm from "@/components/forms/UserForm";
-import { getActiveUser, getUser } from "@/lib/actions/user.actions";
-import { currentUser, User } from "@clerk/nextjs/server";
-import React from "react";
+import { getActiveUser } from "@/lib/actions/user.actions";
 
 export default async function Onboarding() {
-	const clerkUser = (await currentUser()) as User;
 
 	const user = await getActiveUser();
 

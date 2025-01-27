@@ -38,7 +38,7 @@ export const getThreadComments = async (
 	}
 };
 
-export const getUserComments = async (userId: string): Promise<void> => {
+export const getUserComments = async (userId: string): Promise<iComment[]> => {
 	try {
 		await connectDb();
 

@@ -1,16 +1,16 @@
 "use client";
 
-import { iComment } from "@/lib/database/models/comment.model";
-import { iThread } from "@/lib/database/models/thread.model";
-import { ThumbsDown, ThumbsUp } from "lucide-react";
-import React, { useEffect, useState, useTransition } from "react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
-import { Button } from "./ui/button";
 import { upsertComment } from "@/lib/actions/comment.action";
 import { upsertThread } from "@/lib/actions/thread.actions";
-import { iUser } from "@/lib/database/models/user.model";
 import { getActiveUser } from "@/lib/actions/user.actions";
+import { iComment } from "@/lib/database/models/comment.model";
+import { iThread } from "@/lib/database/models/thread.model";
+import { iUser } from "@/lib/database/models/user.model";
 import { useUser } from "@clerk/nextjs";
+import { ThumbsDown, ThumbsUp } from "lucide-react";
+import { useEffect, useState, useTransition } from "react";
+import { Button } from "./ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export default function Engagement({
 	item,

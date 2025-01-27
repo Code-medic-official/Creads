@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import "../globals.css";
 
 export const poppinsFont = Poppins({

@@ -1,33 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Avatar, AvatarFallback } from "./ui/avatar";
-import { AvatarImage } from "@radix-ui/react-avatar";
-import {
-	getReplyComments,
-	getThreadComments,
-} from "@/lib/actions/comment.action";
 import { iComment } from "@/lib/database/models/comment.model";
-import { iThread } from "@/lib/database/models/thread.model";
+import { AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback } from "./ui/avatar";
 
 export default function AvatarGroup({
 	items,
 }: {
 	items: iComment[] | undefined;
 }) {
-
-	// useEffect(() => {
-	// 	const fetchReplyComment = async () => {
-	// 		setItems(await getReplyComments(itemId));
-	// 	};
-
-	// 	if (variant === "THREAD" && !items) {
-	// 		fetchThreadComment();
-	// 	} else if (variant === "COMMENT" && !items) {
-	// 		fetchReplyComment();
-	// 	}
-	// }, [itemId, variant]);
-
 	const getUserReplies = () => {
 		const users = items?.map((item) => item.user);
 

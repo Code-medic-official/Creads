@@ -1,11 +1,15 @@
 "use client";
 
+import { createMessage } from "@/lib/actions/message.actions";
 import { iUser } from "@/lib/database/models/user.model";
 import { messageSchema } from "@/lib/schemas/message";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useTransition } from "react";
+import { Loader, Send } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Button } from "../ui/button";
 import {
 	Form,
 	FormControl,
@@ -14,11 +18,6 @@ import {
 	FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import { Loader, Send } from "lucide-react";
-import { Button } from "../ui/button";
-import { usePathname } from "next/navigation";
-import { createMessage } from "@/lib/actions/message.actions";
-import { useUser } from "@clerk/nextjs";
 
 export default function ChatForm({
 	friend,

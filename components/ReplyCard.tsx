@@ -1,12 +1,11 @@
 "use client";
 
 import { iComment } from "@/lib/database/models/comment.model";
-import React from "react";
-import UserCard from "./cards/UserCard";
 import moment from "moment";
-import ThreadCard from "./cards/ThreadCard";
-import Engagement from "./Engagement";
 import { usePathname } from "next/navigation";
+import ThreadCard from "./cards/ThreadCard";
+import UserCard from "./cards/UserCard";
+import Engagement from "./Engagement";
 
 export default function ReplyCard({ reply }: { reply: iComment }) {
 	const pathname = usePathname();

@@ -1,30 +1,28 @@
 "use client";
 
-import React, { useEffect, useState, useTransition } from "react";
-import { Button } from "./ui/button";
-import { Ban } from "lucide-react";
+import { getActiveUser, upsertUser } from "@/lib/actions/user.actions";
 import { iUser } from "@/lib/database/models/user.model";
-import { getActiveUser, getUser, upsertUser } from "@/lib/actions/user.actions";
-import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import toast from "react-hot-toast";
 import { useUser } from "@clerk/nextjs";
+import { Ban } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { useEffect, useState, useTransition } from "react";
+import toast from "react-hot-toast";
+import { Button } from "./ui/button";
 
 export default function BlockBtn({
 	_user,
-	action,
 }: {
 	_user: iUser;
-	action: "BLOCK" | "UNBLOCK";
 }) {
 	const [isBlocked, setIsBlocked] = useState<boolean>();
 	const [isPending, startTransition] = useTransition();
 	const pathname = usePathname();
 	const [user, setUser] = useState<iUser>();
 
-	const { isLoaded, isSignedIn, user: clerkUser } = useUser();
+	const { isLoaded } = useUser();
 
-	const blockList: string[] = user?.blockList?.map((_users) => _user._id) ?? [];
+	const blockList: string[] = user?.blockList?.map((_user) => _user._id) ?? [];
 
 	useEffect(() => {
 		setIsBlocked(!!blockList.find((userId) => userId === user?._id));

@@ -3,7 +3,6 @@ import Comments from "@/components/Comments";
 import { getThread } from "@/lib/actions/thread.actions";
 import { iThread } from "@/lib/database/models/thread.model";
 import { redirect } from "next/navigation";
-import React from "react";
 import toast from "react-hot-toast";
 
 export default async function page({ params }: { params: { id: string } }) {

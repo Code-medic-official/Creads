@@ -1,11 +1,10 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { messageSchema } from "../schemas/message";
 import { connectDb } from "../database/db";
 import messageModel, { iMessage } from "../database/models/message.model";
-import { revalidatePath } from "next/cache";
-import { pusherServer } from "../pusher";
+import { messageSchema } from "../schemas/message";
 
 export const createMessage = async (
 	message: z.infer<typeof messageSchema>,
@@ -14,7 +13,7 @@ export const createMessage = async (
 	try {
 		await connectDb();
 
-		const newMsg = await messageModel.create(message);
+		await messageModel.create(message);
 
 		revalidatePath(pathname);
 		// Pusher

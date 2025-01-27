@@ -1,10 +1,17 @@
 "use client";
 
+import { THREAD_PRIVACY } from "@/constants";
+import { createThread } from "@/lib/actions/thread.actions";
+import { iThread, ThreadPrivacy } from "@/lib/database/models/thread.model";
 import { threadSchema } from "@/lib/schemas/thread";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useRef, useState, useTransition } from "react";
+import { Image, Loader, Upload } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { z } from "zod";
+import { Button } from "../ui/button";
 import {
 	Form,
 	FormControl,
@@ -13,14 +20,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "../ui/form";
-import { Textarea } from "../ui/textarea";
-import { iThread, ThreadPrivacy } from "@/lib/database/models/thread.model";
-import { Button } from "../ui/button";
-import { Image, Loader, Upload } from "lucide-react";
 import { Label } from "../ui/label";
-import { Badge } from "../ui/badge";
-import { THREAD_PRIVACY } from "@/constants";
-import { cn } from "@/lib/utils";
 import {
 	Select,
 	SelectContent,
@@ -28,9 +28,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "../ui/select";
-import { createThread } from "@/lib/actions/thread.actions";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { Textarea } from "../ui/textarea";
 
 export default function ThreadForm({
 	variant = "CREATE",

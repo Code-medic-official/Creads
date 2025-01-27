@@ -1,16 +1,13 @@
-import { getUserThreads } from "@/lib/actions/thread.actions";
-import React from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import ThreadCard from "./cards/ThreadCard";
-import { iThread } from "@/lib/database/models/thread.model";
 import { getUserComments } from "@/lib/actions/comment.action";
-import ReplyCard from "./ReplyCard";
-import { iComment } from "@/lib/database/models/comment.model";
+import { getUserThreads } from "@/lib/actions/thread.actions";
 import { BookText, Image, MessageSquareQuote } from "lucide-react";
+import ThreadCard from "./cards/ThreadCard";
+import ReplyCard from "./ReplyCard";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 export default async function ProfileFeeds({ userId }: { userId: string }) {
-	const feeds = (await getUserThreads(userId)) as iThread[];
-	const replies = (await getUserComments(userId)) as iComment[];
+	const feeds = await getUserThreads(userId);
+	const replies = await getUserComments(userId);
 
 	return (
 		<Tabs defaultValue="Threads">

@@ -1,11 +1,11 @@
 "use client";
 
-import { Loader2, Plus, UserMinus2 } from "lucide-react";
-import React, { useEffect, useState, useTransition } from "react";
-import { Button } from "./ui/button";
-import { iUser } from "@/lib/database/models/user.model";
 import { getActiveUser, upsertUser } from "@/lib/actions/user.actions";
+import { iUser } from "@/lib/database/models/user.model";
 import { useUser } from "@clerk/nextjs";
+import { Loader2, Plus, UserMinus2 } from "lucide-react";
+import { useEffect, useState, useTransition } from "react";
+import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 
 export default function FollowBtn({

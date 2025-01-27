@@ -1,17 +1,17 @@
 "use client";
 
+import { getActiveUser } from "@/lib/actions/user.actions";
 import { iUser } from "@/lib/database/models/user.model";
-import React, { useEffect, useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { usePathname, useRouter } from "next/navigation";
-import { Button } from "../ui/button";
-import FollowBtn from "../FollowBtn";
-import { EditIcon } from "lucide-react";
-import BlockBtn from "../BlockBtn";
-import { Card, CardContent } from "../ui/card";
 import { useUser } from "@clerk/nextjs";
-import { getActiveUser} from "@/lib/actions/user.actions";
+import { EditIcon } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import BlockBtn from "../BlockBtn";
+import FollowBtn from "../FollowBtn";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { Card, CardContent } from "../ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export default function UserCard({
 	variant,

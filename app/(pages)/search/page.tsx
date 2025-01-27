@@ -1,11 +1,7 @@
 "use server";
 
-import ThreadCard from "@/components/cards/ThreadCard";
-import UserCard from "@/components/cards/UserCard";
 import SearchForm from "@/components/forms/SearchForm";
-import ReplyCard from "@/components/ReplyCard";
 import SearchFeed from "@/components/SearchFeed";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { getSearchComments } from "@/lib/actions/comment.action";
 import { getSearchThreads } from "@/lib/actions/thread.actions";
 import { getSearchUsers } from "@/lib/actions/user.actions";

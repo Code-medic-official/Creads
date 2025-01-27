@@ -1,13 +1,14 @@
 "use client"
 
-import React from "react";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { iComment } from "@/lib/database/models/comment.model";
 import { iThread } from "@/lib/database/models/thread.model";
 import { iUser } from "@/lib/database/models/user.model";
-import { iComment } from "@/lib/database/models/comment.model";
 import ThreadCard from "./cards/ThreadCard";
 import UserCard from "./cards/UserCard";
 import ReplyCard from "./ReplyCard";
+
+// : {results: iThread[] | iUser[] | iComment[]}
 
 export default function SearchFeed({ results }) {
 	const threadResults: iThread[] = results?.threadResults;

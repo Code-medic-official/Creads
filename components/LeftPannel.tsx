@@ -2,12 +2,11 @@
 
 import { LEFT_PANNEL_LINKS } from "@/constants";
 import { cn } from "@/lib/utils";
+import { SignedIn, SignOutButton } from "@clerk/nextjs";
+import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
 import { Button } from "./ui/button";
-import { LogOut } from "lucide-react";
-import { SignedIn, SignOutButton } from "@clerk/nextjs";
 
 export default function LeftPannel() {
 	const pathname = usePathname();

@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import { Sheet, SheetContent, SheetTitle } from "./ui/sheet";
-import { PanelRight, PanelRightClose } from "lucide-react";
-import { Button } from "./ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
-import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
+import { PanelRight, PanelRightClose } from "lucide-react";
+import { useState } from "react";
+import { Button } from "./ui/button";
+import { Sheet, SheetContent, SheetTitle } from "./ui/sheet";
+import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 export default function RightPannel() {
 	return (

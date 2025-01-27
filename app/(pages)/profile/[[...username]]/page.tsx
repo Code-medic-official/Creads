@@ -2,7 +2,6 @@ import UserCard from "@/components/cards/UserCard";
 import ProfileFeeds from "@/components/ProfileFeeds";
 import { getUser, getUserFollowings } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
-import React from "react";
 
 export default async function page({
 	params,
@@ -12,7 +11,7 @@ export default async function page({
 	const { username } = await params;
 	const clerkUser = await currentUser();
 
-	const _user = await getUser(username ?? clerkUser.username);
+	const _user = await getUser(username ?? clerkUser!.username);
 	const followings = await getUserFollowings(_user?._id);
 
 	return (

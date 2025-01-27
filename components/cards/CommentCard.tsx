@@ -1,16 +1,17 @@
 "use client";
 
-import { iComment } from "@/lib/database/models/comment.model";
-import React, { useEffect, useState } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { ChevronDown, ChevronUp, ThumbsDown, ThumbsUp } from "lucide-react";
-import { Button } from "../ui/button";
-import { Card, CardContent } from "../ui/card";
-import moment from "moment";
-import { useAppDispatch } from "@/lib/hooks";
 import { setRefComment } from "@/Features/commentSlice";
 import { getReplyComments } from "@/lib/actions/comment.action";
+import { iComment } from "@/lib/database/models/comment.model";
+import { useAppDispatch } from "@/lib/hooks";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import moment from "moment";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Engagement from "../Engagement";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
+import { Card, CardContent } from "../ui/card";
 import {
 	Collapsible,
 	CollapsibleContent,
@@ -18,8 +19,6 @@ import {
 } from "../ui/collapsible";
 import { Label } from "../ui/label";
 import UserCard from "./UserCard";
-import Engagement from "../Engagement";
-import { usePathname, useRouter } from "next/navigation";
 
 export default function CommentCard({ comment }: { comment: iComment }) {
 	const [replyComments, setReplyComments] = useState<iComment[]>();

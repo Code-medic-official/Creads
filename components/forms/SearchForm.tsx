@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useEffect, useTransition } from "react";
-import { LoaderPinwheel, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LoaderPinwheel, Search } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 export default function SearchForm({
@@ -11,7 +11,8 @@ export default function SearchForm({
 }: {
 	qChange: (q: string) => Promise<void>;
 }) {
-	const [isPending, startTransition] = useTransition();
+	const isPending = false
+	// const [isPending, startTransition] = useTransition();
 
 	const { register, handleSubmit, watch } = useForm();
 	const q = watch("q");

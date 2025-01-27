@@ -1,7 +1,5 @@
 import ChatCard from "@/components/cards/ChatCard";
-import { getActiveUser, getUser, getUserFriends } from "@/lib/actions/user.actions";
-import { currentUser } from "@clerk/nextjs/server";
-import React from "react";
+import { getActiveUser, getUserFriends } from "@/lib/actions/user.actions";
 
 
 export default async function page() {
