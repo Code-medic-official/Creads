@@ -1,0 +1,156 @@
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { connectDb } from "../database/db";
+import userModel, { iUser } from "../database/models/user.model";
+import { redirect } from "next/navigation";
+import { auth, clerkClient, currentUser, User } from "@clerk/nextjs/server";
+
+// ! AUTH Server Actions
+export const createUser = async (): Promise<void> => {
+	await connectDb();
+
+	console.log("creating User");
+
+	try {
+		const clerkUser = await currentUser();
+
+		await userModel.create({
+			username: clerkUser?.username as string,
+			emailAdress: clerkUser?.emailAddresses[0].emailAddress as string,
+			imageUrl: clerkUser?.imageUrl,
+		});
+
+		redirect("/onboarding");
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
+// ? Directly get active User
+export const getActiveUser = async (): Promise<iUser> => {
+	try {
+		const clerkUser = await currentUser();
+
+		const activeUser = await getUser(clerkUser?.username as string);
+
+		return JSON.parse(JSON.stringify(activeUser));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
+export const getUsers = async (): Promise<iUser[]> => {
+	try {
+		await connectDb();
+
+		const users = await userModel.find().populate(["followers", "blockList"]);
+
+		// return users
+		return JSON.parse(JSON.stringify(users));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
+export const getUser = async (username: string): Promise<iUser> => {
+	try {
+		await connectDb();
+
+		const user = await userModel
+			.findOne({ username })
+			.populate(["followers", "blockList"]);
+
+		return JSON.parse(JSON.stringify(user));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
+export const getUserFollowings = async (userId: string): Promise<iUser[]> => {
+	try {
+		await connectDb();
+
+		const followings = await userModel
+			.find({ followers: userId })
+			.select("-followers -age -password -email -onboarded");
+
+		return JSON.parse(JSON.stringify(followings));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
+export const getUserFriends = async (
+	userFollowers: string[],
+	userId: string
+): Promise<iUser[]> => {
+	try {
+		await connectDb();
+
+		const friends = await userModel
+			.find({ followers: userId })
+			.in("_id", userFollowers)
+			.populate("followers");
+
+		return JSON.parse(JSON.stringify(friends));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
+export const getSearchUsers = async (q: string): Promise<iUser[]> => {
+	try {
+		await connectDb();
+
+		const qRegex = new RegExp(q, "i");
+
+		const results = await userModel
+			.find()
+			.regex("username", qRegex)
+			.populate("followers");
+
+		return JSON.parse(JSON.stringify(results));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
+export const deleteUser = async (userId: string) => {
+	try {
+		await connectDb();
+
+		const deletedUser = await userModel.findByIdAndDelete(userId);
+
+		return JSON.parse(JSON.stringify(deletedUser()));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
+export const upsertUser = async (
+	user: iUser,
+	pathname?: string
+): Promise<void> => {
+	await connectDb();
+
+	try {
+		await userModel.findByIdAndUpdate(
+			{ _id: user._id },
+			{
+				username: user.username,
+				emailAdress: user.emailAdress,
+				age: user.age,
+				bio: user.bio,
+				onboarded: user.onboarded,
+				followers: user.followers,
+			},
+			{ upsert: true }
+		);
+
+		// Revalidate profile page only on updating.
+		revalidatePath(pathname || "/profile");
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
