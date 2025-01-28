@@ -1,8 +1,9 @@
 import ThreadForm from "@/components/forms/ThreadForm";
 import { getActiveUser } from "@/lib/actions/user.actions";
 
-export default async function CreateThread({}) {
+export const dynamic = "force-dynamic";
 
+export default async function CreateThread({}) {
 	const user = await getActiveUser();
 
 	return (
