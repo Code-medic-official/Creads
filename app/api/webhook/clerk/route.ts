@@ -36,6 +36,8 @@ export const POST = async (request: Request) => {
 	const payload = await request.json();
 	const header = headers();
 
+	
+	// @ts-expect-error decription-sample
 	const heads = {
 		"svix-id": header.get("svix-id"),
 		"svix-timestamp": header.get("svix-timestamp"),
@@ -67,7 +69,6 @@ export const POST = async (request: Request) => {
 			evnt?.data ?? {};
 
 		try {
-			// @ts-expect-error decription-sample
 			await createCommunity(
 				// @ts-expect-error decription-sample
 				id,

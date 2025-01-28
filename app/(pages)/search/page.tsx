@@ -21,11 +21,6 @@ export const getSearchQuery = async (q: string) => {
 export default async function page(props, results) {
 
 	console.log(props)
-	// const threadResults: iThread[] = results?.threadResults;
-	// const accountResults: iUser[] = results?.accountResults;
-	// const replyResults: iComment[] = results?.replyResults;
-
-	// console.log(results);
 
 	return (
 		<div>
