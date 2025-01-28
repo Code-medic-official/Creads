@@ -5,7 +5,13 @@ import { iThread } from "@/lib/database/models/thread.model";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 
-export default async function page({ params }: { params: { id: string } }) {
+export const dynamic = "force-dynamic";
+
+export default async function page({
+	params,
+}: {
+	params: Promise<{ id: string }>;
+}) {
 	const { id } = await params;
 
 	const thread: iThread = await getThread(id);

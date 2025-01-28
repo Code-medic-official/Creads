@@ -12,6 +12,8 @@ import {
 	getUsers,
 } from "@/lib/actions/user.actions";
 
+export const dynamic = "force-dynamic";
+
 export default async function page() {
 	const user = await getActiveUser();
 	const users = await getUsers();

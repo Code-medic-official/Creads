@@ -3,6 +3,8 @@ import ProfileFeeds from "@/components/ProfileFeeds";
 import { getUser, getUserFollowings } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs/server";
 
+export const dynamic = "force-dynamic";
+
 export default async function page({
 	params,
 }: {
