@@ -9,7 +9,7 @@ export const LEFT_PANNEL_LINKS: {
 	// { label: "Search", path: "/search", icon: <Search /> },
 	{ label: "Chat", path: "/chat", icon: <MessageSquareText /> },
 	{ label: "Create Thread", path: "/create-thread", icon: <Plus /> },
-	{ label: "Community", path: "/community", icon: <Users2 /> },
+	{ label: "Communities", path: "/communities", icon: <Users2 /> },
 	{ label: "Profile", path: "/profile", icon: <User /> },
 ];
 

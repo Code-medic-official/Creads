@@ -111,6 +111,29 @@ export const getFriendThreads = async (
 	}
 };
 
+export const getCommunityThreads = async (
+	communityId: string
+): Promise<iThread[]> => {
+	try {
+		await connectDb();
+
+		const communityThreads = await threadModel
+			.find({ community: communityId })
+			.populate({
+				path: "user",
+				populate: {
+					path: "followers",
+					select: "-age -password -onboarded -followers",
+				},
+			})
+			.sort({ createdAt: "desc" });
+
+		return JSON.parse(JSON.stringify(communityThreads));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
 export const getSearchThreads = async (q: string): Promise<iThread[]> => {
 	try {
 		await connectDb();
