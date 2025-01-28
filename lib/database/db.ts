@@ -1,4 +1,4 @@
-import mongoose, { connection } from "mongoose";
+import mongoose from "mongoose";
 
 export const connectDb = async () => {
 	const connectionStatus = mongoose.connection.readyState;

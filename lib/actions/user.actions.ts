@@ -1,10 +1,10 @@
 "use server";
 
+import { currentUser } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { connectDb } from "../database/db";
 import userModel, { iUser } from "../database/models/user.model";
-import { redirect } from "next/navigation";
-import { auth, clerkClient, currentUser, User } from "@clerk/nextjs/server";
 
 // ! AUTH Server Actions
 export const createUser = async (): Promise<void> => {

@@ -1,6 +1,5 @@
 import { model, models, Schema } from "mongoose";
 import { iUser } from "./user.model";
-import { string } from "zod";
 
 export enum MsgState {
 	SENT = "SENT",

@@ -1,13 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 import { connectDb } from "../database/db";
 import threadModel, { iThread } from "../database/models/thread.model";
-import { z } from "zod";
 import { threadSchema } from "../schemas/thread";
-import toast from "react-hot-toast";
-import { ContainerWithChildren } from "postcss/lib/container";
-import { User } from "lucide-react";
 
 export const createThread = async (
 	thread: z.infer<typeof threadSchema>
@@ -110,7 +107,7 @@ export const getFriendThreads = async (
 
 		return JSON.parse(JSON.stringify(friendThreads));
 	} catch (error: any) {
-		throw new Error();
+		throw new Error(error);
 	}
 };
 
