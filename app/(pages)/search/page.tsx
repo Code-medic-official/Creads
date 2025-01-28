@@ -48,6 +48,9 @@ import { iComment } from "@/lib/database/models/comment.model";
 import { iThread } from "@/lib/database/models/thread.model";
 import { iUser } from "@/lib/database/models/user.model";
 
+// ⚠️ Add this to force dynamic rendering
+export const dynamic = "force-dynamic";
+
 // Server action to fetch search results
 export const getSearchQuery = async (q: string) => {
 	console.log("searching");
