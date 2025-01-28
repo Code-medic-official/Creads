@@ -2,24 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { iComment } from "@/lib/database/models/comment.model";
-import { iThread } from "@/lib/database/models/thread.model";
-import { iUser } from "@/lib/database/models/user.model";
+import { getSearchQuery } from "@/lib/actions/util.actions";
 import { LoaderPinwheel, Search } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
-export default function SearchForm({
-	qChange,
-}: {
-	qChange: (
-		q: string
-	) => Promise<{
-		accountResults: iUser[];
-		replyResults: iComment[];
-		threadResults: iThread[];
-	}>;
-}) {
+export default function SearchForm() {
 	const isPending = false;
 	// const [isPending, startTransition] = useTransition();
 
@@ -29,7 +17,9 @@ export default function SearchForm({
 	const searchHandler = () => {};
 
 	useEffect(() => {
-		qChange(q);
+		const fetchSearchQuery = async () => await getSearchQuery(q);
+
+		fetchSearchQuery();
 	}, [q]);
 
 	return (

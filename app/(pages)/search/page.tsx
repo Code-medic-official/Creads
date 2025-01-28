@@ -37,28 +37,12 @@
 // 	);
 // }
 
-"use server";
-
 import SearchForm from "@/components/forms/SearchForm";
 import SearchFeed from "@/components/SearchFeed";
-import { getSearchComments } from "@/lib/actions/comment.action";
-import { getSearchThreads } from "@/lib/actions/thread.actions";
-import { getSearchUsers } from "@/lib/actions/user.actions";
-import { iComment } from "@/lib/database/models/comment.model";
-import { iThread } from "@/lib/database/models/thread.model";
-import { iUser } from "@/lib/database/models/user.model";
+import { getSearchQuery } from "@/lib/actions/util.actions";
 
 // ⚠️ Add this to force dynamic rendering
 export const dynamic = "force-dynamic";
-
-// Server action to fetch search results
-export const getSearchQuery = async (q: string) => {
-	console.log("searching");
-	const threadResults: iThread[] = await getSearchThreads(q);
-	const accountResults: iUser[] = await getSearchUsers(q);
-	const replyResults: iComment[] = await getSearchComments(q);
-	return { accountResults, replyResults, threadResults };
-};
 
 // Page component
 export default async function SearchPage({
@@ -71,7 +55,7 @@ export default async function SearchPage({
 
 	return (
 		<div>
-			<SearchForm qChange={getSearchQuery} />
+			<SearchForm />
 			{results && (
 				<section className="mt-3">
 					<SearchFeed results={results} />
