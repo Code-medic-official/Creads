@@ -7,19 +7,17 @@ import {
 } from "@/lib/actions/thread.actions";
 import {
 	getActiveUser,
-	getUser,
 	getUserFollowings,
 	getUserFriends,
 	getUsers,
 } from "@/lib/actions/user.actions";
-import { currentUser } from "@clerk/nextjs/server";
-import React from "react";
 
 export default async function page() {
-	const clerkUser = await currentUser();
-
 	const user = await getActiveUser();
 	const users = await getUsers();
+
+	if (users) console.log("users fetched");
+
 	const threads: iThread[] = await getThreads();
 	const userFollowings: string[] = await (
 		await getUserFollowings(user?._id)

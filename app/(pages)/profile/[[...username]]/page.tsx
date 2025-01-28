@@ -11,7 +11,7 @@ export default async function page({
 	const { username } = await params;
 	const clerkUser = await currentUser();
 
-	const _user = await getUser(username ?? clerkUser!.username);
+	const _user = await getUser(username ?? clerkUser.username);
 	const followings = await getUserFollowings(_user?._id);
 
 	return (
