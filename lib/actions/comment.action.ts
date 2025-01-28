@@ -17,7 +17,7 @@ export const createComment = async (
 
 		revalidatePath(path);
 	} catch (error: any) {
-		console.error(error);
+		throw new Error(error);
 	}
 };
 
@@ -34,7 +34,7 @@ export const getThreadComments = async (
 
 		return JSON.parse(JSON.stringify(threadComments));
 	} catch (error: any) {
-		console.error(error);
+		throw new Error(error);
 	}
 };
 
@@ -63,7 +63,9 @@ export const getUserComments = async (userId: string): Promise<iComment[]> => {
 	}
 };
 
-export const getReplyComments = async (commentId: string): Promise<iComment[]> => {
+export const getReplyComments = async (
+	commentId: string
+): Promise<iComment[]> => {
 	try {
 		await connectDb();
 

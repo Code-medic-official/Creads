@@ -8,11 +8,11 @@ import { headers } from "next/headers";
 import { Webhook, WebhookRequiredHeaders } from "svix";
 import { IncomingHttpHeaders } from "http";
 import {
-  addMemberToCommunity,
-  createCommunity,
-  deleteCommunity,
-  removeUserFromCommunity,
-  updateCommunityInfo,
+	addMemberToCommunity,
+	createCommunity,
+	deleteCommunity,
+	removeUserFromCommunity,
+	updateCommunityInfo,
 } from "@/lib/actions/community.actions";
 import { NextResponse } from "next/server";
 
@@ -57,7 +57,7 @@ export const POST = async (request: Request) => {
 		return NextResponse.json({ message: err }, { status: 400 });
 	}
 
-	const eventType: EventType = evnt?.type!;
+	const eventType: EventType = evnt?.type;
 
 	// Listen organization creation event
 	if (eventType === "organization.created") {
@@ -67,9 +67,9 @@ export const POST = async (request: Request) => {
 			evnt?.data ?? {};
 
 		try {
-			// @ts-ignore
+			// @ts-expect-error decription-sample
 			await createCommunity(
-				// @ts-ignore
+				// @ts-expect-error decription-sample
 				id,
 				name,
 				slug,
@@ -118,7 +118,7 @@ export const POST = async (request: Request) => {
 			const { organization, public_user_data } = evnt?.data;
 			console.log("created", evnt?.data);
 
-			// @ts-ignore
+			// @ts-expect-error decription-sample
 			await addMemberToCommunity(organization.id, public_user_data.user_id);
 
 			return NextResponse.json(
@@ -143,7 +143,7 @@ export const POST = async (request: Request) => {
 			const { organization, public_user_data } = evnt?.data;
 			console.log("removed", evnt?.data);
 
-			// @ts-ignore
+			// @ts-expect-error decription-sample
 			await removeUserFromCommunity(public_user_data.user_id, organization.id);
 
 			return NextResponse.json({ message: "Member removed" }, { status: 201 });
@@ -165,7 +165,7 @@ export const POST = async (request: Request) => {
 			const { id, logo_url, name, slug } = evnt?.data;
 			console.log("updated", evnt?.data);
 
-			// @ts-ignore
+			// @ts-expect-error decription-sample
 			await updateCommunityInfo(id, name, slug, logo_url);
 
 			return NextResponse.json({ message: "Member removed" }, { status: 201 });
@@ -187,7 +187,7 @@ export const POST = async (request: Request) => {
 			const { id } = evnt?.data;
 			console.log("deleted", evnt?.data);
 
-			// @ts-ignore
+			// @ts-expect-error decription-sample
 			await deleteCommunity(id);
 
 			return NextResponse.json(
