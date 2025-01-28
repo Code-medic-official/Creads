@@ -1,6 +1,5 @@
 import ChatCard from "@/components/cards/ChatCard";
 import ChatForm from "@/components/forms/ChatForm";
-
 import MessageCard from "@/components/cards/MessageCard";
 import { Button } from "@/components/ui/button";
 import { getChatMessages } from "@/lib/actions/message.actions";

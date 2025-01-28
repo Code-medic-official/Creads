@@ -1,11 +1,10 @@
 import ChatCard from "@/components/cards/ChatCard";
 import { getActiveUser, getUserFriends } from "@/lib/actions/user.actions";
 
+export const dynamic = "force-dynamic"
 
 export default async function page() {
-
 	const user = await getActiveUser();
-
 	const friends = await getUserFriends(user?.followers, user?._id);
 
 	return (
