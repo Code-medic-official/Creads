@@ -3,7 +3,7 @@ import { getActiveUser } from "@/lib/actions/user.actions";
 
 export const dynamic = "force-dynamic";
 
-export default async function CreateThread({}) {
+export default async function page() {
 	const user = await getActiveUser();
 
 	return (
