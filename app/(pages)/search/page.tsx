@@ -17,10 +17,11 @@ export const getSearchQuery = async (q: string) => {
 	await page(null, { accountResults, replyResults, threadResults });
 };
 
+export const dynamic = "force-dynamic";
+
 // export default async function page(props, {threadResults, accountResults, replyResults}) {
 export default async function page(props, results) {
-
-	console.log(props)
+	console.log(props);
 
 	return (
 		<div>
