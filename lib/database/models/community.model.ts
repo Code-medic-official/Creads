@@ -14,42 +14,6 @@ export interface iCommunity {
 	updatedAt?: string;
 }
 
-// const communitySchema = new Schema(
-// 	{
-// 		id: {
-// 			type: String,
-// 			required: true,
-// 		},
-// 		username: {
-// 			type: String,
-// 			unique: true,
-// 			required: true,
-// 		},
-// 		name: {
-// 			type: String,
-// 			required: true,
-// 		},
-// 		image: String,
-// 		bio: String,
-// 		createdBy: {
-// 			type: Schema.Types.ObjectId,
-// 			ref: "User",
-// 		},
-// 		threads: [
-// 			{
-// 				type: Schema.Types.ObjectId,
-// 				ref: "Thread",
-// 			},
-// 		],
-// 		members: [
-// 			{
-// 				type: Schema.Types.ObjectId,
-// 				ref: "User",
-// 			},
-// 		],
-// 	},
-// 	{ timestamps: true }
-// );
 
 const communitySchema = new Schema(
 	{
@@ -60,8 +24,8 @@ const communitySchema = new Schema(
 		},
 		creator: {
 			type: Schema.Types.ObjectId,
-			requried: true,
 			ref: "User",
+			requried: true,
 			immutable: true,
 		},
 		slug: {
@@ -78,7 +42,7 @@ const communitySchema = new Schema(
 			maxLength: 500,
 		},
 		members: {
-			types: [Schema.Types.ObjectId],
+			type: [Schema.Types.ObjectId],
 			ref: "User",
 		},
 		imageUrl: String,

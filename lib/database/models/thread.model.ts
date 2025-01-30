@@ -16,7 +16,6 @@ export interface iThread {
 	likes: string[];
 	dislikes: string[];
 	privacy: ThreadPrivacy;
-	// privacy: "PUBLIC" | "PRIVATE" | "FRIENDS";
 	createdAt: string;
 	updatedAt: string;
 }
