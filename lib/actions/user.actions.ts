@@ -53,12 +53,16 @@ export const getUsers = async (): Promise<iUser[]> => {
 	}
 };
 
-export const getUser = async (username: string): Promise<iUser> => {
+export const getUser = async (
+	username?: string,
+	clerkId?: string
+): Promise<iUser> => {
 	try {
 		await connectDb();
 
 		const user = await userModel
-			.findOne({ username })
+			.findOne()
+			.or([{ username }, { clerkId }])
 			.populate(["followers", "blockList"]);
 
 		return JSON.parse(JSON.stringify(user));

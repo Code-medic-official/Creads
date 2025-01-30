@@ -4,6 +4,7 @@ export interface iUser {
 	_id: string;
 
 	// ? Clerk fields
+	clerkId: string;
 	username: string;
 	emailAdress: string;
 	imageUrl: string;
@@ -21,6 +22,11 @@ export interface iUser {
 
 const userSchema = new Schema(
 	{
+		clerkId: {
+			type: String,
+			required: true,
+			unique: true,
+		},
 		username: {
 			type: String,
 			required: true,

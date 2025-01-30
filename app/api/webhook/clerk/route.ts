@@ -67,25 +67,26 @@ export const POST = async (req: Request) => {
 	// ? Member Joins organization
 	if (evt.type === "organizationMembership.created") {
 		try {
-			const { slug, public_user_data: newMember } = evt.data;
-
-			console.log(newMember);
+			const {
+				organization: { slug },
+				public_user_data: { user_id: clerkId },
+			} = evt.data;
 
 			// Fetch community and the new member from mongo DB
 			const community = await getCommunity(slug);
-			const user = await getUser(newMember.username);
+			const user = await getUser(clerkId);
 
 			const membersList: string[] = community.members!.map(
 				(member) => member._id
 			);
 
 			await upsertCommunity(
-				slug,
 				{
 					...community,
 					members: [...membersList, user._id],
 				},
-				`/communities/${slug}`
+				`/communities/${slug}`,
+				slug
 			);
 
 			return NextResponse.json({ message: "Member Joined" }, { status: 201 });
@@ -97,23 +98,26 @@ export const POST = async (req: Request) => {
 	// ? Member leaves or removed from organisation
 	if (evt.type === "organizationMembership.deleted") {
 		try {
-			const { slug, public_user_data: _user } = evt.data;
+			const {
+				organization: { slug },
+				public_user_data: { user_id },
+			} = evt.data;
 
 			// Fetch community and the new member from mongo DB
 			const community = await getCommunity(slug);
-			const user = await getUser(_user.username);
+			const user = await getUser(user_id);
 
 			const membersList: string[] = community.members!.map(
 				(member) => member._id
 			);
 
 			await upsertCommunity(
-				slug,
 				{
 					...community,
 					members: membersList.filter((memberId) => memberId !== user._id),
 				},
-				`/communities/${slug}`
+				`/communities/${slug}`,
+				slug
 			);
 
 			return NextResponse.json({ message: "Member Removed" }, { status: 201 });
