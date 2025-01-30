@@ -7,20 +7,13 @@ import { connectDb } from "../database/db";
 import userModel, { iUser } from "../database/models/user.model";
 
 // ! AUTH Server Actions
-export const createUser = async (): Promise<void> => {
+export const createUser = async (newUser: iUser): Promise<void> => {
 	await connectDb();
 
 	console.log("creating User");
 
 	try {
-		const clerkUser = await currentUser();
-
-		await userModel.create({
-			username: clerkUser?.username as string,
-			emailAdress: clerkUser?.emailAddresses[0].emailAddress as string,
-			imageUrl: clerkUser?.imageUrl,
-			clerkId: clerkUser?.id,
-		});
+		await userModel.create(newUser);
 
 		redirect("/onboarding");
 	} catch (error: any) {
@@ -121,11 +114,11 @@ export const getSearchUsers = async (q: string): Promise<iUser[]> => {
 	}
 };
 
-export const deleteUser = async (userId: string) => {
+export const deleteUser = async (clerkId: string) => {
 	try {
 		await connectDb();
 
-		const deletedUser = await userModel.findByIdAndDelete(userId);
+		const deletedUser = await userModel.findOneAndDelete({ clerkId });
 
 		return JSON.parse(JSON.stringify(deletedUser()));
 	} catch (error: any) {

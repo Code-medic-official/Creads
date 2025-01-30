@@ -4,7 +4,12 @@ import {
 	getCommunity,
 	upsertCommunity,
 } from "@/lib/actions/community.actions";
-import { getUser } from "@/lib/actions/user.actions";
+import {
+	createUser,
+	deleteUser,
+	getUser,
+	upsertUser,
+} from "@/lib/actions/user.actions";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
@@ -69,7 +74,7 @@ export const POST = async (req: Request) => {
 		}
 	}
 
-	// ? Member Joins organization
+	// ? Member Joins organization✅
 	if (evt.type === "organizationMembership.created") {
 		try {
 			const {
@@ -105,7 +110,7 @@ export const POST = async (req: Request) => {
 		}
 	}
 
-	// ? Member leaves or removed from organisation
+	// ? Member leaves or removed from organisation✅
 	if (evt.type === "organizationMembership.deleted") {
 		try {
 			const {
@@ -169,7 +174,7 @@ export const POST = async (req: Request) => {
 		}
 	}
 
-	// ? Organisation gets deleted
+	// ? Organisation gets deleted ✅
 	if (evt.type === "organization.deleted") {
 		try {
 			const { id: clerkId } = evt.data;
@@ -190,5 +195,57 @@ export const POST = async (req: Request) => {
 		}
 	}
 
+	// ! User WebHooks
+
+	if (evt.type === "user.created") {
+		try {
+			const {
+				username,
+				image_url: imageUrl,
+				id: clerkId,
+				email_addresses,
+			} = evt.data;
+
+			await createUser({
+				username,
+				emailAdress: email_addresses[0].email_address as string,
+				imageUrl,
+				clerkId,
+			});
+
+			return NextResponse.json({ msg: "New User Created" }, { status: 201 });
+		} catch (error: any) {
+			console.error(error);
+			return NextResponse.json({ msg: "Create User Failed" }, { status: 500 });
+		}
+	}
+
+	if (evt.type === "user.updated") {
+		try {
+			const { image_url: imageUrl, id: clerkId, username } = evt.data;
+
+			const user = await getUser(undefined, clerkId);
+
+			await upsertUser({ ...user, imageUrl, username }, `/profile/${username}`);
+
+			return NextResponse.json({ msg: "User Updated" }, { status: 200 });
+		} catch (error: any) {
+			console.error(error);
+			return NextResponse.json({ msg: "User Update Failed" }, { status: 500 });
+		}
+	}
+
+	if (evt.type === "user.deleted") {
+		try {
+			const { id: clerkId } = evt.data;
+
+			await deleteUser(clerkId as string);
+
+			return NextResponse.json({ msg: "User Deleted" }, { status: 200 });
+		} catch (error: any) {
+			console.error(error);
+			return NextResponse.json({ msg: "Delete User Failed!" }, { status: 500 });
+		}
+	}
 	return NextResponse.json({ success: true }, { status: 200 });
 };

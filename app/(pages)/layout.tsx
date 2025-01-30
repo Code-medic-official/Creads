@@ -89,10 +89,8 @@ export default async function RootLayout({
 }>) {
 	const user = await getActiveUser();
 
-	// ! Add Cleark User to Mongo Db
-	if (!user) {
-		await createUser();
-	} else if (!user.onboarded) redirect("/onboarding");
+	// ! Ensure User is onboarded
+	if (!user.onboarded) redirect("/onboarding");
 
 	return (
 		<ClerkProvider afterSignOutUrl="/" dynamic>

@@ -1,17 +1,17 @@
 import { model, models, Schema } from "mongoose";
 
 export interface iUser {
-	_id: string;
+	_id?: string;
 
 	// ? Clerk fields
 	clerkId: string;
 	username: string;
 	emailAdress: string;
-	imageUrl: string;
+	imageUrl?: string;
 
 	age?: number;
 	bio?: string;
-	onboarded: boolean;
+	onboarded?: boolean;
 	createdAt?: string;
 	updatedAt?: string;
 
