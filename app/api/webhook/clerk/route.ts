@@ -59,7 +59,7 @@ export const POST = async (req: Request) => {
 				{ status: 201 }
 			);
 		} catch (error: any) {
-			return NextResponse.json({ err: error }, { status: 500 });
+			return NextResponse.json({ err: "Organisation failed to create" }, { status: 500 });
 		}
 	}
 
@@ -90,7 +90,7 @@ export const POST = async (req: Request) => {
 
 			return NextResponse.json({ message: "Member Joined" }, { status: 201 });
 		} catch (error: any) {
-			return NextResponse.json({ err: error }, { status: 500 });
+			return NextResponse.json({ err: "Member could not join" }, { status: 500 });
 		}
 	}
 
@@ -166,5 +166,5 @@ export const POST = async (req: Request) => {
 	}
 
 
-	return NextResponse.json({ success: true }, { status: 200 });
+	// return NextResponse.json({ success: true }, { status: 200 });
 };
