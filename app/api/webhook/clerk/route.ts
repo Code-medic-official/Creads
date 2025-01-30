@@ -35,7 +35,7 @@ export const POST = async (req: Request) => {
 		return NextResponse.json({ message: error }, { status: 400 });
 	}
 
-	// ? Organisation created
+	// ? Organisation created ✅
 	if (evt.type === "organization.created") {
 		const {
 			created_by: creator,
@@ -52,7 +52,6 @@ export const POST = async (req: Request) => {
 				slug,
 				imageUrl,
 				creator,
-				// logoUrl,
 			});
 
 			return NextResponse.json(
@@ -74,7 +73,7 @@ export const POST = async (req: Request) => {
 
 			// Fetch community and the new member from mongo DB
 			const community = await getCommunity(slug);
-			const user = await getUser(clerkId);
+			const user = await getUser(undefined, clerkId);
 
 			const membersList: string[] = community.members!.map(
 				(member) => member._id
@@ -165,4 +164,7 @@ export const POST = async (req: Request) => {
 			return NextResponse.json({ err: error }, { status: 500 });
 		}
 	}
+
+
+	return NextResponse.json({ success: true }, { status: 200 });
 };
