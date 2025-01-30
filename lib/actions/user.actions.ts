@@ -19,6 +19,7 @@ export const createUser = async (): Promise<void> => {
 			username: clerkUser?.username as string,
 			emailAdress: clerkUser?.emailAddresses[0].emailAddress as string,
 			imageUrl: clerkUser?.imageUrl,
+			clerkId: clerkUser?.id,
 		});
 
 		redirect("/onboarding");

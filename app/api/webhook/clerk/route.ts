@@ -38,7 +38,7 @@ export const POST = async (req: Request) => {
 	// ? Organisation created ✅
 	if (evt.type === "organization.created") {
 		const {
-			created_by: creator,
+			created_by,
 			id: clerkId,
 			image_url: imageUrl,
 			name,
@@ -46,12 +46,14 @@ export const POST = async (req: Request) => {
 		} = evt.data;
 
 		try {
+			const creator = await getUser(undefined, created_by)
+			
 			await createCommunity({
 				clerkId,
 				name,
 				slug,
 				imageUrl,
-				creator,
+				creator: creator._id,
 			});
 
 			return NextResponse.json(
