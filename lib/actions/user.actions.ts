@@ -15,7 +15,7 @@ export const createUser = async (newUser: iUser): Promise<void> => {
 	try {
 		await userModel.create(newUser);
 
-		redirect("/onboarding");
+		// redirect("/onboarding");
 	} catch (error: any) {
 		throw new Error(error);
 	}
