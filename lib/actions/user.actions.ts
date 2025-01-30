@@ -120,7 +120,7 @@ export const deleteUser = async (clerkId: string) => {
 
 		const deletedUser = await userModel.findOneAndDelete({ clerkId });
 
-		return JSON.parse(JSON.stringify(deletedUser()));
+		return JSON.parse(JSON.stringify(deletedUser));
 	} catch (error: any) {
 		throw new Error(error);
 	}

@@ -196,7 +196,6 @@ export const POST = async (req: Request) => {
 	}
 
 	// ! User WebHooks
-
 	if (evt.type === "user.created") {
 		try {
 			const {
