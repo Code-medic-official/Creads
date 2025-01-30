@@ -46,8 +46,8 @@ export const POST = async (req: Request) => {
 		} = evt.data;
 
 		try {
-			const creator = await getUser(undefined, created_by)
-			
+			const creator = await getUser(undefined, created_by);
+
 			await createCommunity({
 				clerkId,
 				name,
@@ -115,7 +115,7 @@ export const POST = async (req: Request) => {
 
 			// Fetch community and the new member from mongo DB
 			const community = await getCommunity(slug);
-			const user = await getUser(user_id);
+			const user = await getUser(undefined, user_id);
 
 			const membersList: string[] = community.members!.map(
 				(member) => member._id
@@ -132,7 +132,12 @@ export const POST = async (req: Request) => {
 
 			return NextResponse.json({ message: "Member Removed" }, { status: 201 });
 		} catch (error: any) {
-			return NextResponse.json({ err: error }, { status: 500 });
+			console.error(error);
+
+			return NextResponse.json(
+				{ err: "Member Delete failed!" },
+				{ status: 500 }
+			);
 		}
 	}
 
@@ -157,7 +162,10 @@ export const POST = async (req: Request) => {
 			);
 		} catch (error: any) {
 			console.error(error);
-			return NextResponse.json({ err: "Organisation update Failed!" }, { status: 500 });
+			return NextResponse.json(
+				{ err: "Organisation update Failed!" },
+				{ status: 500 }
+			);
 		}
 	}
 
@@ -173,7 +181,12 @@ export const POST = async (req: Request) => {
 				{ status: 201 }
 			);
 		} catch (error: any) {
-			return NextResponse.json({ err: error }, { status: 500 });
+			console.error(error);
+
+			return NextResponse.json(
+				{ err: "Organisation delete Failed!" },
+				{ status: 500 }
+			);
 		}
 	}
 

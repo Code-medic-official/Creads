@@ -66,7 +66,6 @@ export const upsertCommunity = async (
 				members: community.members,
 				slug: community.slug,
 				imageUrl: community.imageUrl,
-				logoUrl: community.logoUrl,
 			},
 			{ upsert: true }
 		);
