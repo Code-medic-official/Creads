@@ -1,207 +1,164 @@
-/* eslint-disable camelcase */
-// Resource: https://clerk.com/docs/users/sync-data-to-your-backend
-// Above article shows why we need webhooks i.e., to sync data to our backend
-
-// Resource: https://docs.svix.com/receiving/verifying-payloads/why
-// It's a good practice to verify webhooks. Above article shows why we should do it
-import { headers } from "next/headers";
-import { Webhook, WebhookRequiredHeaders } from "svix";
-import { IncomingHttpHeaders } from "http";
 import {
-	addMemberToCommunity,
 	createCommunity,
-	deleteCommunity,
-	removeUserFromCommunity,
-	updateCommunityInfo,
+	delelteCommunity,
+	getCommunity,
+	upsertCommunity,
 } from "@/lib/actions/community.actions";
+import { getUser } from "@/lib/actions/user.actions";
+import { WebhookEvent } from "@clerk/nextjs/server";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import { Webhook } from "svix";
 
-// Resource: https://clerk.com/docs/integration/webhooks#supported-events
-// Above document lists the supported events
-type EventType =
-	| "organization.created"
-	| "organizationInvitation.created"
-	| "organizationMembership.created"
-	| "organizationMembership.deleted"
-	| "organization.updated"
-	| "organization.deleted";
+export const POST = async (req: Request) => {
+	const payload = await req.json();
+	const wh = new Webhook(process.env.NEXT_CLERK_WEBHOOK_SECRET!);
+	const header = await headers();
 
-type Event = {
-	data: Record<string, string | number | Record<string, string>[]>;
-	object: "event";
-	type: EventType;
-};
+	const svixId = header.get("svix-id");
+	const svixSignature = header.get("svix-signature");
+	const svixTimeStamp = header.get("svix-timestamp");
 
-export const POST = async (request: Request) => {
-	const payload = await request.json();
-	const header = headers();
+	if (!svixId || !svixSignature || !svixTimeStamp)
+		return NextResponse.json({ msg: "Unauthorised" }, { status: 401 });
 
-	
-	// @ts-expect-error decription-sample
-	const heads = {
-		"svix-id": header.get("svix-id"),
-		"svix-timestamp": header.get("svix-timestamp"),
-		"svix-signature": header.get("svix-signature"),
-	};
-
-	// Activitate Webhook in the Clerk Dashboard.
-	// After adding the endpoint, you'll see the secret on the right side.
-	const wh = new Webhook(process.env.NEXT_CLERK_WEBHOOK_SECRET || "");
-
-	let evnt: Event | null = null;
+	let evt: WebhookEvent;
 
 	try {
-		evnt = wh.verify(
-			JSON.stringify(payload),
-			heads as IncomingHttpHeaders & WebhookRequiredHeaders
-		) as Event;
-	} catch (err) {
-		return NextResponse.json({ message: err }, { status: 400 });
+		evt = wh.verify(JSON.stringify(payload), {
+			"svix-id": svixId,
+			"svix-signature": svixSignature,
+			"svix-timestamp": svixTimeStamp,
+		}) as WebhookEvent;
+	} catch (error: any) {
+		console.error("Webhook verification failed:", error);
+		return NextResponse.json({ message: error }, { status: 400 });
 	}
 
-	const eventType: EventType = evnt?.type;
-
-	// Listen organization creation event
-	if (eventType === "organization.created") {
-		// Resource: https://clerk.com/docs/reference/backend-api/tag/Organizations#operation/CreateOrganization
-		// Show what evnt?.data sends from above resource
-		const { id, name, slug, logo_url, image_url, created_by } =
-			evnt?.data ?? {};
+	// ? Organisation created
+	if (evt.type === "organization.created") {
+		const {
+			created_by: creator,
+			id: clerkId,
+			image_url: imageUrl,
+			name,
+			slug,
+		} = evt.data;
 
 		try {
-			await createCommunity(
-				// @ts-expect-error decription-sample
-				id,
+			await createCommunity({
+				clerkId,
 				name,
 				slug,
-				logo_url || image_url,
-				"org bio",
-				created_by
-			);
-
-			return NextResponse.json({ message: "User created" }, { status: 201 });
-		} catch (err) {
-			console.log(err);
-			return NextResponse.json(
-				{ message: "Internal Server Error" },
-				{ status: 500 }
-			);
-		}
-	}
-
-	// Listen organization invitation creation event.
-	// Just to show. You can avoid this or tell people that we can create a new mongoose action and
-	// add pending invites in the database.
-	if (eventType === "organizationInvitation.created") {
-		try {
-			// Resource: https://clerk.com/docs/reference/backend-api/tag/Organization-Invitations#operation/CreateOrganizationInvitation
-			console.log("Invitation created", evnt?.data);
+				imageUrl,
+				creator,
+				// logoUrl,
+			});
 
 			return NextResponse.json(
-				{ message: "Invitation created" },
+				{ msg: "Organisation Created" },
 				{ status: 201 }
 			);
-		} catch (err) {
-			console.log(err);
-
-			return NextResponse.json(
-				{ message: "Internal Server Error" },
-				{ status: 500 }
-			);
+		} catch (error: any) {
+			return NextResponse.json({ err: error }, { status: 500 });
 		}
 	}
 
-	// Listen organization membership (member invite & accepted) creation
-	if (eventType === "organizationMembership.created") {
+	// ? Member Joins organization
+	if (evt.type === "organizationMembership.created") {
 		try {
-			// Resource: https://clerk.com/docs/reference/backend-api/tag/Organization-Memberships#operation/CreateOrganizationMembership
-			// Show what evnt?.data sends from above resource
-			const { organization, public_user_data } = evnt?.data;
-			console.log("created", evnt?.data);
+			const { slug, public_user_data: newMember } = evt.data;
 
-			// @ts-expect-error decription-sample
-			await addMemberToCommunity(organization.id, public_user_data.user_id);
+			console.log(newMember);
+
+			// Fetch community and the new member from mongo DB
+			const community = await getCommunity(slug);
+			const user = await getUser(newMember.username);
+
+			const membersList: string[] = community.members!.map(
+				(member) => member._id
+			);
+
+			await upsertCommunity(
+				slug,
+				{
+					...community,
+					members: [...membersList, user._id],
+				},
+				`/communities/${slug}`
+			);
+
+			return NextResponse.json({ message: "Member Joined" }, { status: 201 });
+		} catch (error: any) {
+			return NextResponse.json({ err: error }, { status: 500 });
+		}
+	}
+
+	// ? Member leaves or removed from organisation
+	if (evt.type === "organizationMembership.deleted") {
+		try {
+			const { slug, public_user_data: _user } = evt.data;
+
+			// Fetch community and the new member from mongo DB
+			const community = await getCommunity(slug);
+			const user = await getUser(_user.username);
+
+			const membersList: string[] = community.members!.map(
+				(member) => member._id
+			);
+
+			await upsertCommunity(
+				slug,
+				{
+					...community,
+					members: membersList.filter((memberId) => memberId !== user._id),
+				},
+				`/communities/${slug}`
+			);
+
+			return NextResponse.json({ message: "Member Removed" }, { status: 201 });
+		} catch (error: any) {
+			return NextResponse.json({ err: error }, { status: 500 });
+		}
+	}
+
+	// ? Organisation gets updated.
+	if (evt.type === "organization.updated") {
+		try {
+			const { id, image_url: imageUrl, name, slug } = evt?.data;
+			console.log("updated", evt?.data);
+
+			const community = await getCommunity(undefined, id);
+
+			await upsertCommunity(
+				{ ...community, name, imageUrl, slug },
+				`/communities/${slug}`,
+				undefined,
+				id
+			);
 
 			return NextResponse.json(
-				{ message: "Invitation accepted" },
+				{ message: "Organisation Updated" },
 				{ status: 201 }
 			);
-		} catch (err) {
-			console.log(err);
-
-			return NextResponse.json(
-				{ message: "Internal Server Error" },
-				{ status: 500 }
-			);
+		} catch (error: any) {
+			return NextResponse.json({ err: error }, { status: 500 });
 		}
 	}
 
-	// Listen member deletion event
-	if (eventType === "organizationMembership.deleted") {
+	// ? Organisation gets deleted
+	if (evt.type === "organization.deleted") {
 		try {
-			// Resource: https://clerk.com/docs/reference/backend-api/tag/Organization-Memberships#operation/DeleteOrganizationMembership
-			// Show what evnt?.data sends from above resource
-			const { organization, public_user_data } = evnt?.data;
-			console.log("removed", evnt?.data);
+			const { id: clerkId } = evt.data;
 
-			// @ts-expect-error decription-sample
-			await removeUserFromCommunity(public_user_data.user_id, organization.id);
-
-			return NextResponse.json({ message: "Member removed" }, { status: 201 });
-		} catch (err) {
-			console.log(err);
+			await delelteCommunity(clerkId as string, "/communities");
 
 			return NextResponse.json(
-				{ message: "Internal Server Error" },
-				{ status: 500 }
-			);
-		}
-	}
-
-	// Listen organization updation event
-	if (eventType === "organization.updated") {
-		try {
-			// Resource: https://clerk.com/docs/reference/backend-api/tag/Organizations#operation/UpdateOrganization
-			// Show what evnt?.data sends from above resource
-			const { id, logo_url, name, slug } = evnt?.data;
-			console.log("updated", evnt?.data);
-
-			// @ts-expect-error decription-sample
-			await updateCommunityInfo(id, name, slug, logo_url);
-
-			return NextResponse.json({ message: "Member removed" }, { status: 201 });
-		} catch (err) {
-			console.log(err);
-
-			return NextResponse.json(
-				{ message: "Internal Server Error" },
-				{ status: 500 }
-			);
-		}
-	}
-
-	// Listen organization deletion event
-	if (eventType === "organization.deleted") {
-		try {
-			// Resource: https://clerk.com/docs/reference/backend-api/tag/Organizations#operation/DeleteOrganization
-			// Show what evnt?.data sends from above resource
-			const { id } = evnt?.data;
-			console.log("deleted", evnt?.data);
-
-			// @ts-expect-error decription-sample
-			await deleteCommunity(id);
-
-			return NextResponse.json(
-				{ message: "Organization deleted" },
+				{ msg: "Organisation deleted." },
 				{ status: 201 }
 			);
-		} catch (err) {
-			console.log(err);
-
-			return NextResponse.json(
-				{ message: "Internal Server Error" },
-				{ status: 500 }
-			);
+		} catch (error: any) {
+			return NextResponse.json({ err: error }, { status: 500 });
 		}
 	}
 };

@@ -16,12 +16,12 @@ export const createCommunity = async (community: iCommunity) => {
 	}
 };
 
-export const getCommunity = async (clerkId: string): Promise<iCommunity> => {
+export const getCommunity = async (slug?: string, clerkId?: string): Promise<iCommunity> => {
 	try {
 		await connectDb();
 
 		const community = await communityModel
-			.findOne({ clerkId })
+			.findOne().or([{clerkId},{ slug }])
 			.populate("creator", "-age -blocklist")
 			.populate("members");
 
@@ -47,21 +47,24 @@ export const getCommunities = async (): Promise<iCommunity[]> => {
 };
 
 export const upsertCommunity = async (
-	clerkId: string,
 	community: iCommunity,
-	pathname: string
+	pathname: string,
+	slug?: string,
+	clerkId?: string
 ): Promise<void> => {
 	try {
 		await connectDb();
 
+		// ? Filter using Slug or clerk Id
 		await communityModel.findOneAndUpdate(
 			{
-				clerkId,
+				$or: [{ slug }, { clerkId }],
 			},
 			{
 				name: community.name,
 				bio: community.bio,
 				members: community.members,
+				slug: community.slug,
 				imageUrl: community.imageUrl,
 				logoUrl: community.logoUrl,
 			},
@@ -80,7 +83,7 @@ export const delelteCommunity = async (
 	try {
 		await connectDb();
 
-    await communityModel.findOneAndDelete({clerkId})
+		await communityModel.findOneAndDelete({ clerkId });
 
 		// ! Delete all threads associated with the community
 		// await threadModel.deleteMany({ community: communityId });
