@@ -2,6 +2,7 @@
 
 import { THREAD_PRIVACY } from "@/constants";
 import { createThread } from "@/lib/actions/thread.actions";
+import { iCommunity } from "@/lib/database/models/community.model";
 import { iThread, ThreadPrivacy } from "@/lib/database/models/thread.model";
 import { threadSchema } from "@/lib/schemas/thread";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,21 +30,25 @@ import {
 	SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
+import CommunityCard from "../cards/CommunityCard";
 
 export default function ThreadForm({
 	variant = "CREATE",
 	thread,
 	userId,
+	community = null,
 }: {
 	variant?: "CREATE" | "UPDATE";
 	thread?: iThread;
 	userId: string;
+	community?: iCommunity | null;
+	// isOpen: boolean;
+	// setIsOpen: (prev?) => boolean;
 }) {
 	const [isPending, startTransition] = useTransition();
+
 	const [img, setImg] = useState("");
-  const router = useRouter()
-	
-	console.log(userId)
+	const router = useRouter();
 
 	const fileBtn = useRef(null);
 
@@ -54,6 +59,7 @@ export default function ThreadForm({
 			image: thread?.image ?? img,
 			privacy: thread?.privacy ?? ThreadPrivacy.PUBLIC,
 			user: userId,
+			community: community?._id,
 		},
 	});
 
@@ -65,7 +71,7 @@ export default function ThreadForm({
 		form.reset();
 
 		toast.success("Thread posted");
-    router.push("/feeds")
+		router.push(community ? `/communities/${community.slug}` : "/feeds");
 	};
 
 	const updateThreadHandler = async (data) => {};
@@ -78,6 +84,12 @@ export default function ThreadForm({
 
 	return (
 		<div>
+			{community && (
+				<div className="flex items-center gap-x-2">
+					<p>Posting on:</p>
+					<CommunityCard community={community} variant="xs" isMember />
+				</div>
+			)}
 			<Form {...form}>
 				<form
 					onSubmit={form.handleSubmit(submitHandler, (err) =>

@@ -14,7 +14,6 @@ export interface iCommunity {
 	updatedAt?: string;
 }
 
-
 const communitySchema = new Schema(
 	{
 		clerkId: {
@@ -40,6 +39,7 @@ const communitySchema = new Schema(
 		bio: {
 			type: String,
 			maxLength: 500,
+			default: "Glad to See yah in the community🤗.",
 		},
 		members: {
 			type: [Schema.Types.ObjectId],

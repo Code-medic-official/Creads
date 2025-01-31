@@ -26,7 +26,7 @@ export const getThreads = async (): Promise<void> => {
 
 	try {
 		const threads = await threadModel
-			.find()
+			.find({ community: null }) // ? Only those without communities
 			.populate({
 				path: "user",
 				populate: {
@@ -55,6 +55,8 @@ export const getUserThreads = async (userId: string): Promise<iThread[]> => {
 					select: "-age -password -onboarded -followers",
 				},
 			})
+			.populate("community", "-bio -members -creator")
+
 			.sort({ createdAt: "desc" });
 
 		return JSON.parse(JSON.stringify(userThreads));
@@ -79,6 +81,8 @@ export const getFollowingsTreads = async (
 					select: "-age -password -onboarded -followers",
 				},
 			})
+			.populate("community", "-bio -members -creator")
+
 			.sort({ createdAt: "desc" });
 
 		return JSON.parse(JSON.stringify(followingsThreads));
@@ -103,6 +107,7 @@ export const getFriendThreads = async (
 					select: "-age -password -onboarded -followers",
 				},
 			})
+			.populate("community", "-bio -members -creator")
 			.sort({ createdAt: "desc" });
 
 		return JSON.parse(JSON.stringify(friendThreads));
@@ -126,6 +131,32 @@ export const getCommunityThreads = async (
 					select: "-age -password -onboarded -followers",
 				},
 			})
+			.populate("community", "-bio -members -creator")
+			.sort({ createdAt: "desc" });
+
+		return JSON.parse(JSON.stringify(communityThreads));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
+export const getCommunitiesThreads = async (
+	communitiesIds: string[] = []
+): Promise<iThread[]> => {
+	try {
+		await connectDb();
+
+		const communityThreads = await threadModel
+			.find()
+			.in("community", communitiesIds)
+			.populate({
+				path: "user",
+				populate: {
+					path: "followers",
+					select: "-age -password -onboarded -followers",
+				},
+			})
+			.populate("community", "-bio -members -creator")
 			.sort({ createdAt: "desc" });
 
 		return JSON.parse(JSON.stringify(communityThreads));
@@ -150,6 +181,8 @@ export const getSearchThreads = async (q: string): Promise<iThread[]> => {
 					select: "-age -password -onboarded -followers",
 				},
 			})
+			.populate("community", "-bio -members -creator")
+
 			.sort({ createdAt: "desc" });
 
 		return JSON.parse(JSON.stringify(results));
@@ -162,15 +195,16 @@ export const getThread = async (threadId: string): Promise<iThread> => {
 	try {
 		await connectDb();
 
-		const thread = await threadModel.findById(threadId).populate({
-			path: "user",
-			populate: {
-				path: "followers",
-				select: "-age -password -onboarded -followers",
-			},
-		});
-
-		if (!thread) console.error(`Thread of Id: ${threadId} NOT FOUND`);
+		const thread = await threadModel
+			.findById(threadId)
+			.populate({
+				path: "user",
+				populate: {
+					path: "followers",
+					select: "-age -password -onboarded -followers",
+				},
+			})
+			.populate("community", "-bio -members -creator");
 
 		return JSON.parse(JSON.stringify(thread));
 	} catch (error: any) {

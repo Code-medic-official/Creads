@@ -5,8 +5,8 @@ import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { RightPannelSheet } from "./RightPannel";
 import { Button } from "./ui/button";
+import RightPannelSheet from "./RightPannelSheet";
 
 export default function Navbar() {
 	const router = useRouter();
@@ -35,8 +35,6 @@ export default function Navbar() {
 				</Button>
 				
 				<UserButton />
-				{/* <OrganizationProfile /> */}
-				<OrganizationSwitcher  />
 			</div>
 		</nav>
 	);

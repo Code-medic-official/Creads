@@ -59,7 +59,7 @@ export default function FollowBtn({
 	};
 
 
-	console.log(!isLoaded && !user)
+	// console.log(!isLoaded && !user)
 	if (!isLoaded && !user) return <Skeleton className="w-20 h-6 rounded-3xl" />
 
 	return (

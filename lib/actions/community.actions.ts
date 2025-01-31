@@ -16,12 +16,16 @@ export const createCommunity = async (community: iCommunity) => {
 	}
 };
 
-export const getCommunity = async (slug?: string, clerkId?: string): Promise<iCommunity> => {
+export const getCommunity = async (
+	slug?: string,
+	clerkId?: string
+): Promise<iCommunity> => {
 	try {
 		await connectDb();
 
 		const community = await communityModel
-			.findOne().or([{clerkId},{ slug }])
+			.findOne()
+			.or([{ clerkId }, { slug }])
 			.populate("creator", "-age -blocklist")
 			.populate("members");
 
@@ -41,6 +45,43 @@ export const getCommunities = async (): Promise<iCommunity[]> => {
 			.populate("members");
 
 		return JSON.parse(JSON.stringify(communities));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
+export const getUserCommunities = async (
+	userId: string
+): Promise<iCommunity[]> => {
+	try {
+		await connectDb();
+
+		const userCommunities = await communityModel
+			.find({ members: userId })
+			.populate("creator", "-age -blockList -createdAt -updatedAt -onboarded")
+			.populate("members")
+			.sort({ createdAt: "desc" });
+
+		return JSON.parse(JSON.stringify(userCommunities));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
+export const getOtherCommunities = async (
+	userId: string
+): Promise<iCommunity[]> => {
+	try {
+		await connectDb();
+
+		const userCommunities = await communityModel
+			.find()
+			.ne("members", userId)
+			.populate("creator", "-age -blockList -createdAt -updatedAt -onboarded")
+			.populate("members")
+			.sort({ createdAt: "desc" });
+
+		return JSON.parse(JSON.stringify(userCommunities));
 	} catch (error: any) {
 		throw new Error(error);
 	}

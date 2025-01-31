@@ -14,6 +14,8 @@ import Engagement from "../Engagement";
 import FollowBtn from "../FollowBtn";
 import { Card, CardContent } from "../ui/card";
 import UserCard from "./UserCard";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function ThreadCard({ thread }: { thread: iThread }) {
 	const [user, setUser] = useState<iUser>();
@@ -23,7 +25,6 @@ export default function ThreadCard({ thread }: { thread: iThread }) {
 
 	const router = useRouter();
 	const pathname = usePathname();
-
 
 	useEffect(() => {
 		const fetchActiveUser = async (): Promise<void> => {
@@ -67,7 +68,29 @@ export default function ThreadCard({ thread }: { thread: iThread }) {
 					</div>
 				</div>
 
-				<AvatarGroup items={comments} />
+				<div className="flex items-center gap-x-1">
+					<AvatarGroup items={comments} />
+					{thread.community && (
+						<>
+							{" "}
+							<Link
+								href={`/communities/${thread.community.slug}`}
+								className="font-medium text-xs text-muted-foreground hover:text-primary flex items-center gap-x-1"
+								>
+								- 
+								<p>{thread.community.name}</p>
+								<Image
+									src={thread.community.imageUrl}
+									width={20}
+									height={20}
+									priority
+									alt="community image"
+									className="rounded-full object-cover size-5"
+								/>
+							</Link>
+						</>
+					)}
+				</div>
 			</CardContent>
 		</Card>
 	);

@@ -5,6 +5,7 @@ import { connectDb } from "../database/db";
 import commentModel, { iComment } from "../database/models/comment.model";
 import { commentSchema } from "../schemas/comment";
 import { z } from "zod";
+import { getCommunityThreads } from "./thread.actions";
 
 export const createComment = async (
 	comment: z.infer<typeof commentSchema>,
@@ -55,6 +56,11 @@ export const getUserComments = async (userId: string): Promise<iComment[]> => {
 					},
 				},
 			})
+			.populate({
+				path: "thread",
+				populate: { path: "community", select: "-bio -members -creator" },
+			})
+
 			.sort({ createdAt: "desc" });
 
 		return JSON.parse(JSON.stringify(userComments));
@@ -100,9 +106,48 @@ export const getSearchComments = async (q: string): Promise<iComment[]> => {
 					},
 				},
 			})
+			.populate({
+				path: "thread",
+				populate: { path: "community", select: "-bio -members -creator" },
+			})
+
 			.sort({ createdAt: "desc" });
 
 		return JSON.parse(JSON.stringify(results));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
+export const getCommunityComments = async (
+	communityId: string
+): Promise<iComment[]> => {
+	try {
+		const communityThreadsIds = (await getCommunityThreads(communityId)).map(
+			(thread) => thread._id
+		);
+
+		const communityReplies = await commentModel
+			.find({ refComment: null })
+			.in("thread", communityThreadsIds)
+			.populate("user")
+			.populate({
+				path: "thread",
+				populate: {
+					path: "user",
+					populate: {
+						path: "followers",
+						select: "-age -password -onboarded -followers",
+					},
+				},
+			})
+			.populate({
+				path: "thread",
+				populate: { path: "community", select: "-bio -members -creator" },
+			})
+			.sort({ createdAt: "desc" });
+
+		return JSON.parse(JSON.stringify(communityReplies));
 	} catch (error: any) {
 		throw new Error(error);
 	}

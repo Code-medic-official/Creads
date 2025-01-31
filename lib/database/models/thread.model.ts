@@ -1,5 +1,6 @@
 import { Schema, model, models } from "mongoose";
 import { iUser } from "./user.model";
+import { iCommunity } from "./community.model";
 
 export enum ThreadPrivacy {
 	PUBLIC = "PUBLIC",
@@ -10,7 +11,7 @@ export enum ThreadPrivacy {
 export interface iThread {
 	_id: string;
 	user: iUser;
-	community: string; // ! change this
+	community: iCommunity | string; // ! change this
 	caption: string;
 	image: string;
 	likes: string[];
