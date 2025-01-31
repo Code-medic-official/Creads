@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { ReactNode } from "react";
 import "../globals.css";
+import { ThemeProvider } from "next-themes";
 
 export const poppinsFont = Poppins({
 	subsets: ["latin"],
@@ -62,7 +63,17 @@ export default function layout({ children }: { children: ReactNode }) {
 	return (
 		<ClerkProvider dynamic>
 			<html lang="en">
-				<body className={cn(poppinsFont.className)}>{children}</body>
+				<body className={cn(poppinsFont.className)}>
+				<ThemeProvider
+								attribute="class"
+								defaultTheme="system"
+								enableSystem
+								disableTransitionOnChange
+							>
+
+					{children}
+							</ThemeProvider>
+					</body>
 			</html>
 		</ClerkProvider>
 	);

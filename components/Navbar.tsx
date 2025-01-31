@@ -1,6 +1,6 @@
 "use client";
 
-import { OrganizationSwitcher, UserButton } from "@clerk/nextjs";
+import { OrganizationSwitcher, SignedIn, UserButton } from "@clerk/nextjs";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,7 +36,9 @@ export default function Navbar() {
 					<Search width="12px" />
 				</Button>
 
-				<UserButton />
+				<SignedIn>
+					<UserButton />
+				</SignedIn>
 			</div>
 		</nav>
 	);

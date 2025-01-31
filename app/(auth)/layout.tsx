@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { ReactNode } from "react";
 import { poppinsFont } from "../(root)/layout";
 import "../globals.css";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
 	title: "Onboarding",
@@ -20,7 +21,14 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 						poppinsFont.className
 					)}
 				>
-					{children}
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem
+						disableTransitionOnChange
+					>
+						{children}
+					</ThemeProvider>
 				</body>
 			</html>
 		</ClerkProvider>
