@@ -12,6 +12,7 @@ import CommunityCard from "./cards/CommunityCard";
 import { Label } from "./ui/label";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { iCommunity } from "@/lib/database/models/community.model";
+import { Skeleton } from "./ui/skeleton";
 
 export default function RightPannel() {
 	const [user, setUser] = useState<iUser>();
@@ -43,27 +44,44 @@ export default function RightPannel() {
 				<TabsContent value="Communities">
 					<section className="mb-3">
 						<Label>You Communities</Label>
-						{userCommunities?.map((community) => (
-							<CommunityCard
-								key={community._id}
-								variant="sm"
-								community={community}
-								isMember
-							/>
-						))}
+
+						{userCommunities ? (
+							<div className="space-y-2">
+								{userCommunities?.map((community) => (
+									<CommunityCard
+										key={community._id}
+										variant="sm"
+										community={community}
+										isMember
+									/>
+								))}
+							</div>
+						) : (
+							[1, 2, 3].map((n) => (
+								<Skeleton key={n} className="w-full rounded-xl h-10 mb-2" />
+							))
+						)}
 					</section>
 
 					<section>
 						<Label>Others</Label>
 
-						{otherCommunities?.map((community) => (
-							<CommunityCard
-								key={community._id}
-								variant="sm"
-								community={community}
-								isMember={false}
-							/>
-						))}
+						{otherCommunities ? (
+							<div className="space-y-2">
+								{otherCommunities?.map((community) => (
+									<CommunityCard
+										key={community._id}
+										variant="sm"
+										community={community}
+										isMember={false}
+									/>
+								))}
+							</div>
+						) : (
+							[1, 2, 3].map((n) => (
+								<Skeleton key={n} className="w-full rounded-xl h-10 mb-2" />
+							))
+						)}
 					</section>
 				</TabsContent>
 				<TabsContent value="Activities">
@@ -73,3 +91,7 @@ export default function RightPannel() {
 		</div>
 	);
 }
+
+const LoadingState = () => {
+	return <div className="p-3">Loading...</div>;
+};

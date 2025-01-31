@@ -95,7 +95,7 @@ export default function CommunityCard({
 								<span className="font-medium">{community.members!.length}</span>
 							</div>
 						</div>
-						<p>{community.bio}</p>
+            
 						<p className="text-sm">
 							Creator:{" "}
 							<Link

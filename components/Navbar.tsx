@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import RightPannelSheet from "./RightPannelSheet";
+import ThemeToggle from "./themeToggle";
 
 export default function Navbar() {
 	const router = useRouter();
@@ -25,15 +26,16 @@ export default function Navbar() {
 			</Link>
 
 			<div className="flex items-center gap-x-2">
+				<ThemeToggle />
 				<RightPannelSheet />
 				<Button
 					variant="outline"
 					onClick={() => router.push("/search")}
-					className="size-8 rounded-lg text-primary"				
+					className="size-8 rounded-lg text-primary"
 				>
 					<Search width="12px" />
 				</Button>
-				
+
 				<UserButton />
 			</div>
 		</nav>

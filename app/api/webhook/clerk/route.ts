@@ -59,6 +59,7 @@ export const POST = async (req: Request) => {
 				slug,
 				imageUrl,
 				creator: creator._id,
+				// members: [creator._id!] // ? Uncomment if it doesn't work
 			});
 
 			return NextResponse.json(

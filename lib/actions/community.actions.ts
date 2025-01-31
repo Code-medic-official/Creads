@@ -103,7 +103,6 @@ export const upsertCommunity = async (
 			},
 			{
 				name: community.name,
-				bio: community.bio,
 				members: community.members,
 				slug: community.slug,
 				imageUrl: community.imageUrl,

@@ -7,7 +7,6 @@ export interface iCommunity {
 	creator: iUser | string;
 	imageUrl: string;
 	name: string;
-	bio?: string;
 	slug: string;
 	members?: (iUser | string)[];
 	createdAt?: string;
@@ -36,11 +35,7 @@ const communitySchema = new Schema(
 			type: String,
 			required: true,
 		},
-		bio: {
-			type: String,
-			maxLength: 500,
-			default: "Glad to See yah in the community🤗.",
-		},
+
 		members: {
 			type: [Schema.Types.ObjectId],
 			ref: "User",

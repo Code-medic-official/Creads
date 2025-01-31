@@ -12,6 +12,7 @@ import { redirect } from "next/navigation";
 import { Toaster } from "react-hot-toast";
 import StoreProvider from "../(root)/StoreProvider";
 import "../globals.css";
+import { ThemeProvider } from "next-themes";
 
 const poppinsFont = Poppins({
 	subsets: ["latin"],
@@ -100,22 +101,29 @@ export default async function RootLayout({
 						<body
 							className={`${poppinsFont.className} antialiased bg-background text-foreground`}
 						>
-							<Toaster />
-							<ScrollArea className="h-screen">
-								<Navbar />
-								<main className="flex">
-									<section>
-										<LeftPannel />
-									</section>
-									<section className="flex-1 p-3 min-h-[calc(100vh-3.5rem)]">
-										{children}
-									</section>
-									<section className="hidden sm:block  sm:flex-[.4] ">
-										<RightPannel />
-									</section>
-								</main>
-								<BottomNav />
-							</ScrollArea>
+							<ThemeProvider
+								attribute="class"
+								defaultTheme="system"
+								enableSystem
+								disableTransitionOnChange
+							>
+								<Toaster />
+								<ScrollArea className="h-screen">
+									<Navbar />
+									<main className="flex">
+										<section>
+											<LeftPannel />
+										</section>
+										<section className="flex-1 p-3 min-h-[calc(100vh-3.5rem)]">
+											{children}
+										</section>
+										<section className="hidden sm:block  sm:flex-[.4] ">
+											<RightPannel />
+										</section>
+									</main>
+									<BottomNav />
+								</ScrollArea>
+							</ThemeProvider>
 						</body>
 					</TooltipProvider>
 				</html>
