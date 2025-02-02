@@ -91,7 +91,7 @@ export default async function RootLayout({
 	const user = await getActiveUser();
 
 	// ! Ensure User is onboarded
-	if (!user.onboarded) redirect("/onboarding");
+	if (user && !user?.onboarded) redirect("/onboarding");
 
 	
 

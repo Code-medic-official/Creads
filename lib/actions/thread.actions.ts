@@ -21,7 +21,7 @@ export const createThread = async (
 	}
 };
 
-export const getThreads = async (): Promise<void> => {
+export const getThreads = async (): Promise<iThread[]> => {
 	await connectDb();
 
 	try {

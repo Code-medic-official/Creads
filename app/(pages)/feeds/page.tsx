@@ -1,5 +1,6 @@
 import ThreadCard from "@/components/cards/ThreadCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getCommunities } from "@/lib/actions/community.actions";
 import {
 	getFollowingsTreads,
 	getFriendThreads,
@@ -18,20 +19,21 @@ export const dynamic = "force-dynamic";
 export default async function page() {
 	const user = await getActiveUser();
 	const users = await getUsers();
+	const communities = await getCommunities();
 
-	if (users) console.log("users fetched");
+	if (users && communities) console.log("users & communities fetched");
 
 	const threads: iThread[] = await getThreads();
-	const userFollowings: string[] = await (
-		await getUserFollowings(user?._id)
-	).map((_user) => _user._id);
+	const userFollowings: string[] = (await (
+		await getUserFollowings(user._id!)
+	).map((_user) => _user._id)) as string[];
 	const followingsThreads: iThread[] = await getFollowingsTreads(
 		userFollowings
 	);
 
 	const UserFriends: string[] = (
-		await getUserFriends(user?.followers, user?._id)
-	).map((_user) => _user._id);
+		await getUserFriends(user.followers as string[], user._id!)
+	).map((_user) => _user._id) as string[];
 	const friendThreads = await getFriendThreads(UserFriends);
 
 	return (
