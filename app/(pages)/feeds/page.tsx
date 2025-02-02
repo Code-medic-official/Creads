@@ -11,6 +11,7 @@ import {
 	getUserFriends,
 	getUsers,
 } from "@/lib/actions/user.actions";
+import { iThread } from "@/lib/database/models/thread.model";
 
 export const dynamic = "force-dynamic";
 

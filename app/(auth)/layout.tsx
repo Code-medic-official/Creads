@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
 	return (
-		<ClerkProvider dynamic>
+		<ClerkProvider afterSignOutUrl="/" dynamic>
 			<html lang="en">
 				<body
 					className={cn(

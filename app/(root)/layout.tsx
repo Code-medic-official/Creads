@@ -61,7 +61,7 @@ export const metadata: Metadata = {
 
 export default function layout({ children }: { children: ReactNode }) {
 	return (
-		<ClerkProvider dynamic>
+		<ClerkProvider afterSignOutUrl="/" dynamic>
 			<html lang="en">
 				<body className={cn(poppinsFont.className)}>
 				<ThemeProvider

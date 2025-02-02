@@ -67,7 +67,7 @@ export const getUserThreads = async (userId: string): Promise<iThread[]> => {
 
 export const getFollowingsTreads = async (
 	followings: string[]
-): Promise<void> => {
+): Promise<iThread[]> => {
 	try {
 		await connectDb();
 

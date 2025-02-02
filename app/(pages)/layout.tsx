@@ -4,15 +4,15 @@ import Navbar from "@/components/Navbar";
 import RightPannel from "@/components/RightPannel";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { createUser, getActiveUser } from "@/lib/actions/user.actions";
+import { getActiveUser } from "@/lib/actions/user.actions";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import { Poppins } from "next/font/google";
 import { redirect } from "next/navigation";
 import { Toaster } from "react-hot-toast";
 import StoreProvider from "../(root)/StoreProvider";
 import "../globals.css";
-import { ThemeProvider } from "next-themes";
 
 const poppinsFont = Poppins({
 	subsets: ["latin"],
@@ -92,6 +92,8 @@ export default async function RootLayout({
 
 	// ! Ensure User is onboarded
 	if (!user.onboarded) redirect("/onboarding");
+
+	
 
 	return (
 		<ClerkProvider afterSignOutUrl="/" dynamic>

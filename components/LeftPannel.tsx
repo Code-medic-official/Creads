@@ -44,6 +44,7 @@ export default function LeftPannel() {
 					</Button>
 				</SignOutButton>
 			</SignedIn>
+
 		</div>
 	);
 }
