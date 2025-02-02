@@ -63,7 +63,7 @@ export default function UserCard({
 	} else if (variant === "profile") {
 		return (
 			<section>
-				<div className="flex items-center justify-between">
+				<div className="flex items-center justify-between relative">
 					<div className="flex items-center gap-x-3">
 						<Avatar className="size-24  md:size-28 border">
 							<AvatarImage src={_user.imageUrl || ""} />
@@ -77,6 +77,9 @@ export default function UserCard({
 							<span className="font-medium text-muted-foreground text-sm">
 								@{_user?.username.toLowerCase().split(" ")[0]}
 							</span>
+							<p className="font-medium text-muted-foreground text-sm">
+								{_user?.emailAdress}
+							</p>
 
 							<div className="flex items-center mt-2">
 								<Button
@@ -92,7 +95,7 @@ export default function UserCard({
 								<Button
 									size="sm"
 									variant="ghost"
-									className="p-1 text-muted-foreground"
+									className="p-1 text-muted-foreground "
 								>
 									<span className="font-semibold text-foreground">
 										{_user?.followers.length}
@@ -103,15 +106,19 @@ export default function UserCard({
 						</div>
 					</div>
 
-					<div className="flex flex-col items-end gap-4">
+					<div className="">
 						{_user._id === user?._id ? (
 							<Button size="icon">
 								<EditIcon />
 							</Button>
 						) : (
 							<>
-								<FollowBtn _user={_user} pathname={pathname} />
-								<BlockBtn _user={_user} />
+								<div className="absolute top-0 right-0">
+									<FollowBtn _user={_user} pathname={pathname} />
+								</div>
+								<div className="absolute bottom-4 right-0">
+									<BlockBtn _user={_user} />
+								</div>
 							</>
 						)}
 					</div>
@@ -146,7 +153,7 @@ export default function UserCard({
 		);
 	} else if (variant === "lg") {
 		return (
-			<Card className="rounded-2xl hover:shadow ">
+			<Card className="rounded-2xl shadow-non hover:shadow ">
 				<CardContent className="p-2 flex items-center justify-between">
 					<div
 						onClick={() => router.push(`/profile/${_user.username}`)}

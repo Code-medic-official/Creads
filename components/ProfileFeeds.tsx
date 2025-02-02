@@ -1,11 +1,9 @@
-import { getUserComments } from "@/lib/actions/comment.action";
-import { getUserThreads } from "@/lib/actions/thread.actions";
+import { iComment } from "@/lib/database/models/comment.model";
+import { iThread } from "@/lib/database/models/thread.model";
 import { BookText, Image, MessageSquareQuote } from "lucide-react";
 import ThreadCard from "./cards/ThreadCard";
 import ReplyCard from "./ReplyCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { iThread } from "@/lib/database/models/thread.model";
-import { iComment } from "@/lib/database/models/comment.model";
 
 export default async function ProfileFeeds({
 	feeds,

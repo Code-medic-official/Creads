@@ -182,7 +182,6 @@ export const getSearchThreads = async (q: string): Promise<iThread[]> => {
 				},
 			})
 			.populate("community", "-bio -members -creator")
-
 			.sort({ createdAt: "desc" });
 
 		return JSON.parse(JSON.stringify(results));

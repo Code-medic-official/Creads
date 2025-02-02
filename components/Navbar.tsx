@@ -10,6 +10,7 @@ import RightPannelSheet from "./RightPannelSheet";
 import ThemeToggle from "./themeToggle";
 import { useNetworkState } from "@uidotdev/usehooks";
 import toast from "react-hot-toast";
+import SearchDialog from "./SearchDialog";
 
 export default function Navbar() {
 	const router = useRouter();
@@ -18,7 +19,7 @@ export default function Navbar() {
 	if (!online) toast.error("Offline🌐 Find Better Network❗");
 
 	return (
-		<nav className="sticky top-0 bg-secondary px-5 py-2 w-screen h-14 flex items-center justify-between z-30">
+		<nav className="sticky top-0 glass-secondary px-5 py-2 w-screen h-14 flex items-center justify-between z-30">
 			<Link href="/" className="flex items-center gap-x-1">
 				<Image
 					src="/assets/logo.jpg"
@@ -34,14 +35,7 @@ export default function Navbar() {
 			<div className="flex items-center gap-x-2">
 				<ThemeToggle />
 				<RightPannelSheet />
-				<Button
-					variant="outline"
-					size="icon"
-					onClick={() => router.push("/search")}
-					className="rounded-xl text-primary"
-				>
-					<Search strokeWidth={3} size={24} />
-				</Button>
+				<SearchDialog />
 
 				<SignedIn>
 					<UserButton />

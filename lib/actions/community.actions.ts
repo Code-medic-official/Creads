@@ -87,6 +87,27 @@ export const getOtherCommunities = async (
 	}
 };
 
+export const getSearchCommunities = async (
+	q: string
+): Promise<iCommunity[]> => {
+	try {
+		await connectDb();
+
+		const qRegex = new RegExp(q, "i");
+
+		const communities = await communityModel
+			.find()
+			.regex("name", qRegex)
+			.populate("creator", "-age -blockList -createdAt -updatedAt -onboarded")
+			.populate("members")
+			.sort({ createdAt: "desc" });
+
+		return JSON.parse(JSON.stringify(communities));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
+
 export const upsertCommunity = async (
 	community: iCommunity,
 	pathname: string,

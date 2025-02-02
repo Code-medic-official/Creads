@@ -7,18 +7,13 @@ import { Loader2, Plus, UserMinus2 } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
+import { usePathname } from "next/navigation";
 
-export default function FollowBtn({
-	_user,
-	pathname,
-}: {
-	_user: iUser;
-	pathname: string;
-}) {
-	const [isFollowing, setIsFollowing] = useState<boolean>(false);
+export default function FollowBtn({ _user }: { _user: iUser }) {
+	const [isFollowing, setIsFollowing] = useState<boolean>();
 	const [isPending, startTransition] = useTransition();
 	const [user, setUser] = useState<iUser>();
-
+	const pathname = usePathname();
 	const { isLoaded } = useUser();
 
 	const _userFollowers: string[] = _user.followers.map(
@@ -58,9 +53,9 @@ export default function FollowBtn({
 		}
 	};
 
-
 	// console.log(!isLoaded && !user)
-	if (!isLoaded && !user) return <Skeleton className="w-20 h-6 rounded-3xl" />
+	if (isFollowing === undefined)
+		return <Skeleton className="w-20 h-6 rounded-3xl" />;
 
 	return (
 		<>

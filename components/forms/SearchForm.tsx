@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getSearchQuery } from "@/lib/actions/util.actions";
+import { getSearchResults } from "@/lib/actions/util.actions";
 import { LoaderPinwheel, Search } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -17,7 +17,7 @@ export default function SearchForm() {
 	const searchHandler = () => {};
 
 	useEffect(() => {
-		const fetchSearchQuery = async () => await getSearchQuery(q);
+		const fetchSearchQuery = async () => await getSearchResults(q);
 
 		fetchSearchQuery();
 	}, [q]);

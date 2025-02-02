@@ -1,16 +1,15 @@
 "use client";
 
 import { iCommunity } from "@/lib/database/models/community.model";
-import React from "react";
-import { Card, CardContent } from "../ui/card";
-import Link from "next/link";
-import Image from "next/image";
-import { Button } from "../ui/button";
-import { PlusCircle, Users2 } from "lucide-react";
-import { OrganizationProfile, OrganizationSwitcher } from "@clerk/nextjs";
-import moment from "moment";
-import { useRouter } from "next/navigation";
+import { OrganizationSwitcher } from "@clerk/nextjs";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { PlusCircle, Users2 } from "lucide-react";
+import moment from "moment";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Button } from "../ui/button";
+import { Card, CardContent } from "../ui/card";
 
 export default function CommunityCard({
 	variant,
@@ -67,8 +66,12 @@ export default function CommunityCard({
 						/>
 						<div>
 							<p className="text-sm font-medium">{community.name}</p>
+							<div className="text-primary flex items-center gap-x-1">
+								<Users2 size={18} />
+								<span className="font-medium text-sm">{community.members!.length}</span>
 
-							{isMember || <Button size="sm">Join</Button>}
+							</div>
+							{/* {isMember || <Button size="sm">Join</Button>} */}
 						</div>
 					</CardContent>
 				</Link>
@@ -88,14 +91,16 @@ export default function CommunityCard({
 						className="rounded-lg object-cover size-20 sm:size-24 md:size-32"
 					/>
 					<div className="text-xs sm:text-sm text-muted-foreground">
-						<div className="flex items-center gap-x-2" >
-							<p className="font-bold text-base md:text-xl text-foreground">{community.name}</p>
+						<div className="flex items-center gap-x-2">
+							<p className="font-bold text-base md:text-xl text-foreground">
+								{community.name}
+							</p>
 							<div className="text-primary flex items-center gap-x-1">
 								<Users2 size={20} />
 								<span className="font-medium">{community.members!.length}</span>
 							</div>
 						</div>
-            
+
 						<p className="text-sm">
 							Creator:{" "}
 							<Link

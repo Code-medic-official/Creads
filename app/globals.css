@@ -76,6 +76,10 @@ body {
 
 @layer utilities {
 	.glass-secondary {
-		@apply bg-secondary/15 backdrop-blur-md;
+		@apply bg-secondary/70 backdrop-blur-md;
+	}
+
+	.collapsible-tab[data-state="active"] span {
+		@apply !inline-block
 	}
 }

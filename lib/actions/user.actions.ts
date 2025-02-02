@@ -1,6 +1,6 @@
 "use server";
 
-import { currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { connectDb } from "../database/db";
@@ -24,9 +24,9 @@ export const createUser = async (newUser: iUser): Promise<void> => {
 // ? Directly get active User
 export const getActiveUser = async (): Promise<iUser> => {
 	try {
-		const clerkUser = await currentUser();
+		const {userId} = await auth()
 
-		const activeUser = await getUser(clerkUser?.username as string);
+		const activeUser = await getUser(undefined, userId!);
 
 		return JSON.parse(JSON.stringify(activeUser));
 	} catch (error: any) {

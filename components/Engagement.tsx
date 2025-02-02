@@ -11,19 +11,20 @@ import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
 import { Button } from "./ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { usePathname } from "next/navigation";
 
 export default function Engagement({
 	item,
 	variant,
-	pathname,
 }: {
 	item: iThread | iComment;
 	variant: "THREAD" | "COMMENT";
-	pathname: string;
 }) {
 	const [isPending, startTransition] = useTransition();
 	const [hasLiked, setHasLiked] = useState<boolean>(false);
 	const [hasDisliked, setHasDisliked] = useState<boolean>(false);
+	const pathname = usePathname();
+
 
 	const { isLoaded } = useUser();
 

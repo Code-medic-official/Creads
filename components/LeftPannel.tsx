@@ -19,15 +19,15 @@ export default function LeftPannel() {
 						pathname.split("/")[1] === link.path.split("/")[1];
 					return (
 						<Link
-							key={i}
+							key={i}	
 							href={link.path}
 							className={cn(
-								"flex items-center gap-x-2 p-3 rounded-lg",
+								"flex items-center md: gap-x-2 p-3 rounded-lg",
 								isActive && "bg-primary text-primary-foreground"
 							)}
 						>
 							{link.icon}
-							<p className="font-semibold hidden md:block ">{link.label}</p>
+							<p className="font-semibold hidden md:block">{link.label}</p>
 						</Link>
 					);
 				})}

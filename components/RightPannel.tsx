@@ -13,6 +13,7 @@ import { Label } from "./ui/label";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { iCommunity } from "@/lib/database/models/community.model";
 import { Skeleton } from "./ui/skeleton";
+import { OrganizationList } from "@clerk/nextjs";
 
 export default function RightPannel() {
 	const [user, setUser] = useState<iUser>();
@@ -82,6 +83,8 @@ export default function RightPannel() {
 								<Skeleton key={n} className="w-full rounded-xl h-10 mb-2" />
 							))
 						)}
+
+
 					</section>
 				</TabsContent>
 				<TabsContent value="Activities">
