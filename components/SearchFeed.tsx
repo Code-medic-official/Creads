@@ -32,7 +32,7 @@ export default function SearchFeed({
 
 	return (
 		<Tabs defaultValue="Threads">
-			<TabsList className=" sticky top-[3.6rem] z-30">
+			<TabsList className="sticky top-[3.6rem] z-30">
 				<TabsTrigger
 					value="Threads"
 					className="collapsible-tab px-1 rounded-xl"
