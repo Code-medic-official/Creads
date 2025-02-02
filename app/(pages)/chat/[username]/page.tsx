@@ -7,6 +7,8 @@ import { getActiveUser, getUser } from "@/lib/actions/user.actions";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
+export const revalidate = 3;
+
 export default async function page({
 	params,
 }: {
@@ -17,19 +19,8 @@ export default async function page({
 	const user = await getActiveUser();
 
 	const friend = await getUser(username);
-	const messages = await getChatMessages(user?._id, friend._id);
+	const messages = await getChatMessages(user._id!, friend._id!);
 
-	// const refreshMessagesHandler = (newMsg: iMessage) => {
-	// 	console.log("refreshing");
-
-	// 	const existingMsg = messages.find((msg) => msg._id === newMsg._id);
-
-	// 	if (!existingMsg) messages.push(newMsg);
-	// };
-
-	// Pusher
-	// pusherClient.subscribe("user._id");
-	// pusherClient.bind("message:new", refreshMessagesHandler);
 	return (
 		<div className="relative">
 			<section className="-mt-3 sticky top-[3.6rem] z-10">
