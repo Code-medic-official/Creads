@@ -16,7 +16,7 @@ export default function Navbar() {
 	if (!online) toast.error("Offline🌐 Find Better Network❗");
 
 	return (
-		<nav className="sticky top-0 glass-secondary px-5 py-2 w-screen h-14 flex items-center justify-between z-30">
+		<nav className="sticky top-0 glass-secondary px-2 sm:px-5 py-2 w-screen h-14 flex items-center justify-between z-30">
 			<Link href="/" className="flex items-center gap-x-1">
 				<Image
 					src="/assets/logo.jpg"
@@ -31,7 +31,7 @@ export default function Navbar() {
 
 			<GithubBtn />
 
-			<div className="flex items-center gap-x-2">
+			<div className="flex items-center gap-x-1 sm:gap-x-2">
 				<ThemeToggle />
 				<RightPannelSheet />
 				<SearchDialog />
