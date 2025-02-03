@@ -1,19 +1,16 @@
 "use client";
 
-import { OrganizationSwitcher, SignedIn, UserButton } from "@clerk/nextjs";
-import { Search } from "lucide-react";
+import { SignedIn, UserButton } from "@clerk/nextjs";
+import { useNetworkState } from "@uidotdev/usehooks";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Button } from "./ui/button";
-import RightPannelSheet from "./RightPannelSheet";
-import ThemeToggle from "./themeToggle";
-import { useNetworkState } from "@uidotdev/usehooks";
 import toast from "react-hot-toast";
+import RightPannelSheet from "./RightPannelSheet";
 import SearchDialog from "./SearchDialog";
+import ThemeToggle from "./themeToggle";
+import GithubBtn from "./GithubBtn";
 
 export default function Navbar() {
-	const router = useRouter();
 	const { online } = useNetworkState();
 
 	if (!online) toast.error("Offline🌐 Find Better Network❗");
@@ -31,6 +28,8 @@ export default function Navbar() {
 				/>
 				<p className="text-xl font-medium hidden sm:block">Creads</p>
 			</Link>
+
+			<GithubBtn />
 
 			<div className="flex items-center gap-x-2">
 				<ThemeToggle />

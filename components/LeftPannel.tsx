@@ -2,11 +2,8 @@
 
 import { LEFT_PANNEL_LINKS } from "@/constants";
 import { cn } from "@/lib/utils";
-import { SignedIn, SignOutButton } from "@clerk/nextjs";
-import { LogOut } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "./ui/button";
 
 export default function LeftPannel() {
 	const pathname = usePathname();
@@ -19,7 +16,7 @@ export default function LeftPannel() {
 						pathname.split("/")[1] === link.path.split("/")[1];
 					return (
 						<Link
-							key={i}	
+							key={i}
 							href={link.path}
 							className={cn(
 								"flex items-center md: gap-x-2 p-3 rounded-lg",
@@ -32,19 +29,6 @@ export default function LeftPannel() {
 					);
 				})}
 			</div>
-
-			<SignedIn>
-				<SignOutButton redirectUrl="/sign-in" >
-					<Button
-						variant={"outlineDestructive"}
-						className="size-10 sm:w-full p-1"
-					>
-						<span className="font-semibold hidden md:block ">Logout</span>
-						<LogOut size="1rem" />
-					</Button>
-				</SignOutButton>
-			</SignedIn>
-
 		</div>
 	);
 }

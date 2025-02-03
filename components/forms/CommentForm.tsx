@@ -73,9 +73,8 @@ export default function CommentForm({
 						<FormItem className="flex-1 ">
 							<FormControl>
 								<Textarea
-									// rows={0.5}
 									{...field}
-									className="rounded-2xl !h-5 border-none !outline-none focus-visible:ring-0"
+									className="rounded-2xl !h-5 border-none shadow-none !outline-none focus-visible:ring-0"
 									placeholder={
 										refComment
 											? `Replying to @${

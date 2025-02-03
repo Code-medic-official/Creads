@@ -108,6 +108,7 @@ export default function ThreadForm({
 										{...field}
 										placeholder="Hot take..."
 										rows={5}
+										className="rounded-xl"
 									></Textarea>
 								</FormControl>
 								<FormMessage />
@@ -115,7 +116,7 @@ export default function ThreadForm({
 						)}
 					/>
 
-					<div>
+					{/* <div>
 						<input
 							type="file"
 							accept="image/*"
@@ -132,7 +133,7 @@ export default function ThreadForm({
 							<Image />
 							<Label>Select Image</Label>
 						</div>
-					</div>
+					</div> */}
 
 					<FormField
 						control={form.control}

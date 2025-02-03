@@ -1,3 +1,5 @@
+import { Search } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import {
 	Dialog,
@@ -5,22 +7,20 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "../components/ui/dialog";
-import { Button } from "./ui/button";
-import { Search } from "lucide-react";
 import { PlaceholdersAndVanishInput } from "../components/ui/placeholders-and-vanish-input";
-import { useRouter } from "next/navigation";
+import { Button } from "./ui/button";
 
 export default function SearchDialog() {
-	const [q, setQ] = useState<string>();
+	const [q, setQ] = useState<string>("");
 	const router = useRouter();
 	const [isOpen, setIsOpen] = useState(false);
 
 	const placeholders = [
-		"What's the first rule of Fight Club?",
-		"Who is Tyler Durden?",
-		"Where is Andrew Laeddis Hiding?",
-		"Write a Javascript method to reverse a string",
-		"How to assemble your own PC?",
+		"Top design trends on Creads 2023",
+		"Find the best influencers on Creads",
+		"Latest Creads platform updates and news",
+		"Collaborate with top designers on Creads",
+		"Brands that grew using Creads successfully",
 	];
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -28,7 +28,7 @@ export default function SearchDialog() {
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		router.push(`/search/${encodeURIComponent(q)}`);
-    // Close dialog after 1 second
+		// Close dialog after 800 milli-second
 		setTimeout(() => setIsOpen(false), 800);
 	};
 
@@ -38,8 +38,7 @@ export default function SearchDialog() {
 				<Button
 					variant="outline"
 					size="icon"
-					// onClick={() => router.push("/search")}
-					className="rounded-xl text-primary"
+					className="text-primary inline-flex animate-shimmer items-center justify-center border border-secondary dark:border-slate-800 bg-[linear-gradient(110deg,#d6d6d6,45%,#fffeff,55%,#d6d6d6)] dark:bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
 				>
 					<Search strokeWidth={3} size={24} />
 				</Button>
