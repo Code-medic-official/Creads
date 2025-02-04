@@ -18,15 +18,13 @@ export default async function page({
 	const feeds = await getCommunityThreads(community._id!);
 	const replies = await getCommunityComments(community._id!);
 
-	console.log(replies)
-
 	return (
 		<div>
 			<section>
 				<CommunityCard community={community} variant="lg" isMember />
 			</section>
 
-			<section className="mt-4" >
+			<section className="mt-4">
 				<ProfileFeeds feeds={feeds} replies={replies} />
 			</section>
 		</div>

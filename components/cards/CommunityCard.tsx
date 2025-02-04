@@ -68,8 +68,9 @@ export default function CommunityCard({
 							<p className="text-sm font-medium">{community.name}</p>
 							<div className="text-primary flex items-center gap-x-1">
 								<Users2 size={18} />
-								<span className="font-medium text-sm">{community.members!.length}</span>
-
+								<span className="font-medium text-sm">
+									{community.members!.length}
+								</span>
 							</div>
 							{/* {isMember || <Button size="sm">Join</Button>} */}
 						</div>
@@ -79,8 +80,8 @@ export default function CommunityCard({
 		);
 	} else if (variant === "lg") {
 		return (
-			<div className="flex gap-x-2 relative">
-				<div className="flex-1 flex gap-x-2">
+			<div>
+				<div className="flex gap-x-2">
 					<Image
 						src={community.imageUrl}
 						width={isMdDevice ? 128 : isSmDevice ? 96 : 80}
@@ -90,7 +91,7 @@ export default function CommunityCard({
 						priority
 						className="rounded-lg object-cover size-20 sm:size-24 md:size-32"
 					/>
-					<div className="text-xs sm:text-sm text-muted-foreground">
+					<div className="flex-1 text-xs sm:text-sm text-muted-foreground relative leading-3">
 						<div className="flex items-center gap-x-2">
 							<p className="font-bold text-base md:text-xl text-foreground">
 								{community.name}
@@ -102,7 +103,7 @@ export default function CommunityCard({
 						</div>
 
 						<p className="text-sm">
-							Creator:{" "}
+							<span className="text-xs">Creator</span>:{" "}
 							<Link
 								href={`/profile/${community.creator.username}`}
 								className="font-medium hover:text-primary text-foreground"
@@ -115,22 +116,28 @@ export default function CommunityCard({
 							<span className="font-medium">
 								{moment(community.createdAt).format("h:ma - MMM D,YYYY")}
 							</span>
+							<div className="absolute hidden sm:block top-0 right-0">
+								<OrganizationSwitcher />
+							</div>
 						</p>
-					</div>
-				</div>
 
-				<div>
-					<div className="absolute top-0 right-0">
-						<OrganizationSwitcher />
+						{/* Actions */}
+						<div>
+							<div className="absolute sm:hidden block -bottom-2 -left-1">
+								<OrganizationSwitcher />
+							</div>
+							{isMember && (
+								<Button
+									onClick={() =>
+										router.push(`/create-thread/${community.slug}`)
+									}
+									className="p-0 size-8 rounded-xl absolute bottom-0 right-0 "
+								>
+									<PlusCircle size={20} />
+								</Button>
+							)}
+						</div>
 					</div>
-					{isMember && (
-						<Button
-							onClick={() => router.push(`/create-thread/${community.slug}`)}
-							className="p-0 size-8 rounded-xl absolute bottom-0 right-0 "
-						>
-							<PlusCircle size={20} />
-						</Button>
-					)}
 				</div>
 			</div>
 		);

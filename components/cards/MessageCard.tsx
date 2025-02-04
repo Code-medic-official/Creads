@@ -1,21 +1,22 @@
-import { getActiveUser } from "@/lib/actions/user.actions";
 import { iMessage, MsgState } from "@/lib/database/models/message.model";
 import { cn } from "@/lib/utils";
 import { Check, CheckCheck } from "lucide-react";
 import moment from "moment";
 import { Card, CardContent } from "../ui/card";
 
-export default async function MessageCard({ msg }: { msg: iMessage }) {
-	const user = await getActiveUser();
-
+export default function MessageCard({
+	msg,
+	userId,
+}: {
+	msg: iMessage;
+	userId: string;
+}) {
 	return (
-		<div
-			className={cn("flex", user?._id === msg.from && "flex-row-reverse")}
-		>
+		<div className={cn("flex", userId === msg.from && "flex-row-reverse")}>
 			<Card
 				className={cn(
 					"rounded-2xl  w-fit border-none shadow-none",
-					user?._id === msg.from
+					userId === msg.from
 						? "rounded-br-sm bg-primary text-primary-foreground"
 						: "rounded-bl-sm bg-secondary"
 				)}
@@ -27,7 +28,7 @@ export default async function MessageCard({ msg }: { msg: iMessage }) {
 						<p
 							className={cn(
 								"text-xs",
-								user?._id === msg.from
+								userId === msg.from
 									? "text-secondary"
 									: "text-muted-foreground  "
 							)}
