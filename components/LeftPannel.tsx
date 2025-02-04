@@ -19,7 +19,7 @@ export default function LeftPannel() {
 							key={i}
 							href={link.path}
 							className={cn(
-								"flex items-center md: gap-x-2 p-3 rounded-lg",
+								"flex items-center md: gap-x-2 p-3 rounded-xl",
 								isActive && "bg-primary text-primary-foreground"
 							)}
 						>

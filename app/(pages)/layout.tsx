@@ -93,12 +93,10 @@ export default async function RootLayout({
 	// ! Ensure User is onboarded
 	if (user && !user?.onboarded) redirect("/onboarding");
 
-	
-
 	return (
 		<ClerkProvider afterSignOutUrl="/" dynamic>
 			<StoreProvider>
-				<html lang="en">
+				<html suppressHydrationWarning lang="en">
 					<TooltipProvider>
 						<body
 							className={`${poppinsFont.className} antialiased bg-background text-foreground`}

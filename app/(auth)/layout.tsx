@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function AuthLayout({ children }: { children: ReactNode }) {
 	return (
 		<ClerkProvider afterSignOutUrl="/" dynamic>
-			<html lang="en">
+			<html suppressHydrationWarning lang="en">
 				<body
 					className={cn(
 						"bg-background text-foreground h-screen flex items-center justify-center",

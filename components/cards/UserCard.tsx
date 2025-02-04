@@ -74,9 +74,9 @@ export default function UserCard({
 
 						<div className="leading-3">
 							<p className="text-xl font-bold">{_user?.username}</p>
-							<span className="font-medium text-muted-foreground text-sm">
+							{/* <span className="font-medium text-muted-foreground text-sm">
 								@{_user?.username.toLowerCase().split(" ")[0]}
-							</span>
+							</span> */}
 							<p className="font-medium text-muted-foreground text-sm">
 								{_user?.emailAdress}
 							</p>

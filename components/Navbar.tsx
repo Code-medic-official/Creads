@@ -13,7 +13,7 @@ import GithubBtn from "./GithubBtn";
 export default function Navbar() {
 	const { online } = useNetworkState();
 
-	if (!online) toast.error("Offline🌐 Find Better Network❗");
+	if (!online) toast.error("Offline🌐 Brokie❗🤣", { id: "asdf42" });
 
 	return (
 		<nav className="sticky top-0 glass-secondary px-2 sm:px-5 py-2 w-screen h-14 flex items-center justify-between z-30">
@@ -24,7 +24,7 @@ export default function Navbar() {
 					width={40}
 					height={40}
 					priority
-					className="rounded-lg"
+					className="rounded-xl"
 				/>
 				<p className="text-xl font-medium hidden sm:block">Creads</p>
 			</Link>
