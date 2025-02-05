@@ -13,6 +13,7 @@ import { redirect } from "next/navigation";
 import { Toaster } from "react-hot-toast";
 import StoreProvider from "../(root)/StoreProvider";
 import "../globals.css";
+import { getCommunities } from "@/lib/actions/community.actions";
 
 const poppinsFont = Poppins({
 	subsets: ["latin"],
@@ -89,6 +90,9 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	const user = await getActiveUser();
+	const communities = await getCommunities();
+
+	if (communities) console.log("Communities Fetched");
 
 	// ! Ensure User is onboarded
 	if (user && !user?.onboarded) redirect("/onboarding");

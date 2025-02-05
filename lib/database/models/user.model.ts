@@ -62,4 +62,5 @@ userSchema.pre("find", function () {
 	this.sort({ createdAt: "desc" });
 });
 
-export default models.User || model("User", userSchema);
+
+export default models?.User || model("User", userSchema);

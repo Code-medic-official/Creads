@@ -24,7 +24,7 @@ export const createUser = async (newUser: iUser): Promise<void> => {
 // ? Directly get active User
 export const getActiveUser = async (): Promise<iUser> => {
 	try {
-		const {userId} = await auth()
+		const { userId } = await auth();
 
 		const activeUser = await getUser(undefined, userId!);
 
@@ -71,7 +71,7 @@ export const getUserFollowings = async (userId: string): Promise<iUser[]> => {
 
 		const followings = await userModel
 			.find({ followers: userId })
-			.select("-followers -age -password -email -onboarded");
+			.select("-age -password -email -onboarded -blockList");
 
 		return JSON.parse(JSON.stringify(followings));
 	} catch (error: any) {

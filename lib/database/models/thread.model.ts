@@ -20,7 +20,7 @@ export interface iThread {
 	createdAt: string;
 	updatedAt: string;
 }
-
+	
 const threadSchema = new Schema(
 	{
 		user: {

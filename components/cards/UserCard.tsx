@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import PopularityList from "../PopularityList";
 
 export default function UserCard({
 	variant,
@@ -82,7 +83,7 @@ export default function UserCard({
 							</p>
 
 							<div className="flex items-center mt-2">
-								<Button
+								{/* <Button
 									size="sm"
 									variant="ghost"
 									className="p-1 text-muted-foreground"
@@ -101,7 +102,20 @@ export default function UserCard({
 										{_user?.followers.length}
 									</span>
 									<span>Followers</span>
-								</Button>
+								</Button> */}
+
+								<PopularityList
+									variant="FOLLOWERS"
+									followers={_user?.followers as iUser[]}
+									following={followings!}
+									blockList={_user?.blockList as iUser[]}
+								/>
+								<PopularityList
+									variant="FOLLOWING"
+									followers={_user?.followers as iUser[]}
+									following={followings!}
+									blockList={_user?.blockList as iUser[]}
+								/>
 							</div>
 						</div>
 					</div>
@@ -171,14 +185,14 @@ export default function UserCard({
 								{_user?.username}
 							</p>
 							<p className="text-sm text-muted-foreground">
-								@{_user?.username.toLowerCase().split(" ")[0]}
+								{_user?.emailAdress}
 							</p>
-							<p className="text-xs">
+							{_user.followers && <p className="text-xs">
 								<span className="text-primary font-medium">
 									{_user.followers.length}
 								</span>{" "}
 								Followers
-							</p>
+							</p>}
 						</div>
 					</div>
 

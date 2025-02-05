@@ -9,7 +9,8 @@ import Link from "next/link";
 import { SparklesCore } from "../../components/ui/sparkles";
 import { FloatingNav } from "../../components/ui/floating-navbar";
 import Image from "next/image";
-import { HOME_NAV } from "@/constants";
+import { DEMO_PAGES, HOME_NAV } from "@/constants";
+import { Tabs } from "@/components/ui/AceTabs";
 
 export default function Home() {
 	const words = [
@@ -21,8 +22,7 @@ export default function Home() {
 	];
 
 	return (
-		<div className="text-xl">
-
+		<div className="p-3">
 			<FloatingNav navItems={HOME_NAV} />
 			<section className="h-[35rem] w-full flex flex-col items-center justify-center overflow-hidden rounded-md">
 				<h1 className="flex items-baseline gap-x-2 md:text-7xl text-6xl lg:text-9xl font-bold text-center text-foreground relative z-20">
@@ -81,6 +81,13 @@ export default function Home() {
 					<span>Get started</span>
 				</Link>
 			</HoverBorderGradient>
+
+			<section>
+				<div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative b flex flex-col max-w-5xl mx-auto w-full  items-start justify-start my-40">
+					<h3 className=" mb-3 text-xl sm:text-2xl md:text-4xl">Pages</h3>
+					<Tabs tabs={DEMO_PAGES} />
+				</div>
+			</section>
 		</div>
 	);
 }

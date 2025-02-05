@@ -1,7 +1,7 @@
 "use client";
 
 import { iMessage } from "@/lib/database/models/message.model";
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import MessageCard from "./cards/MessageCard";
 import { getChatMessages } from "@/lib/actions/message.actions";
 
@@ -19,6 +19,8 @@ export default function MsgFeed({
 	const fetchMessages = async () => {
 		setMessages(await getChatMessages(userId, friendId));
 	};
+
+  // const latestMsg = useRef<ReactNode>(null)
 
 	useEffect(() => {
 		const interval = setInterval(fetchMessages, 3000);

@@ -22,9 +22,8 @@ export const createThread = async (
 };
 
 export const getThreads = async (): Promise<iThread[]> => {
-	await connectDb();
-
 	try {
+		await connectDb();
 		const threads = await threadModel
 			.find({ community: null }) // ? Only those without communities
 			.populate({
@@ -55,7 +54,7 @@ export const getUserThreads = async (userId: string): Promise<iThread[]> => {
 					select: "-age -password -onboarded -followers",
 				},
 			})
-			.populate("community", "-bio -members -creator")
+			.populate("community", "-members -creator")
 
 			.sort({ createdAt: "desc" });
 

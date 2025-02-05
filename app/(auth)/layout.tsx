@@ -15,7 +15,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 	return (
 		<ClerkProvider afterSignOutUrl="/" dynamic>
 			<html suppressHydrationWarning lang="en">
-				<body
+				<body	
 					className={cn(
 						"bg-background text-foreground h-screen flex items-center justify-center",
 						poppinsFont.className
