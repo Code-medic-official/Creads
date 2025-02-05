@@ -10,7 +10,7 @@ import { SparklesCore } from "../../components/ui/sparkles";
 import { FloatingNav } from "../../components/ui/floating-navbar";
 import Image from "next/image";
 import { DEMO_PAGES, HOME_NAV } from "@/constants";
-import { Tabs } from "@/components/ui/AceTabs";
+import { Tabs } from "@/components/ui/aceTabs";
 
 export default function Home() {
 	const words = [
