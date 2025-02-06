@@ -74,11 +74,11 @@ export default function UserCard({
 						</Avatar>
 
 						<div className="leading-3">
-							<p className="text-xl font-bold">{_user?.username}</p>
+							<p className="md:text-xl font-bold">{_user?.username}</p>
 							{/* <span className="font-medium text-muted-foreground text-sm">
 								@{_user?.username.toLowerCase().split(" ")[0]}
 							</span> */}
-							<p className="font-medium text-muted-foreground text-sm">
+							<p className="font-medium text-muted-foreground text-xs sm:text-sm">
 								{_user?.emailAdress}
 							</p>
 

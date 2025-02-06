@@ -134,7 +134,7 @@ export const upsertUser = async (
 
 	try {
 		await userModel.findByIdAndUpdate(
-			{ _id: user._id },
+			user._id,
 			{
 				username: user.username,
 				emailAdress: user.emailAdress,
@@ -142,6 +142,7 @@ export const upsertUser = async (
 				bio: user.bio,
 				onboarded: user.onboarded,
 				followers: user.followers,
+				blockList: user.blockList,
 			},
 			{ upsert: true }
 		);

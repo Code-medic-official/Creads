@@ -3,40 +3,33 @@
 import { getActiveUser, upsertUser } from "@/lib/actions/user.actions";
 import { iUser } from "@/lib/database/models/user.model";
 import { cn } from "@/lib/utils";
-import { useUser } from "@clerk/nextjs";
 import { Ban } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import { Button } from "./ui/button";
 
-export default function BlockBtn({
-	_user,
-}: {
-	_user: iUser;
-}) {
+export default function BlockBtn({ _user }: { _user: iUser }) {
 	const [isBlocked, setIsBlocked] = useState<boolean>();
 	const [isPending, startTransition] = useTransition();
 	const pathname = usePathname();
 	const [user, setUser] = useState<iUser>();
 
-	const { isLoaded } = useUser();
-
-	const blockList: string[] = user?.blockList?.map((_user) => _user._id) ?? [];
+	const blockList: string[] = user?.blockList?.map((user_) => user_._id) ?? [];
 
 	useEffect(() => {
-		setIsBlocked(!!blockList.find((userId) => userId === user?._id));
-
+		setIsBlocked(!!blockList.find((userId) => userId === _user._id));
+						
 		const fetchActiveUser = async (): Promise<void> => {
 			setUser(await getActiveUser());
 		};
 
-		if (isLoaded) fetchActiveUser();
-	}, [isLoaded]);
+		fetchActiveUser();
+	}, [blockList]);
 
-	const blockHandler = async () => {
+	const blockHandler = () => {
 		startTransition(() =>
-			upsertUser({ ..._user, blockList: [...blockList, _user?._id] }, pathname)
+			upsertUser({ ...user, blockList: [...blockList, _user?._id] }, pathname)
 		);
 
 		toast(
@@ -51,9 +44,9 @@ export default function BlockBtn({
 		startTransition(() =>
 			upsertUser(
 				{
-					..._user,
-					blockList: blockList.filter((userId) => userId !== user?._id),
-				},
+					...user,
+					blockList: blockList.filter((userId) => userId !== _user?._id),
+				} as iUser,
 				pathname
 			)
 		);
