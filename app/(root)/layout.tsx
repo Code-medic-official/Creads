@@ -72,6 +72,7 @@ export default function layout({ children }: { children: ReactNode }) {
 						enableSystem
 						disableTransitionOnChange
 					>
+
 						{children}
 					</ThemeProvider>
 				</body>

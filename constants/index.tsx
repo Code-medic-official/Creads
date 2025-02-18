@@ -111,3 +111,68 @@ export const DEMO_PAGES = [
 		),
 	},
 ];
+
+
+export const TECH_STACKS = [
+  {
+    title: "Next.js",
+    link: "https://nextjs.org/",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/8/8e/Nextjs-logo.svg",
+    description: "Next.js is a React framework with server-side rendering, static site generation, and SEO optimization for high-performance apps."
+  },
+  {
+    title: "React",
+    link: "https://react.dev/",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg",
+    description: "React is a powerful JavaScript library for building dynamic, reusable UI components with a virtual DOM for efficiency."
+  },
+  {
+    title: "TypeScript",
+    link: "https://www.typescriptlang.org/",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg",
+    description: "TypeScript adds static typing to JavaScript, improving code quality, maintainability, and developer productivity."
+  },
+  {
+    title: "Tailwind CSS",
+    link: "https://tailwindcss.com/",
+    icon: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg",
+    description: "Tailwind CSS is a utility-first framework for fast, responsive, and modern UI design with minimal custom styling."
+  },
+  {
+    title: "MongoDB",
+    link: "https://www.mongodb.com/",
+    icon: "https://icon.icepanel.io/Technology/svg/MongoDB.svg",
+    description: "MongoDB is a NoSQL database that provides flexibility, scalability, and efficient document-based data storage."
+  },
+  {
+    title: "Mongoose",
+    link: "https://mongoosejs.com/",
+    icon: "https://icon.icepanel.io/Technology/svg/Mongoose.js.svg",
+    description: "Mongoose is an object modeling tool for MongoDB, simplifying schema validation and database interactions in Node.js."
+  },
+  {
+    title: "Clerk Authentication",
+    link: "https://clerk.com/",
+    icon: "https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_c58d5fd4ba449e621bdcd01ac1f00976/clerk-dev.png",
+    description: "Clerk simplifies authentication with social logins, multi-factor authentication, and session management for web apps."
+  },
+  {
+    title: "shadcn/ui",
+    link: "https://ui.shadcn.com/",
+    icon: "https://ui.shadcn.com/favicon.ico",
+    description: "shadcn/ui provides customizable, accessible components built with Radix UI and Tailwind CSS for modern web apps."
+  },
+  {
+    title: "Aceternity UI",
+    link: "https://ui.aceternity.com/",
+    icon: "https://ui.aceternity.com/_next/image?url=%2Flogo-dark.png&w=64&q=75",
+    description: "Aceternity UI offers beautiful, accessible UI components for fast and modern web development."
+  },
+  {
+    title: "Lucide Icons",
+    link: "https://lucide.dev/",
+    icon: "https://lucide.dev/favicon.ico",
+    description: "Lucide Icons is an open-source, customizable SVG icon library for consistent, modern UI design."
+  }
+];
+

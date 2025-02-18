@@ -4,8 +4,8 @@ const nextConfig = {
 		ignoreBuildErrors: true,
 	},
 	eslint: {
-    ignoreDuringBuilds: true,
-  },
+		ignoreDuringBuilds: true,
+	},
 	images: {
 		remotePatterns: [
 			{
@@ -18,7 +18,32 @@ const nextConfig = {
 			},
 			{
 				protocol: "https",
-				hostname: "uploadthing.com",
+				hostname: "upload.wikimedia.org",
+			},
+			{
+				protocol: "https",
+				hostname: "icon.icepanel.io",
+			},
+			{
+				protocol: "https",
+				hostname: "ui.shadcn.com",
+			},
+			{
+				protocol: "https",
+				hostname: "ui.aceternity.com",
+			},
+			
+			{
+				protocol: "https",
+				hostname: "lucide.dev",
+			},
+			{
+				protocol: "https",
+				hostname: "images.g2crowd.com",
+			},
+			{
+				protocol: "https",
+				hostname: "icon.icepanel.io",
 			},
 		],
 	},
