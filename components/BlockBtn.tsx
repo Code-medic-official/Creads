@@ -20,7 +20,7 @@ export default function BlockBtn({ _user }: { _user: iUser }) {
 	useEffect(() => {
 		setIsBlocked(!!blockList.find((userId) => userId === _user._id));
 						
-		const fetchActiveUser = async (): Promise<void> => {
+		const fetchActiveUser = async (): Promise<void> => {  
 			setUser(await getActiveUser());
 		};
 

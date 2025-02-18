@@ -38,6 +38,8 @@ export default function UserCard({
 		if (isLoaded && !user) fetchActiveUser();
 	}, [isLoaded]);
 
+	console.log(_user);
+
 	if (variant === "sm") {
 		return (
 			<Tooltip>
@@ -83,34 +85,15 @@ export default function UserCard({
 							</p>
 
 							<div className="flex items-center mt-2">
-								{/* <Button
-									size="sm"
-									variant="ghost"
-									className="p-1 text-muted-foreground"
-								>
-									<span className="font-semibold text-foreground">
-										{followings.length}
-									</span>
-									<span>Following</span>
-								</Button>
-								<Button
-									size="sm"
-									variant="ghost"
-									className="p-1 text-muted-foreground "
-								>
-									<span className="font-semibold text-foreground">
-										{_user?.followers.length}
-									</span>
-									<span>Followers</span>
-								</Button> */}
-
 								<PopularityList
+									userId={_user.clerkId!}
 									variant="FOLLOWERS"
 									followers={_user?.followers as iUser[]}
 									following={followings!}
 									blockList={_user?.blockList as iUser[]}
 								/>
 								<PopularityList
+									userId={_user.clerkId!}
 									variant="FOLLOWING"
 									followers={_user?.followers as iUser[]}
 									following={followings!}
@@ -187,12 +170,14 @@ export default function UserCard({
 							<p className="text-sm text-muted-foreground">
 								{_user?.emailAdress}
 							</p>
-							{_user.followers && <p className="text-xs">
-								<span className="text-primary font-medium">
-									{_user.followers.length}
-								</span>{" "}
-								Followers
-							</p>}
+							{_user.followers && (
+								<p className="text-xs">
+									<span className="text-primary font-medium">
+										{_user.followers.length}
+									</span>{" "}
+									Followers
+								</p>
+							)}
 						</div>
 					</div>
 

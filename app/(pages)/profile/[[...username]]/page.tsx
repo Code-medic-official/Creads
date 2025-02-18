@@ -21,6 +21,7 @@ export default async function page({
 	const feeds = await getUserThreads(_user._id!);
 	const replies = await getUserComments(_user._id!);
 
+
 	return (
 		<div>
 			<UserCard _user={_user} variant="profile" followings={followings} />

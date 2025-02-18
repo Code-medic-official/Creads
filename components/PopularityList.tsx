@@ -1,7 +1,7 @@
 "use client";
 
 import { useMediaQuery } from "@uidotdev/usehooks";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import { Button } from "./ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
@@ -10,13 +10,18 @@ import { iUser } from "@/lib/database/models/user.model";
 import { Badge } from "./ui/badge";
 import UserCard from "./cards/UserCard";
 import Void from "./Void";
+import { getActiveUser } from "@/lib/actions/user.actions";
+import { useAuth, useUser } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 
 export default function PopularityList({
+	userId,
 	variant,
 	followers,
 	following,
 	blockList,
 }: {
+	userId: string;
 	variant: "FOLLOWING" | "FOLLOWERS";
 	followers: iUser[];
 	following: iUser[];
@@ -61,6 +66,7 @@ export default function PopularityList({
 						<DialogTitle>Popularity Lists</DialogTitle>
 					</div>
 					<ListContent
+						userId={userId}
 						blockList={blockList}
 						followers={followers}
 						following={following}
@@ -104,6 +110,7 @@ export default function PopularityList({
 						<DrawerTitle>Popularity Lists</DrawerTitle>
 					</div>
 					<ListContent
+						userId={userId}
 						blockList={blockList}
 						followers={followers}
 						following={following}
@@ -116,16 +123,20 @@ export default function PopularityList({
 }
 
 const ListContent = ({
+	userId,
 	variant,
 	followers,
 	following,
 	blockList,
 }: {
+	userId: string;
+
 	variant: "FOLLOWING" | "FOLLOWERS";
 	followers: iUser[];
 	following: iUser[];
 	blockList: iUser[];
 }) => {
+	const { userId: userClkId } = useAuth();
 	return (
 		<Tabs defaultValue={variant}>
 			<TabsList className="my-3 sticky top-2">
@@ -145,14 +156,16 @@ const ListContent = ({
 						</Badge>
 					</div>
 				</TabsTrigger>
-				<TabsTrigger value="BLOCKED">
-					<div className="flex items-center">
-						<span className="text-xs sm:text-sm md:text-base">Blocked</span>
-						<Badge variant="secondary" className="text-primary text-xs ml-1">
-							{blockList?.length}
-						</Badge>
-					</div>
-				</TabsTrigger>
+				{userClkId === userId && (
+					<TabsTrigger value="BLOCKED">
+						<div className="flex items-center">
+							<span className="text-xs sm:text-sm md:text-base">Blocked</span>
+							<Badge variant="secondary" className="text-primary text-xs ml-1">
+								{blockList?.length}
+							</Badge>
+						</div>
+					</TabsTrigger>
+				)}
 			</TabsList>
 
 			<TabsContent value="FOLLOWERS" className="space-y-2">
