@@ -1,7 +1,7 @@
 "use client";
 
 import { Loader, MessageCircleHeart, SendHorizonal, Star } from "lucide-react";
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { HoverBorderGradient } from "./ui/hover-border-gradient";
 import {
 	Modal,
@@ -21,9 +21,23 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "./ui/drawer";
+import { useRouter } from "next/router";
+import { iUser } from "@/lib/database/models/user.model";
+import { getActiveUser } from "@/lib/actions/user.actions";
+import { redirect } from "next/navigation";
+import { createFeedback } from "@/lib/actions/feedback.action";
 
 export default function FeedBackBtn() {
 	const isSmScreen = useMediaQuery("(max-width: 425px)");
+	const [user, setUser] = useState<iUser>();
+
+	useEffect(() => {
+		const fetchAuthUser = async () => {
+			setUser(await getActiveUser());
+		};
+
+		fetchAuthUser();
+	}, []);
 
 	if (isSmScreen) {
 		return (
@@ -37,7 +51,6 @@ export default function FeedBackBtn() {
 						<MessageCircleHeart />
 						<span>Feedback</span>
 					</HoverBorderGradient>
-
 				</DrawerTrigger>
 
 				<DrawerContent className="p-3">
@@ -46,7 +59,7 @@ export default function FeedBackBtn() {
 						<DrawerDescription>Help make the app grow!</DrawerDescription>
 					</div>
 
-					<FeedBackForm />
+					<FeedBackForm user={user!} />
 				</DrawerContent>
 			</Drawer>
 		);
@@ -66,7 +79,7 @@ export default function FeedBackBtn() {
 
 				<ModalBody>
 					<ModalContent>
-						<FeedBackForm />
+						<FeedBackForm user={user!} />
 					</ModalContent>
 				</ModalBody>
 			</Modal>
@@ -74,16 +87,25 @@ export default function FeedBackBtn() {
 	}
 }
 
-const FeedBackForm = () => {
+const FeedBackForm = ({ user }: { user: iUser }) => {
 	const [rating, setRating] = useState<number>(0);
 	const [feedback, setFeedback] = useState<string>("");
 	const [isPending, startTransition] = useTransition();
+	// const router = useRouter();
 
 	const sendFeedBackHandler = async () => {
-		startTransition(() => console.log(rating, feedback));
+		if (!user) {
+			toast("Please sign in");
+			redirect("/sign-in");
+		}
+
+		startTransition(() =>
+			createFeedback({ body: feedback, rating, user: user._id! })
+		);
 
 		toast.success("Thanks for the Feedback🤗");
 	};
+
 	return (
 		<div>
 			<h3 className="mb-4 flex items-center gap-x-1 text-xl md:text-2xl font-medium text-primary">
