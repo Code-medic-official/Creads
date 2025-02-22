@@ -1,19 +1,20 @@
 "use client";
 
+import { createFeedback } from "@/lib/actions/feedback.action";
+import { getActiveUser } from "@/lib/actions/user.actions";
+import { iUser } from "@/lib/database/models/user.model";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import { Loader, MessageCircleHeart, SendHorizonal, Star } from "lucide-react";
-import React, { useEffect, useState, useTransition } from "react";
-import { HoverBorderGradient } from "./ui/hover-border-gradient";
+import { redirect } from "next/navigation";
+import { useEffect, useState, useTransition } from "react";
+import toast from "react-hot-toast";
 import {
 	Modal,
 	ModalBody,
 	ModalContent,
 	ModalTrigger,
 } from "./ui/animated-modal";
-import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { Label } from "./ui/label";
-import toast from "react-hot-toast";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import {
 	Drawer,
 	DrawerContent,
@@ -21,11 +22,9 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "./ui/drawer";
-import { useRouter } from "next/router";
-import { iUser } from "@/lib/database/models/user.model";
-import { getActiveUser } from "@/lib/actions/user.actions";
-import { redirect } from "next/navigation";
-import { createFeedback } from "@/lib/actions/feedback.action";
+import { HoverBorderGradient } from "./ui/hover-border-gradient";
+import { Label } from "./ui/label";
+import { Textarea } from "./ui/textarea";
 
 export default function FeedBackBtn() {
 	const isSmScreen = useMediaQuery("(max-width: 425px)");
@@ -46,7 +45,7 @@ export default function FeedBackBtn() {
 					<HoverBorderGradient
 						containerClassName="rounded-full"
 						as="div"
-						className="text-primary font-medium bg-background flex items-center space-x-2 fixed bottom-5 right-5"
+						className="text-primary text-sm border border-primary shadow-sm bg-primary/15 backdrop-blur-md font-medium flex items-center space-x-2 fixed bottom-5 right-5"
 					>
 						<MessageCircleHeart />
 						<span>Feedback</span>
@@ -68,11 +67,11 @@ export default function FeedBackBtn() {
 			<Modal>
 				<ModalTrigger>
 					<HoverBorderGradient
-						containerClassName="rounded-full"
+						containerClassName="rounded-full w-fit"
 						as="div"
-						className="text-primary bg-background flex items-center space-x-2 fixed bottom-5 right-5"
+						className="text-primary text-sm border border-primary shadow-sm bg-primary/15 backdrop-blur-md flex items-center gap-x-1 fixed bottom-5 right-5"
 					>
-						<MessageCircleHeart />
+						<MessageCircleHeart size={20} />
 						<span>Feedback</span>
 					</HoverBorderGradient>
 				</ModalTrigger>

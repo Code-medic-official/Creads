@@ -1,8 +1,9 @@
 import { model, models, Schema } from "mongoose";
+import { iUser } from "./user.model";
 
 export interface iFeedback {
 	_id?: string;
-	user: string;
+	user: string | iUser;
 	rating: number;
 	body: string | null;
 	isApproved?: boolean;

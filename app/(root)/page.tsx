@@ -20,32 +20,46 @@ import {
 	Boxes,
 	Code2,
 	Component,
+	MessageCircleHeartIcon,
 	Stars,
-	TreePine
+	TreePine,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { ContainerScroll } from "../../components/ui/container-scroll-animation";
+import { useEffect, useState } from "react";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import {
 	GlowingStarsBackgroundCard,
 	GlowingStarsDescription,
 	GlowingStarsTitle,
-} from "../../components/ui/glowing-stars";
-import { HeroHighlight, Highlight } from "../../components/ui/hero-highlight";
-import { LinkPreview } from "../../components/ui/link-preview";
-import { SparklesCore } from "../../components/ui/sparkles";
-import devLogo from "../../public/assets/CM_logo.png";
+} from "@/components/ui/glowing-stars";
+import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
+import { LinkPreview } from "@/components/ui/link-preview";
+import { SparklesCore } from "@/components/ui/sparkles";
+import devLogo from "@/public/assets/CM_logo.png";
+import { iFeedback } from "@/lib/database/models/feedback.model";
+import { getFeedbacks } from "@/lib/actions/feedback.action";
+import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
+
 
 export default function Home() {
 	const { theme, setTheme } = useTheme();
 	const router = useRouter();
+	const [feedbacks, setFeedbacks] = useState<[iFeedback]>([]);
 
 	useEffect(() => {
 		setTheme("dark");
+
+		const fetchFeedback = async () => {
+			setFeedbacks(await getFeedbacks());
+		};
+
+		fetchFeedback();
 	}, []);
+
+	console.log(feedbacks);
 
 	return (
 		<div className="p-3">
@@ -73,15 +87,15 @@ export default function Home() {
 					<SignInButton>
 						<Button>Sign in</Button>
 					</SignInButton>
-					<button className="hidden sm:block p-[3px] relative rounded-full overflow-hidden">
+					<button className="p-[3px] relative rounded-full overflow-hidden">
 						<div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg" />
 
 						<Link
 							href="/feeds"
-							className="flex items-center gap-x-1 px-8 py-2  bg-background rounded-full  relative group transition duration-200 text-white hover:bg-transparent"
+							className="flex items-center gap-x-1 p-2 md:px-8 md:py-2  bg-background rounded-full  relative group transition duration-200 text-white hover:bg-transparent"
 						>
 							<Stars />
-							<span>Get started</span>
+							<span className="hidden md:inline" >Get started</span>
 						</Link>
 					</button>
 				</div>
@@ -354,12 +368,14 @@ export default function Home() {
 			</section>
 
 			{/* Testimonials (uncomment after we have some more contentP */}
-			{/* <section className="mt-10">
+			<section className="mt-10">
 				<h3 className="mb-3 text-xl sm:text-2xl md:text-4xl font-medium flex items-center gap-x-1">
 					<MessageCircleHeartIcon />
 					<span>Testimonials</span>
 				</h3>
-			</section> */}
+
+				<AnimatedTestimonials testimonials={feedbacks} autoplay />
+			</section>
 
 			<FeedBackBtn />
 		</div>

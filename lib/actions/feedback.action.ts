@@ -15,3 +15,17 @@ export const createFeedback = async (feedback: iFeedback): Promise<void> => {
 		throw new Error(error);
 	}
 };
+
+export const getFeedbacks = async (): Promise<[iFeedback]> => {
+	try {
+		await connectDb();
+
+		const feedbacks = await feedbackModel
+			.find()
+			.populate("user", "-age -bio -blockList -followers -onboarded");
+
+		return JSON.parse(JSON.stringify(feedbacks));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
