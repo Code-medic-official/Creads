@@ -5,6 +5,7 @@ import { Poppins } from "next/font/google";
 import { ReactNode } from "react";
 import "../globals.css";
 import { ThemeProvider } from "next-themes";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export const poppinsFont = Poppins({
 	subsets: ["latin"],
@@ -72,8 +73,10 @@ export default function layout({ children }: { children: ReactNode }) {
 						enableSystem
 						disableTransitionOnChange
 					>
-
-						{children}
+						<ScrollArea className="h-screen">
+							<ScrollBar />
+							<main>{children}</main>
+						</ScrollArea>
 					</ThemeProvider>
 				</body>
 			</html>

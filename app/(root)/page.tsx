@@ -1,5 +1,6 @@
 "use client";
 
+import FeedBackBtn from "@/components/FeedBackBtn";
 import GithubBtn from "@/components/GithubBtn";
 import { Tabs } from "@/components/ui/aceTabs";
 import { Button } from "@/components/ui/button";
@@ -12,22 +13,31 @@ import {
 } from "@/components/ui/carousel";
 import { DEMO_PAGES, TECH_STACKS } from "@/constants";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
+import Autoplay from "embla-carousel-autoplay";
 import { motion } from "framer-motion";
-import { ArrowRight, Boxes, Component, Stars } from "lucide-react";
+import {
+	ArrowRight,
+	Boxes,
+	Code2,
+	Component,
+	Stars,
+	TreePine
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { SparklesCore } from "../../components/ui/sparkles";
-import { HeroHighlight, Highlight } from "/components/ui/hero-highlight";
-import { ContainerScroll } from "/components/ui/container-scroll-animation";
-import Autoplay from "embla-carousel-autoplay";
+import { ContainerScroll } from "../../components/ui/container-scroll-animation";
 import {
 	GlowingStarsBackgroundCard,
 	GlowingStarsDescription,
 	GlowingStarsTitle,
-} from "/components/ui/glowing-stars";
-import { useRouter } from "next/navigation";
+} from "../../components/ui/glowing-stars";
+import { HeroHighlight, Highlight } from "../../components/ui/hero-highlight";
+import { LinkPreview } from "../../components/ui/link-preview";
+import { SparklesCore } from "../../components/ui/sparkles";
+import devLogo from "../../public/assets/CM_logo.png";
 
 export default function Home() {
 	const { theme, setTheme } = useTheme();
@@ -41,11 +51,24 @@ export default function Home() {
 		<div className="p-3">
 			{/* Hero Navbar */}
 			<section className="w-[98vw] mx-auto sticky top-2 z-50 px-3 py-2 rounded-xl bg-secondary/45 backdrop-blur-md flex items-center justify-between shadow-md">
+				<Link href="/" className="flex items-center gap-x-1">
+					<Image
+						src="/assets/logo.jpg"
+						alt="Logo"
+						width={40}
+						height={40}
+						priority
+						className="rounded-xl"
+					/>
+					<p className="text-xl font-medium hidden sm:block">Creads</p>
+				</Link>
 				<GithubBtn />
 				<div className="flex items-center gap-x-3">
-					<SignUpButton>
-						<Button>Sign up</Button>
-					</SignUpButton>
+					<div className="hidden sm:block">
+						<SignUpButton>
+							<Button>Sign up</Button>
+						</SignUpButton>
+					</div>
 
 					<SignInButton>
 						<Button>Sign in</Button>
@@ -181,7 +204,10 @@ export default function Home() {
 					<span>Tech Stack</span>
 				</h3>
 
-				<Carousel plugins={[Autoplay({ delay: 3500 })]} className="w-[97vw]">
+				<Carousel
+					plugins={[Autoplay({ delay: 3500 })]}
+					className="w-[97vw] md:w-[95vw]"
+				>
 					<CarouselContent>
 						{TECH_STACKS.map((stack, i) => (
 							<CarouselItem
@@ -219,6 +245,123 @@ export default function Home() {
 					<CarouselNext />
 				</Carousel>
 			</section>
+
+			{/* Developer Section */}
+			<section className="mt-10">
+				<h3 className="mb-3 text-xl sm:text-2xl md:text-4xl font-medium flex items-center gap-x-1">
+					<Code2 />
+					<span>Developer</span>
+				</h3>
+
+				<div className="p-4">
+					<h4 className="text-2xl sm:text-3xl md:text-4xl text-center mb-4 font-semibold ">
+						Code Medic🧑‍💻
+					</h4>
+					<div className="w-full flex flex-col sm:flex-row items-center gap-4 justify-center">
+						<Image
+							src={devLogo}
+							alt="dev-Logo"
+							className="object-cover size-10/12 sm:size-1/3 md:size-1/4 rounded-3xl"
+						/>
+
+						<div className="space-y-3">
+							<LinkPreview
+								url="https://github.com/Code-medic-official"
+								// target="_blank"
+								className="flex items-center gap-x-2"
+							>
+								<Image
+									src="/assets/github.png"
+									width={25}
+									height={25}
+									priority
+									alt="github logo"
+									className="object-cover text-white"
+								/>
+								<span className="font-medium">Code Medic Official✨</span>
+							</LinkPreview>
+							<LinkPreview
+								url="https://github.com/Code-medic-official"
+								// target="_blank"
+								className="flex items-center gap-x-2"
+							>
+								<Image
+									src="/assets/gmail.png"
+									width={25}
+									height={25}
+									priority
+									alt="gmail logo"
+									className="object-cover text-white"
+								/>
+								<span className="font-medium">Codemedic2@gmail.com</span>
+							</LinkPreview>
+							<LinkPreview
+								url="https://youtube.com/@codemedic"
+								// target="_blank"
+								className="flex items-center gap-x-2"
+							>
+								<Image
+									src="/assets/youtube.png"
+									width={25}
+									height={25}
+									priority
+									alt="github logo"
+									className="object-cover text-white"
+								/>
+								<span className="font-medium">Code Medic 📽️</span>
+							</LinkPreview>
+							<LinkPreview
+								url="https://www.instagram.com/code_medic"
+								// target="_blank"
+								className="flex items-center gap-x-2"
+							>
+								<Image
+									src="/assets/instagram.png"
+									width={25}
+									height={25}
+									priority
+									alt="instagram logo"
+									className="object-cover text-white"
+								/>
+								<span className="font-medium">Code Medic 📸</span>
+							</LinkPreview>
+							<LinkPreview
+								url="https://twitter.com/rueltieni"
+								// target="_blank"
+								className="flex items-center gap-x-2"
+							>
+								<Image
+									src="/assets/twitter.png"
+									width={25}
+									height={25}
+									priority
+									alt="twitter logo"
+									className="object-cover text-white"
+								/>
+								<span className="font-medium">Victoruel 🐦</span>
+							</LinkPreview>
+							<LinkPreview
+								url="https://linktr.ee/codemedic"
+								// target="_blank"
+								className="flex items-center gap-x-2"
+							>
+								<TreePine size={30} fill="#40d45c" stroke="#40ff5c" />
+								<span className="font-medium">Link Tree 🎄</span>
+							</LinkPreview>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			{/* Testimonials (uncomment after we have some more contentP */}
+			{/* <section className="mt-10">
+				<h3 className="mb-3 text-xl sm:text-2xl md:text-4xl font-medium flex items-center gap-x-1">
+					<MessageCircleHeartIcon />
+					<span>Testimonials</span>
+				</h3>
+			</section> */}
+
+			<FeedBackBtn />
 		</div>
 	);
 }

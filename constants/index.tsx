@@ -151,7 +151,7 @@ export const TECH_STACKS = [
     description: "Mongoose is an object modeling tool for MongoDB, simplifying schema validation and database interactions in Node.js."
   },
   {
-    title: "Clerk Authentication",
+    title: "Clerk",
     link: "https://clerk.com/",
     icon: "https://images.g2crowd.com/uploads/product/image/social_landscape/social_landscape_c58d5fd4ba449e621bdcd01ac1f00976/clerk-dev.png",
     description: "Clerk simplifies authentication with social logins, multi-factor authentication, and session management for web apps."

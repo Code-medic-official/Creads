@@ -32,7 +32,7 @@ const nextConfig = {
 				protocol: "https",
 				hostname: "ui.aceternity.com",
 			},
-			
+
 			{
 				protocol: "https",
 				hostname: "lucide.dev",
@@ -44,6 +44,10 @@ const nextConfig = {
 			{
 				protocol: "https",
 				hostname: "icon.icepanel.io",
+			},
+			{
+				protocol: "https",
+				hostname: "api.microlink.io",
 			},
 		],
 	},
