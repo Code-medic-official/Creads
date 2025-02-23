@@ -184,7 +184,7 @@ export default function Home() {
 					}
 				>
 					<Image
-						src={null}
+						src={"/lead/eg.ong"}
 						alt="hero"
 						height={720}
 						width={1400}
@@ -369,7 +369,7 @@ export default function Home() {
 				<AnimatedTestimonials testimonials={feedbacks} autoplay />
 			</section>
 
-			<Feedback user={user} />
+			<Feedback user={user!} />
 		</>
 	);
 }

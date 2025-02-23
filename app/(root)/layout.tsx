@@ -1,13 +1,11 @@
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
 import { Poppins } from "next/font/google";
 import { ReactNode } from "react";
 import "../globals.css";
-import { ThemeProvider } from "next-themes";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { getFeedbacks } from "@/lib/actions/feedback.action";
-import { getActiveUser } from "@/lib/actions/user.actions";
 
 export const poppinsFont = Poppins({
 	subsets: ["latin"],
@@ -63,8 +61,8 @@ export const metadata: Metadata = {
 };
 
 export default async function layout({ children }: { children: ReactNode }) {
-	await getFeedbacks()
-	await getActiveUser()
+	// await getFeedbacks()
+	// await getActiveUser()
 
 	return (
 		<ClerkProvider afterSignOutUrl="/" dynamic>

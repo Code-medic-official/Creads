@@ -59,7 +59,7 @@
     "mongodb": "^6.10.0",
     "mongoose": "^8.7.3",
     "motion": "^12.4.4",
-    "next": "^15.0.2",
+    "next": "^15.1.7",
     "next-themes": "^0.3.0",
     "pusher": "^5.2.0",
     "pusher-js": "^8.4.0-rc2",

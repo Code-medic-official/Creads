@@ -25,9 +25,10 @@ import { HoverBorderGradient } from "./ui/hover-border-gradient";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 
-export default function Feedback({user}: {user: iUser}) {
-	const isSmScreen = useMediaQuery("(max-width: 425px)");
+export const dynamic = "force-dynamic";
 
+export default function Feedback({ user }: { user: iUser }) {
+	const isSmScreen = useMediaQuery("(max-width: 425px)");
 
 	if (isSmScreen) {
 		return (
