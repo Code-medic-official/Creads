@@ -3,6 +3,7 @@
 import Feedback from "@/components/FeedBack";
 import GithubBtn from "@/components/GithubBtn";
 import { Tabs } from "@/components/ui/aceTabs";
+import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 import { Button } from "@/components/ui/button";
 import {
 	Carousel,
@@ -11,24 +12,6 @@ import {
 	CarouselNext,
 	CarouselPrevious,
 } from "@/components/ui/carousel";
-import { DEMO_PAGES, TECH_STACKS } from "@/constants";
-import { SignInButton, SignUpButton } from "@clerk/nextjs";
-import Autoplay from "embla-carousel-autoplay";
-import { motion } from "framer-motion";
-import {
-	ArrowRight,
-	Boxes,
-	Code2,
-	Component,
-	MessageCircleHeartIcon,
-	Stars,
-	TreePine,
-} from "lucide-react";
-import { useTheme } from "next-themes";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import {
 	GlowingStarsBackgroundCard,
@@ -38,28 +21,44 @@ import {
 import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 import { LinkPreview } from "@/components/ui/link-preview";
 import { SparklesCore } from "@/components/ui/sparkles";
-import devLogo from "@/public/assets/CM_logo.png";
-import { iFeedback } from "@/lib/database/models/feedback.model";
+import { DEMO_PAGES, TECH_STACKS } from "@/constants";
 import { getFeedbacks } from "@/lib/actions/feedback.action";
-import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
+import { getActiveUser } from "@/lib/actions/user.actions";
+import { iFeedback } from "@/lib/database/models/feedback.model";
+import { iUser } from "@/lib/database/models/user.model";
+import devLogo from "@/public/assets/CM_logo.png";
+import { SignInButton, SignUpButton } from "@clerk/nextjs";
+import Autoplay from "embla-carousel-autoplay";
+import { motion } from "motion/react";
+// import { motion } from "motion/react";
+import {
+	ArrowRight,
+	Boxes,
+	Code2,
+	Component,
+	MessageCircleHeartIcon,
+	Stars,
+	TreePine,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export default function Home() {
-	const { theme, setTheme } = useTheme();
-	const router = useRouter();
+export default function Hage() {
+	const [user, setUser] = useState<iUser>();
 	const [feedbacks, setFeedbacks] = useState<[iFeedback]>([]);
 
 	useEffect(() => {
-		setTheme("dark");
-
-		const fetchFeedback = async () => {
+		const fetchData = async () => {
+			setUser(await getActiveUser());
 			setFeedbacks(await getFeedbacks());
 		};
 
-		fetchFeedback();
+		fetchData();
 	}, []);
 
 	return (
-		<div className="p-3">
+		<>
 			{/* Hero Navbar */}
 			<section className="w-[98vw] mx-auto sticky top-2 z-50 px-3 py-2 rounded-xl bg-secondary/45 backdrop-blur-md flex items-center justify-between shadow-md">
 				<Link href="/" className="flex items-center gap-x-1">
@@ -112,23 +111,20 @@ export default function Home() {
 					<span>Creads</span>
 				</h1>
 				<div className="w-[40rem] h-40 relative">
-					{/* Gradients */}
 					<div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[2px] w-3/4 blur-sm" />
 					<div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
 					<div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm" />
 					<div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-px w-1/4" />
 
-					{/* Core component */}
 					<SparklesCore
 						background="transparent"
 						minSize={0.4}
 						maxSize={1}
 						particleDensity={1200}
 						className="w-full h-full"
-						particleColor={theme === "dark" ? "#FFFFFF" : "#874ced"}
+						particleColor={"#FFFFFF"}
 					/>
 
-					{/* Radial Gradient to prevent sharp edges */}
 					<div className="absolute inset-0 w-full h-full bg-background [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"></div>
 				</div>
 			</section>
@@ -187,7 +183,7 @@ export default function Home() {
 					}
 				>
 					<Image
-						src={`/linear.webp`}
+						src={null}
 						alt="hero"
 						height={720}
 						width={1400}
@@ -239,13 +235,11 @@ export default function Home() {
 										<GlowingStarsDescription>
 											{stack.description}
 										</GlowingStarsDescription>
-										<Button
-											size="icon"
-											variant="secondary"
-											onClick={() => router.push(stack.link)}
-										>
-											<ArrowRight />
-										</Button>
+										<Link href={stack.link}>
+											<Button size="icon" variant="secondary">
+												<ArrowRight />
+											</Button>
+										</Link>
 									</div>
 								</GlowingStarsBackgroundCard>
 							</CarouselItem>
@@ -364,7 +358,7 @@ export default function Home() {
 				</div>
 			</section>
 
-			{/* Testimonials (uncomment after we have some more contentP */}
+			{/* Testimonials (uncomment after we have some more contents */}
 			<section className="mt-10">
 				<h3 className="mb-3 text-xl sm:text-2xl md:text-4xl font-medium flex items-center gap-x-1">
 					<MessageCircleHeartIcon />
@@ -374,7 +368,7 @@ export default function Home() {
 				<AnimatedTestimonials testimonials={feedbacks} autoplay />
 			</section>
 
-			<Feedback />
-		</div>
+			<Feedback user={user} />
+		</>
 	);
 }

@@ -1,12 +1,11 @@
 "use client";
 
 import { createFeedback } from "@/lib/actions/feedback.action";
-import { getActiveUser } from "@/lib/actions/user.actions";
 import { iUser } from "@/lib/database/models/user.model";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { Loader, MessageCircleHeart, SendHorizonal, Star } from "lucide-react";
 import { redirect } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import {
 	Modal,
@@ -26,22 +25,14 @@ import { HoverBorderGradient } from "./ui/hover-border-gradient";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 
-export default function Feedback() {
+export default function Feedback({user}: {user: iUser}) {
 	const isSmScreen = useMediaQuery("(max-width: 425px)");
-	const [user, setUser] = useState<iUser>();
 
-	useEffect(() => {
-		const fetchAuthUser = async () => {
-			setUser(await getActiveUser());
-		};
-
-		fetchAuthUser();
-	}, []);
 
 	if (isSmScreen) {
 		return (
 			<Drawer>
-				<DrawerTrigger asChild>
+				<DrawerTrigger>
 					<FeedbackBtn />
 				</DrawerTrigger>
 
@@ -55,21 +46,21 @@ export default function Feedback() {
 				</DrawerContent>
 			</Drawer>
 		);
-	} else {
-		return (
-			<Modal>
-				<ModalTrigger>
-					<FeedbackBtn />
-				</ModalTrigger>
-
-				<ModalBody>
-					<ModalContent>
-						<FeedBackForm user={user!} />
-					</ModalContent>
-				</ModalBody>
-			</Modal>
-		);
 	}
+
+	return (
+		<Modal>
+			<ModalTrigger>
+				<FeedbackBtn />
+			</ModalTrigger>
+
+			<ModalBody>
+				<ModalContent>
+					<FeedBackForm user={user!} />
+				</ModalContent>
+			</ModalBody>
+		</Modal>
+	);
 }
 
 const FeedbackBtn = () => (

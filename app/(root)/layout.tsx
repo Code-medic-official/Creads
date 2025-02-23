@@ -6,6 +6,8 @@ import { ReactNode } from "react";
 import "../globals.css";
 import { ThemeProvider } from "next-themes";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { getFeedbacks } from "@/lib/actions/feedback.action";
+import { getActiveUser } from "@/lib/actions/user.actions";
 
 export const poppinsFont = Poppins({
 	subsets: ["latin"],
@@ -60,7 +62,10 @@ export const metadata: Metadata = {
 	],
 };
 
-export default function layout({ children }: { children: ReactNode }) {
+export default async function layout({ children }: { children: ReactNode }) {
+	await getFeedbacks()
+	await getActiveUser()
+
 	return (
 		<ClerkProvider afterSignOutUrl="/" dynamic>
 			<html suppressHydrationWarning lang="en">
@@ -69,13 +74,13 @@ export default function layout({ children }: { children: ReactNode }) {
 				>
 					<ThemeProvider
 						attribute="class"
-						defaultTheme="system"
+						defaultTheme="dark"
 						enableSystem
 						disableTransitionOnChange
 					>
 						<ScrollArea className="h-screen">
 							<ScrollBar />
-							<main>{children}</main>
+							<main className="p-3 sm:p-5 md:p-7" >{children}</main>
 						</ScrollArea>
 					</ThemeProvider>
 				</body>

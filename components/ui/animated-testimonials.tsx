@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -18,19 +18,22 @@ export const AnimatedTestimonials = ({
 
 	const handleNext = () => {
 		setActive((prev) => {
-			if(active + 1 < testimonials.length) {
-				return prev + 1
-			} else { return 0}
-		} );
+			if (active + 1 < testimonials.length) {
+				return prev + 1;
+			} else {
+				return 0;
+			}
+		});
 	};
 
 	const handlePrev = () => {
-
 		setActive((prev) => {
-			if(active + 1 > 1) {
-				return prev - 1
-			} else { return testimonials.length - 1}
-		} );
+			if (active + 1 > 1) {
+				return prev - 1;
+			} else {
+				return testimonials.length - 1;
+			}
+		});
 	};
 
 	const isActive = (index: number) => {

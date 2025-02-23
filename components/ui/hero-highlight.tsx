@@ -1,6 +1,7 @@
 "use client";
+
 import { cn } from "@/lib/utils";
-import { useMotionValue, motion, useMotionTemplate } from "framer-motion";
+import { useMotionValue, motion, useMotionTemplate } from "motion/react";
 import React from "react";
 
 export const HeroHighlight = ({
@@ -12,8 +13,8 @@ export const HeroHighlight = ({
 	className?: string;
 	containerClassName?: string;
 }) => {
-	let mouseX = useMotionValue(0);
-	let mouseY = useMotionValue(0);
+	const mouseX = useMotionValue(0);
+	const mouseY = useMotionValue(0);
 
 	function handleMouseMove({
 		currentTarget,
@@ -78,7 +79,7 @@ export const Highlight = ({
 			transition={{
 				duration: 2,
 				ease: "linear",
-				delay: 0.5,
+				delay: 1,
 			}}
 			style={{
 				backgroundRepeat: "no-repeat",
