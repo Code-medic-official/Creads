@@ -26,7 +26,7 @@ import { HoverBorderGradient } from "./ui/hover-border-gradient";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 
-export default function FeedBackBtn() {
+export default function Feedback() {
 	const isSmScreen = useMediaQuery("(max-width: 425px)");
 	const [user, setUser] = useState<iUser>();
 
@@ -42,14 +42,7 @@ export default function FeedBackBtn() {
 		return (
 			<Drawer>
 				<DrawerTrigger asChild>
-					<HoverBorderGradient
-						containerClassName="rounded-full"
-						as="div"
-						className="text-primary text-sm border border-primary shadow-sm bg-primary/15 backdrop-blur-md font-medium flex items-center space-x-2 fixed bottom-5 right-5"
-					>
-						<MessageCircleHeart />
-						<span>Feedback</span>
-					</HoverBorderGradient>
+					<FeedbackBtn />
 				</DrawerTrigger>
 
 				<DrawerContent className="p-3">
@@ -66,14 +59,7 @@ export default function FeedBackBtn() {
 		return (
 			<Modal>
 				<ModalTrigger>
-					<HoverBorderGradient
-						containerClassName="rounded-full w-fit"
-						as="div"
-						className="text-primary text-sm border border-primary shadow-sm bg-primary/15 backdrop-blur-md flex items-center gap-x-1 fixed bottom-5 right-5"
-					>
-						<MessageCircleHeart size={20} />
-						<span>Feedback</span>
-					</HoverBorderGradient>
+					<FeedbackBtn />
 				</ModalTrigger>
 
 				<ModalBody>
@@ -85,6 +71,17 @@ export default function FeedBackBtn() {
 		);
 	}
 }
+
+const FeedbackBtn = () => (
+	<HoverBorderGradient
+		containerClassName="rounded-full w-fit z-20"
+		as="div"
+		className="text-primary text-sm font-medium border border-primary shadow-sm bg-primary/15 backdrop-blur-md flex items-center gap-x-1 cursor-pointer fixed bottom-5 right-5 hover:bg-gradient-to-br from-purple-500 to-indigo-500 hover:scale-105 hover:text-background transition-all ease-in"
+	>
+		<MessageCircleHeart size={20} />
+		<span>Feedback</span>
+	</HoverBorderGradient>
+);
 
 const FeedBackForm = ({ user }: { user: iUser }) => {
 	const [rating, setRating] = useState<number>(0);

@@ -1,6 +1,6 @@
 "use client";
 
-import FeedBackBtn from "@/components/FeedBackBtn";
+import Feedback from "@/components/FeedBack";
 import GithubBtn from "@/components/GithubBtn";
 import { Tabs } from "@/components/ui/aceTabs";
 import { Button } from "@/components/ui/button";
@@ -43,7 +43,6 @@ import { iFeedback } from "@/lib/database/models/feedback.model";
 import { getFeedbacks } from "@/lib/actions/feedback.action";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 
-
 export default function Home() {
 	const { theme, setTheme } = useTheme();
 	const router = useRouter();
@@ -58,8 +57,6 @@ export default function Home() {
 
 		fetchFeedback();
 	}, []);
-
-	console.log(feedbacks);
 
 	return (
 		<div className="p-3">
@@ -95,7 +92,7 @@ export default function Home() {
 							className="flex items-center gap-x-1 p-2 md:px-8 md:py-2  bg-background rounded-full  relative group transition duration-200 text-white hover:bg-transparent"
 						>
 							<Stars />
-							<span className="hidden md:inline" >Get started</span>
+							<span className="hidden md:inline">Get started</span>
 						</Link>
 					</button>
 				</div>
@@ -377,7 +374,7 @@ export default function Home() {
 				<AnimatedTestimonials testimonials={feedbacks} autoplay />
 			</section>
 
-			<FeedBackBtn />
+			<Feedback />
 		</div>
 	);
 }

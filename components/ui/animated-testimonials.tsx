@@ -14,14 +14,23 @@ export const AnimatedTestimonials = ({
 	testimonials: [iFeedback];
 	autoplay?: boolean;
 }) => {
-	const [active, setActive] = useState(0);
+	const [active, setActive] = useState<number>(0);
 
 	const handleNext = () => {
-		setActive((prev) => (prev + 1) % testimonials.length);
+		setActive((prev) => {
+			if(active + 1 < testimonials.length) {
+				return prev + 1
+			} else { return 0}
+		} );
 	};
 
 	const handlePrev = () => {
-		setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+
+		setActive((prev) => {
+			if(active + 1 > 1) {
+				return prev - 1
+			} else { return testimonials.length - 1}
+		} );
 	};
 
 	const isActive = (index: number) => {
@@ -30,10 +39,10 @@ export const AnimatedTestimonials = ({
 
 	useEffect(() => {
 		if (autoplay) {
-			const interval = setInterval(handleNext, 5000);
+			const interval = setInterval(handleNext, 4000);
 			return () => clearInterval(interval);
 		}
-	}, [autoplay]);
+	}, [autoplay, handleNext]);
 
 	const randomRotateY = () => {
 		return Math.floor(Math.random() * 21) - 10;
