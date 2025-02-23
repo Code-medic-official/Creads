@@ -30,7 +30,6 @@ import devLogo from "@/public/assets/CM_logo.png";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
 import Autoplay from "embla-carousel-autoplay";
 import { motion } from "motion/react";
-// import { motion } from "motion/react";
 import {
 	ArrowRight,
 	Boxes,
@@ -44,7 +43,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function Hage() {
+export const dynamic = "force-dynamic";
+
+export default function Home() {
 	const [user, setUser] = useState<iUser>();
 	const [feedbacks, setFeedbacks] = useState<[iFeedback]>([]);
 
