@@ -9,11 +9,23 @@ import RightPannelSheet from "./RightPannelSheet";
 import SearchDialog from "./SearchDialog";
 import ThemeToggle from "./themeToggle";
 import GithubBtn from "./GithubBtn";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { dark } from "@clerk/themes";
 
 export default function Navbar() {
 	const { online } = useNetworkState();
+	const { theme, systemTheme } = useTheme();
+
+	const [clerkTheme, setClerkTheme] = useState<typeof dark>();
 
 	if (!online) toast.error("Offline🌐 Brokie❗🤣", { id: "asdf42" });
+
+	useEffect(() => {
+		if (theme === "dark" || systemTheme === "dark") {
+			setClerkTheme(dark);
+		}
+	}, [theme, systemTheme]);
 
 	return (
 		<nav className="sticky top-0 glass-secondary px-2 sm:px-5 py-2 w-screen h-14 flex items-center justify-between z-30">
@@ -37,7 +49,7 @@ export default function Navbar() {
 				<SearchDialog />
 
 				<SignedIn>
-					<UserButton />
+					<UserButton appearance={{ baseTheme: clerkTheme }} />
 				</SignedIn>
 			</div>
 		</nav>
