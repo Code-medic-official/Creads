@@ -42,12 +42,15 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 export const dynamic = "force-dynamic";
 
 export default function Home() {
 	const [user, setUser] = useState<iUser>();
 	const [feedbacks, setFeedbacks] = useState<[iFeedback]>([]);
+
+	const {} = useTheme()
 
 	useEffect(() => {
 		const fetchData = async () => {

@@ -6,7 +6,7 @@ import OnlineBadge from "../OnlineBadge";
 import { Card, CardContent } from "../ui/card";
 import UserCard from "./UserCard";
 
-export default function ChatCard({
+export default async function ChatCard({
 	_user,
 	lastMsg,
 	variant = "default",

@@ -32,23 +32,25 @@ export default function FollowBtn({ _user }: { _user: iUser }) {
 
 	const followHandler = async (action: "FOLLOW" | "UNFOLLOW") => {
 		if (action === "FOLLOW") {
-			startTransition(() =>
-				upsertUser(
-					{ ..._user, followers: [..._userFollowers, user?._id] },
-					pathname
-				)
+			startTransition(
+				async () =>
+					await upsertUser(
+						{ ..._user, followers: [..._userFollowers, user?._id] },
+						pathname
+					)
 			);
 		} else {
-			startTransition(() =>
-				upsertUser(
-					{
-						..._user,
-						followers: _userFollowers.filter(
-							(followerId) => followerId !== user?._id
-						),
-					},
-					pathname
-				)
+			startTransition(
+				async () =>
+					await upsertUser(
+						{
+							..._user,
+							followers: _userFollowers.filter(
+								(followerId) => followerId !== user?._id
+							),
+						},
+						pathname
+					)
 			);
 		}
 	};

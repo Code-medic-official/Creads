@@ -1,4 +1,4 @@
-"use client"
+// "use client"
 
 import { getThreadComments } from "@/lib/actions/comment.action";
 import { getActiveUser } from "@/lib/actions/user.actions";
@@ -16,26 +16,27 @@ import FollowBtn from "../FollowBtn";
 import { Card, CardContent } from "../ui/card";
 import UserCard from "./UserCard";
 
-export default function ThreadCard({ thread }: { thread: iThread }) {
-	// const user = await getActiveUser();
-	// const comments = await getThreadComments(thread._id);
-	const [user, setUser] = useState<iUser>();
-	const [comments, setComments] = useState<iComment[]>();
+export default async function ThreadCard({ thread }: { thread: iThread }) {
+	const user = await getActiveUser();
+	const comments = await getThreadComments(thread._id);
+	// const [user, setUser] = useState<iUser>();
+	// const [comments, setComments] = useState<iComment[]>();
 
-	const { isLoaded } = useUser();
+	// const { isLoaded } = useUser();
+	
 
-	useEffect(() => {
-		const fetchActiveUser = async (): Promise<void> => {
-			setUser(await getActiveUser());
-		};
+	// useEffect(() => {
+	// 	const fetchActiveUser = async (): Promise<void> => {
+	// 		setUser(await getActiveUser());
+	// 	};
 
-		const fetchThreadComment = async () => {
-			setComments(await getThreadComments(thread._id));
-		};
+	// 	const fetchThreadComment = async () => {
+	// 		setComments(await getThreadComments(thread._id));
+	// 	};
 
-		if (!comments) fetchThreadComment();
-		if (isLoaded) fetchActiveUser();
-	}, [isLoaded]);
+	// 	if (!comments) fetchThreadComment();
+	// 	if (isLoaded) fetchActiveUser();
+	// }, [isLoaded]);
 
 	return (
 		<Card className="bg-secondary hover:shadow-md">

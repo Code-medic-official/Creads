@@ -87,8 +87,9 @@ const FeedBackForm = ({ user }: { user: iUser }) => {
 			redirect("/sign-in");
 		}
 
-		startTransition(() =>
-			createFeedback({ body: feedback, rating, user: user._id! })
+		startTransition(
+			async () =>
+				await createFeedback({ body: feedback, rating, user: user._id! })
 		);
 
 		toast.success("Thanks for the Feedback🤗");

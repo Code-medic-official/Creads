@@ -29,7 +29,7 @@ export default function RightPannel() {
 		const fetchOtherCommunities = async (): Promise<void> =>
 			setOtherCommunities(await getOtherCommunities(user?._id));
 
-		fetchUser();
+		if (!user) fetchUser();
 		fetchUserCommunities();
 		fetchOtherCommunities();
 	}, [user?._id]);
@@ -83,8 +83,6 @@ export default function RightPannel() {
 								<Skeleton key={n} className="w-full rounded-xl h-10 mb-2" />
 							))
 						)}
-
-
 					</section>
 				</TabsContent>
 				<TabsContent value="Activities">

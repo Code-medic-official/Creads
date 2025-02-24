@@ -73,6 +73,7 @@ export default async function layout({ children }: { children: ReactNode }) {
 					<ThemeProvider
 						attribute="class"
 						defaultTheme="dark"
+						forcedTheme="dark"
 						enableSystem
 						disableTransitionOnChange
 					>

@@ -41,7 +41,7 @@ export default function UserForm({
 	const updateUserHandler = (
 		data: z.infer<typeof userSchema>
 	): Promise<void> => {
-		startTransition(() => upsertUser({ ...user, ...data }));
+		startTransition(async () => await upsertUser({ ...user, ...data }));
 
 		form.reset();
 		console.log("onboarding..");

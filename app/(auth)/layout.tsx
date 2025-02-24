@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { poppinsFont } from "../(root)/layout";
 import "../globals.css";
 import { ThemeProvider } from "next-themes";
+import { dark } from "@clerk/themes";
 
 export const metadata: Metadata = {
 	title: "Onboarding",
@@ -13,21 +14,24 @@ export const metadata: Metadata = {
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
 	return (
-		<ClerkProvider afterSignOutUrl="/" dynamic>
+		<ClerkProvider afterSignOutUrl="/" appearance={{ baseTheme: dark }} dynamic>
 			<html suppressHydrationWarning lang="en">
-				<body	
+				<body
 					className={cn(
-						"bg-background text-foreground h-screen flex items-center justify-center",
+						"bg-background text-foreground ",
 						poppinsFont.className
 					)}
 				>
 					<ThemeProvider
 						attribute="class"
-						defaultTheme="system"
+						defaultTheme="dark"
 						enableSystem
+						forcedTheme="dark"
 						disableTransitionOnChange
 					>
-						{children}
+						<main className="h-screen flex items-center justify-center">
+							{children}
+						</main>
 					</ThemeProvider>
 				</body>
 			</html>

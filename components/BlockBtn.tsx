@@ -24,7 +24,7 @@ export default function BlockBtn({ _user }: { _user: iUser }) {
 			setUser(await getActiveUser());
 		};
 
-		fetchActiveUser();
+		if(!user) fetchActiveUser();
 	}, [blockList]);
 
 	const blockHandler = () => {

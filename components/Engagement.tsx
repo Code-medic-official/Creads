@@ -42,7 +42,7 @@ export default function Engagement({
 			setUser(await getActiveUser());
 		};
 
-		if (isLoaded) fetchActiveUser();
+		if (isLoaded && !user) fetchActiveUser();
 	}, [item, isLoaded, user?._id]);
 
 	const likeHandler = async (): Promise<void> => {
@@ -50,14 +50,14 @@ export default function Engagement({
 			? itemLikes.filter((userId) => userId !== user?._id)
 			: [...itemLikes, user?._id];
 
-		startTransition(() => {
+		startTransition(async () =>  {
 			if (variant === "COMMENT") {
-				return upsertComment(
+				return await upsertComment(
 					{ ...item, likes: likesUpdate } as iComment,
 					pathname
 				);
 			} else {
-				return upsertThread(
+				return await upsertThread(
 					{ ...item, likes: likesUpdate } as iThread,
 					pathname
 				);
@@ -70,14 +70,14 @@ export default function Engagement({
 			? itemDislikes.filter((userId) => userId !== user?._id)
 			: [...itemDislikes, user?._id];
 
-		startTransition(() => {
+		startTransition(async () =>  {
 			if (variant === "COMMENT") {
-				return upsertComment(
+				return await upsertComment(
 					{ ...item, dislikes: dislikesUpdate } as iComment,
 					pathname
 				);
 			} else {
-				return upsertThread(
+				return await upsertThread(
 					{ ...item, dislikes: dislikesUpdate } as iThread,
 					pathname
 				);

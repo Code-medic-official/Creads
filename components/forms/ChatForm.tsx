@@ -22,11 +22,11 @@ import { Input } from "../ui/input";
 export default function ChatForm({
 	friend,
 	refMessageId,
-	from
+	from,
 }: {
 	friend: iUser;
 	refMessageId?: string;
-	from: iUser
+	from: iUser;
 }) {
 	const [isPending, startTransition] = useTransition();
 	const pathname = usePathname();
@@ -42,7 +42,7 @@ export default function ChatForm({
 	});
 
 	const sendMsgHandler = async (data: z.infer<typeof messageSchema>) => {
-		startTransition(() => createMessage(data, pathname));
+		startTransition(async () => await createMessage(data, pathname));
 
 		form.reset();
 	};

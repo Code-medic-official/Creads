@@ -31,8 +31,6 @@ export default function CommentForm({
 	const dispatch = useAppDispatch();
 	const currentPath = usePathname();
 
-
-
 	const form = useForm<z.infer<typeof commentSchema>>({
 		resolver: zodResolver(commentSchema),
 		defaultValues: {
@@ -46,11 +44,12 @@ export default function CommentForm({
 	const createCommentHandler = async (
 		data: z.infer<typeof commentSchema>
 	): Promise<void> => {
-		startTransition(() =>
-			createComment(
-				{ ...data, refComment: refComment?._id || null },
-				currentPath
-			)
+		startTransition(
+			async () =>
+				await createComment(
+					{ ...data, refComment: refComment?._id || null },
+					currentPath
+				)
 		);
 
 		dispatch(setRefComment(null));

@@ -66,7 +66,7 @@ export default function ThreadForm({
 	const createThreadHandler = async (
 		data: z.infer<typeof threadSchema>
 	): Promise<void> => {
-		startTransition(() => createThread(data));
+		startTransition(async () => await createThread(data));
 
 		form.reset();
 

@@ -36,7 +36,7 @@ export default function UserCard({
 		};
 
 		if (isLoaded && !user) fetchActiveUser();
-	}, [isLoaded]);
+	}, [isLoaded, user?._id]);
 
 	console.log(_user);
 
