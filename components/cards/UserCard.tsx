@@ -38,8 +38,6 @@ export default function UserCard({
 		if (isLoaded && !user) fetchActiveUser();
 	}, [isLoaded, user?._id]);
 
-	console.log(_user);
-
 	if (variant === "sm") {
 		return (
 			<Tooltip>

@@ -1,18 +1,16 @@
 "use client";
 
-import { useMediaQuery } from "@uidotdev/usehooks";
-import React, { useEffect, useState } from "react";
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
-import { Button } from "./ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from "./ui/drawer";
 import { iUser } from "@/lib/database/models/user.model";
-import { Badge } from "./ui/badge";
+import { useAuth } from "@clerk/nextjs";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import { useState } from "react";
 import UserCard from "./cards/UserCard";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
+import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from "./ui/drawer";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import Void from "./Void";
-import { getActiveUser } from "@/lib/actions/user.actions";
-import { useAuth, useUser } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
 
 export default function PopularityList({
 	userId,

@@ -8,17 +8,24 @@ export function PlaceholdersAndVanishInput({
 	placeholders,
 	onChange,
 	onSubmit,
+	isPending,
 }: {
 	placeholders: string[];
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+	isPending: boolean;
 }) {
 	const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
 
 	const intervalRef = useRef<NodeJS.Timeout | null>(null);
 	const startAnimation = () => {
 		intervalRef.current = setInterval(() => {
-			setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
+			// ? Modified to show loading state
+			if (isPending) {
+				setCurrentPlaceholder(0); // loading placeholder was set at Zero index in the parent
+			} else {
+				setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
+			}
 		}, 3000);
 	};
 	const handleVisibilityChange = () => {

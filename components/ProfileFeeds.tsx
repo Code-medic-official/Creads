@@ -4,6 +4,7 @@ import { BookText, Image, MessageSquareQuote } from "lucide-react";
 import ThreadCard from "./cards/ThreadCard";
 import ReplyCard from "./ReplyCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import Void from "./Void";
 
 export default async function ProfileFeeds({
 	feeds,
@@ -30,15 +31,23 @@ export default async function ProfileFeeds({
 			</TabsList>
 
 			<TabsContent value="Threads" className="space-y-3">
-				{feeds.map((thread) => (
-					<ThreadCard key={thread._id} thread={thread} />
-				))}
+				{feeds.length > 0 ? (
+					feeds.map((thread) => <ThreadCard key={thread._id} thread={thread} />)
+				) : (
+					<Void msg="No posts yet!😢" />
+				)}
 			</TabsContent>
 
 			<TabsContent value="Replies" className="space-y-5">
-				{replies.map((reply) => (
-					<ReplyCard key={reply._id} reply={reply} />
-				))}
+				{replies.length > 0 ? (
+					replies.map((reply) => <ReplyCard key={reply._id} reply={reply} />)
+				) : (
+					<Void msg="No replies yet!😿" />
+				)}
+			</TabsContent>
+
+			<TabsContent value="Media" className="space-y-5">
+				<Void msg="Media comming Soon✨" />
 			</TabsContent>
 		</Tabs>
 	);

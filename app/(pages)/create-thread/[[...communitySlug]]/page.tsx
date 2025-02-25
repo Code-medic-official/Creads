@@ -17,7 +17,7 @@ export default async function page({
 		<div>
 			<h2 className="font-semibold text-xl mb-3">CreateThread</h2>
 
-			<ThreadForm userId={user?._id} community={community ?? null} />
+			<ThreadForm userId={user._id!} community={community ?? null} />
 		</div>
 	);
 }

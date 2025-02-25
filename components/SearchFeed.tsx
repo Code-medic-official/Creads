@@ -14,6 +14,7 @@ import {
 	UsersIcon,
 } from "lucide-react";
 import CommunityCard from "./cards/CommunityCard";
+import Void from "./Void";
 
 export default function SearchFeed({
 	results,
@@ -84,28 +85,49 @@ export default function SearchFeed({
 			</TabsList>
 
 			<TabsContent value="Threads" className="space-y-3">
-				{threadResults?.map((thread, i) => {
-					// console.log(thread);
-					return <ThreadCard key={i} thread={thread} />;
-				})}
-			</TabsContent>
+				{threadResults?.length > 0 ? (
+					threadResults?.map((thread, i) => {
+						// console.log(thread);
+						return <ThreadCard key={i} thread={thread} />;
+					})
+				) : (
+					<Void msg="Sorry, no Thread results match your search😢" />
+				)}
+		</TabsContent>
 
 			<TabsContent value="Accounts" className="space-y-3">
-				{accountResults?.map((user, i) => (
-					<UserCard key={i} _user={user} variant="lg" />
-				))}
+				{accountResults?.length > 0 ? (
+					accountResults?.map((user, i) => (
+						<UserCard key={i} _user={user} variant="lg" />
+					))
+				) : (
+					<Void msg="Sorry, no Account results match your search😢" />
+				)}
 			</TabsContent>
 
 			<TabsContent value="Replies" className="space-y-4">
-				{replyResults?.map((comment, i) => (
-					<ReplyCard key={i} reply={comment} />
-				))}
+				{replyResults?.length > 0 ? (
+					replyResults?.map((comment, i) => (
+						<ReplyCard key={i} reply={comment} />
+					))
+				) : (
+					<Void msg="Sorry, no Replies results match your search😢" />
+				)}
 			</TabsContent>
 
 			<TabsContent value="Communities" className="space-y-4">
-				{communityResults?.map((community, i) => (
-					<CommunityCard key={i} community={community} variant="sm" isMember />
-				))}
+				{communityResults?.length > 0 ? (
+					communityResults?.map((community, i) => (
+						<CommunityCard
+							key={i}
+							community={community}
+							variant="sm"
+							isMember
+						/>
+					))
+				) : (
+					<Void msg="Sorry, no Communities results match your search😢" />
+				)}
 			</TabsContent>
 		</Tabs>
 	);

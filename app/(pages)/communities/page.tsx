@@ -1,5 +1,6 @@
 import ThreadCard from "@/components/cards/ThreadCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Void from "@/components/Void";
 import {
 	getOtherCommunities,
 	getUserCommunities,
@@ -14,17 +15,17 @@ export const dynamic = "force-dynamic";
 export default async function page() {
 	const user = await getActiveUser();
 	const userCommunitiesIds = (await getUserCommunities(user._id!)).map(
-		(community) => community._id
+		(community): string => community._id!
 	);
 	const otherCommunitiesIds = (await getOtherCommunities(user._id!)).map(
-		(community) => community._id
+		(community): string => community._id!
 	);
 
 	const memberCommunityThreads = await getCommunitiesThreads(
-		userCommunitiesIds!
+		userCommunitiesIds
 	);
 	const otherCommunityThreads = await getCommunitiesThreads(
-		otherCommunitiesIds!
+		otherCommunitiesIds
 	);
 
 	return (
@@ -42,14 +43,22 @@ export default async function page() {
 				</div>
 
 				<TabsContent value="Member" className="space-y-3">
-					{memberCommunityThreads?.map((thread, i) => (
-						<ThreadCard key={i} thread={thread} />
-					))}
+					{memberCommunityThreads?.length > 0 ? (
+						memberCommunityThreads?.map((thread, i) => (
+							<ThreadCard key={i} thread={thread} />
+						))
+					) : (
+						<Void msg="Looks like you're part of any community yet😢. Please considure joining one to see their Posts🤗" />
+					)}
 				</TabsContent>
 				<TabsContent value="Others" className="space-y-3">
-					{otherCommunityThreads?.map((thread, i) => (
-						<ThreadCard key={i} thread={thread} />
-					))}
+					{otherCommunityThreads?.length > 0 ? (
+						otherCommunityThreads?.map((thread, i) => (
+							<ThreadCard key={i} thread={thread} />
+						))
+					) : (
+						<Void msg="It's feeling quite out here🦗😂" />
+					)}
 				</TabsContent>
 			</Tabs>
 		</div>

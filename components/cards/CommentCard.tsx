@@ -102,7 +102,6 @@ export default function CommentCard({ comment }: { comment: iComment }) {
 }
 
 const ReplyCard = ({ replyComment: comment }: { replyComment: iComment }) => {
-	const pathname = usePathname();
 
 	return (
 		<div className="">
@@ -112,7 +111,7 @@ const ReplyCard = ({ replyComment: comment }: { replyComment: iComment }) => {
 				<p className="text-sm">{comment.body}</p>
 
 				<div className="flex items-center justify-between">
-					<Engagement item={comment} pathname={pathname} variant="COMMENT" />
+					<Engagement item={comment}  variant="COMMENT" />
 
 					<span className="text-xs text-muted-foreground">
 						{moment(comment.createdAt).fromNow(true)}

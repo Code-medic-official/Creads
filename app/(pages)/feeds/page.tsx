@@ -1,5 +1,6 @@
 import ThreadCard from "@/components/cards/ThreadCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Void from "@/components/Void";
 import { getCommunities } from "@/lib/actions/community.actions";
 import {
 	getFollowingsTreads,
@@ -51,15 +52,23 @@ export default async function page() {
 			</TabsContent>
 
 			<TabsContent value="Following" className="space-y-3">
-				{followingsThreads?.map((thread, i) => (
-					<ThreadCard key={i} thread={thread} />
-				))}
+				{followingsThreads.length > 0 ? (
+					followingsThreads?.map((thread, i) => (
+						<ThreadCard key={i} thread={thread} />
+					))
+				) : (
+					<Void msg="Follow people to see their threads🤗" />
+				)}
 			</TabsContent>
 
 			<TabsContent value="Friends" className="space-y-3">
-				{friendThreads?.map((thread, i) => (
-					<ThreadCard key={i} thread={thread} />
-				))}
+				{friendThreads.length > 0 ? (
+					friendThreads?.map((thread, i) => (
+						<ThreadCard key={i} thread={thread} />
+					))
+				) : (
+					<Void msg="You make friends by following each other👯." />
+				)}
 			</TabsContent>
 		</Tabs>
 	);

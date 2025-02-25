@@ -1,38 +1,20 @@
-"use client";
-
 import Feedback from "@/components/FeedBack";
 import GithubBtn from "@/components/GithubBtn";
 import { Tabs } from "@/components/ui/aceTabs";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 import { Button } from "@/components/ui/button";
-import {
-	Carousel,
-	CarouselContent,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
-} from "@/components/ui/carousel";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
-import {
-	GlowingStarsBackgroundCard,
-	GlowingStarsDescription,
-	GlowingStarsTitle,
-} from "@/components/ui/glowing-stars";
-import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
+
+import MainHeroSection from "@/components/MainHeroSection";
+import TechCarousel from "@/components/TechCarousel";
 import { LinkPreview } from "@/components/ui/link-preview";
 import { SparklesCore } from "@/components/ui/sparkles";
-import { DEMO_PAGES, TECH_STACKS } from "@/constants";
+import { DEMO_PAGES } from "@/constants";
 import { getFeedbacks } from "@/lib/actions/feedback.action";
 import { getActiveUser } from "@/lib/actions/user.actions";
-import { iFeedback } from "@/lib/database/models/feedback.model";
-import { iUser } from "@/lib/database/models/user.model";
 import devLogo from "@/public/assets/CM_logo.png";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
-import Autoplay from "embla-carousel-autoplay";
-import { motion } from "motion/react";
 import {
-	ArrowRight,
-	Boxes,
 	Code2,
 	Component,
 	MessageCircleHeartIcon,
@@ -41,25 +23,14 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
 
 export const dynamic = "force-dynamic";
 
-export default function Home() {
-	const [user, setUser] = useState<iUser>();
-	const [feedbacks, setFeedbacks] = useState<[iFeedback]>([]);
+export default async function Home() {
+	const user = await getActiveUser();
+	const feedbacks = await getFeedbacks();
 
-	const {} = useTheme()
-
-	useEffect(() => {
-		const fetchData = async () => {
-			setUser(await getActiveUser());
-			setFeedbacks(await getFeedbacks());
-		};
-
-		fetchData();
-	}, []);
+	console.log("running on server");
 
 	return (
 		<>
@@ -135,41 +106,7 @@ export default function Home() {
 
 			{/* Hero 2 */}
 			<section className="-mt-28">
-				<HeroHighlight>
-					<motion.h1
-						initial={{
-							opacity: 0,
-							y: 20,
-						}}
-						animate={{
-							opacity: 1,
-							y: [20, -5, 0],
-						}}
-						transition={{
-							duration: 0.5,
-							ease: [0.4, 0.0, 0.2, 1],
-						}}
-						className="text-2xl px-4 md:text-4xl lg:text-5xl font-bold text-neutral-700 dark:text-white max-w-4xl leading-relaxed lg:leading-snug text-center mx-auto "
-					>
-						Your new Social Platform🤩; a place where you can{" "}
-						<Highlight className="text-black dark:text-white">
-							Let Out All Your Hot Takes❤️‍🔥
-						</Highlight>
-						<div className="mt-10">
-							<button className="mt-4 relative rounded-full overflow-hidden ">
-								<div className="absolute inset-0 !bg-gradient-to-r !from-indigo-500 !to-purple-500 rounded-lg" />
-
-								<Link
-									href="/feeds"
-									className="flex items-center gap-x-1 px-8 py-2 rounded-full  relative group transition duration-200 text-white bg-transparent"
-								>
-									<Stars />
-									<span>Get started</span>
-								</Link>
-							</button>
-						</div>
-					</motion.h1>
-				</HeroHighlight>
+				<MainHeroSection />
 			</section>
 
 			{/* Screen shot */}
@@ -210,49 +147,7 @@ export default function Home() {
 
 			{/* Teck stack Carousel */}
 			<section>
-				<h3 className="mb-3 text-xl sm:text-2xl md:text-4xl font-medium flex items-center gap-x-1">
-					<Boxes />
-					<span>Tech Stack</span>
-				</h3>
-
-				<Carousel
-					plugins={[Autoplay({ delay: 3500 })]}
-					className="w-[97vw] md:w-[95vw]"
-				>
-					<CarouselContent>
-						{TECH_STACKS.map((stack, i) => (
-							<CarouselItem
-								key={i}
-								className="pl-5 basis-[90%] sm:basis-[45%] min-[950px]:basis-[30%] min-[1450px]:basis-[22%] relative"
-							>
-								<Image
-									src={stack.icon}
-									priority
-									width={30}
-									height={30}
-									alt="Stack-icon"
-									className="roudend-full absolute top-3 left-8"
-								/>
-								<GlowingStarsBackgroundCard>
-									<GlowingStarsTitle>{stack.title}</GlowingStarsTitle>
-									<div className="flex justify-between items-end">
-										<GlowingStarsDescription>
-											{stack.description}
-										</GlowingStarsDescription>
-										<Link href={stack.link}>
-											<Button size="icon" variant="secondary">
-												<ArrowRight />
-											</Button>
-										</Link>
-									</div>
-								</GlowingStarsBackgroundCard>
-							</CarouselItem>
-						))}
-					</CarouselContent>
-
-					<CarouselPrevious />
-					<CarouselNext />
-				</Carousel>
+				<TechCarousel />
 			</section>
 
 			{/* Developer Section */}
@@ -264,7 +159,7 @@ export default function Home() {
 
 				<div className="p-4">
 					<h4 className="text-2xl sm:text-3xl md:text-4xl text-center mb-4 font-semibold ">
-						Code Medic🧑‍💻
+						⚕️Code Medic💊
 					</h4>
 					<div className="w-full flex flex-col sm:flex-row items-center gap-4 justify-center">
 						<Image

@@ -6,6 +6,8 @@ import { ThemeProvider } from "next-themes";
 import { Poppins } from "next/font/google";
 import { ReactNode } from "react";
 import "../globals.css";
+import { getActiveUser } from "@/lib/actions/user.actions";
+import { getFeedbacks } from "@/lib/actions/feedback.action";
 
 export const poppinsFont = Poppins({
 	subsets: ["latin"],
@@ -61,8 +63,8 @@ export const metadata: Metadata = {
 };
 
 export default async function layout({ children }: { children: ReactNode }) {
-	// await getFeedbacks()
-	// await getActiveUser()
+	await getFeedbacks()
+	await getActiveUser()
 
 	return (
 		<ClerkProvider afterSignOutUrl="/" dynamic>

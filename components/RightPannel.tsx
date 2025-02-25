@@ -4,32 +4,26 @@ import {
 	getOtherCommunities,
 	getUserCommunities,
 } from "@/lib/actions/community.actions";
-import { getActiveUser } from "@/lib/actions/user.actions";
+import { iCommunity } from "@/lib/database/models/community.model";
 import { iUser } from "@/lib/database/models/user.model";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { useEffect, useState } from "react";
 import CommunityCard from "./cards/CommunityCard";
 import { Label } from "./ui/label";
-import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
-import { iCommunity } from "@/lib/database/models/community.model";
 import { Skeleton } from "./ui/skeleton";
-import { OrganizationList } from "@clerk/nextjs";
+import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 
-export default function RightPannel() {
-	const [user, setUser] = useState<iUser>();
+export default function RightPannel({ user }: { user: iUser }) {
 	const [userCommunities, setUserCommunities] = useState<iCommunity[]>();
 	const [otherCommunities, setOtherCommunities] = useState<iCommunity[]>();
 
 	useEffect(() => {
-		const fetchUser = async (): Promise<void> => setUser(await getActiveUser());
-
 		const fetchUserCommunities = async (): Promise<void> =>
-			setUserCommunities(await getUserCommunities(user?._id));
+			setUserCommunities(await getUserCommunities(user._id!));
 
 		const fetchOtherCommunities = async (): Promise<void> =>
-			setOtherCommunities(await getOtherCommunities(user?._id));
+			setOtherCommunities(await getOtherCommunities(user._id!));
 
-		if (!user) fetchUser();
 		fetchUserCommunities();
 		fetchOtherCommunities();
 	}, [user?._id]);

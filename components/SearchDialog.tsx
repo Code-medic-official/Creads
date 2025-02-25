@@ -1,6 +1,6 @@
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import {
 	Dialog,
 	DialogContent,
@@ -14,23 +14,46 @@ export default function SearchDialog() {
 	const [q, setQ] = useState<string>("");
 	const router = useRouter();
 	const [isOpen, setIsOpen] = useState(false);
+	const [isPending, startTransition] = useTransition();
 
-	const placeholders = [
-		"Top design trends on Creads 2023",
+	const [placeholders, setPlaceholders] = useState([
+		"Top design trends on Creads 2025",
 		"Find the best influencers on Creads",
 		"Latest Creads platform updates and news",
 		"Collaborate with top designers on Creads",
 		"Brands that grew using Creads successfully",
-	];
+	]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setQ(e.target.value);
+
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		setPlaceholders([
+			`🔎Searching for "${q}"...`,
+			"🔃Filtering results...",
+			"📅Sorting results...",
+			"🌐Slow internet😭...",
+			"📡Tying to access the server...",
+		]);
+
 		e.preventDefault();
-		router.push(`/search/${encodeURIComponent(q)}`);
-		// Close dialog after 800 milli-second
-		setTimeout(() => setIsOpen(false), 800);
+		startTransition(() => {
+			router.push(`/search/${encodeURIComponent(q)}`);
+		});
 	};
+
+	useEffect(() => {
+		if (!isPending) {
+			setIsOpen(false);
+			setPlaceholders([
+				"Top design trends on Creads 2025",
+				"Find the best influencers on Creads",
+				"Latest Creads platform updates and news",
+				"Collaborate with top designers on Creads",
+				"Brands that grew using Creads successfully",
+			]);
+		}
+	}, [isPending]);
 
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -53,6 +76,7 @@ export default function SearchDialog() {
 					placeholders={placeholders}
 					onChange={handleChange}
 					onSubmit={onSubmit}
+					isPending={isPending}
 				/>
 			</DialogContent>
 		</Dialog>

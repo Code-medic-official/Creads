@@ -6,12 +6,13 @@ import { iCommunity } from "@/lib/database/models/community.model";
 import { iThread, ThreadPrivacy } from "@/lib/database/models/thread.model";
 import { threadSchema } from "@/lib/schemas/thread";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Image, Loader, Upload } from "lucide-react";
+import { Loader, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
+import CommunityCard from "../cards/CommunityCard";
 import { Button } from "../ui/button";
 import {
 	Form,
@@ -21,7 +22,6 @@ import {
 	FormLabel,
 	FormMessage,
 } from "../ui/form";
-import { Label } from "../ui/label";
 import {
 	Select,
 	SelectContent,
@@ -30,7 +30,6 @@ import {
 	SelectValue,
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
-import CommunityCard from "../cards/CommunityCard";
 
 export default function ThreadForm({
 	variant = "CREATE",
@@ -61,7 +60,7 @@ export default function ThreadForm({
 			user: userId,
 			community: community?._id,
 		},
-	});
+});
 
 	const createThreadHandler = async (
 		data: z.infer<typeof threadSchema>

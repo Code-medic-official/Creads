@@ -24,6 +24,8 @@ export default function Navbar() {
 	useEffect(() => {
 		if (theme === "dark" || systemTheme === "dark") {
 			setClerkTheme(dark);
+		} else {
+			setClerkTheme(undefined);
 		}
 	}, [theme, systemTheme]);
 

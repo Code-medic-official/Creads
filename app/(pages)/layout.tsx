@@ -122,7 +122,7 @@ export default async function RootLayout({
 											{children}
 										</section>
 										<section className="hidden sm:block  sm:flex-[.4] ">
-											<RightPannel />
+											<RightPannel user={user} />
 										</section>
 									</main>
 									<BottomNav />
