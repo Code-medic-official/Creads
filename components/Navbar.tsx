@@ -21,8 +21,10 @@ export default function Navbar() {
 
 	if (!online) toast.error("Offline🌐 Brokie❗🤣", { id: "asdf42" });
 
+	console.log(clerkTheme);
+
 	useEffect(() => {
-		if (theme === "dark" || systemTheme === "dark") {
+		if (theme === "dark") {
 			setClerkTheme(dark);
 		} else {
 			setClerkTheme(undefined);
