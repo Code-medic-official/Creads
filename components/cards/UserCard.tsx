@@ -109,7 +109,7 @@ export default function UserCard({
 						) : (
 							<>
 								<div className="absolute top-0 right-0">
-									<FollowBtn _user={_user} pathname={pathname} />
+									<FollowBtn _user={_user} />
 								</div>
 								<div className="absolute bottom-4 right-0">
 									<BlockBtn _user={_user} />
@@ -186,7 +186,7 @@ export default function UserCard({
 							</Button>
 						) : (
 							<>
-								<FollowBtn _user={_user} pathname={pathname} />
+								<FollowBtn _user={_user} />
 								<BlockBtn _user={_user} />
 							</>
 						)}
