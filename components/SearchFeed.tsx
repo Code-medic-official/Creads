@@ -91,7 +91,7 @@ export default function SearchFeed({
 						return <ThreadCard key={i} thread={thread} />;
 					})
 				) : (
-					<Void msg="Sorry, no Thread results match your search😢" />
+					<Void msg="Sorry, no Threads match your search😢" />
 				)}
 		</TabsContent>
 
@@ -101,7 +101,7 @@ export default function SearchFeed({
 						<UserCard key={i} _user={user} variant="lg" />
 					))
 				) : (
-					<Void msg="Sorry, no Account results match your search😢" />
+					<Void msg="Sorry, no Accounts match your search😢" />
 				)}
 			</TabsContent>
 
@@ -111,7 +111,7 @@ export default function SearchFeed({
 						<ReplyCard key={i} reply={comment} />
 					))
 				) : (
-					<Void msg="Sorry, no Replies results match your search😢" />
+					<Void msg="Sorry, no Replies match your search😢" />
 				)}
 			</TabsContent>
 
@@ -126,7 +126,7 @@ export default function SearchFeed({
 						/>
 					))
 				) : (
-					<Void msg="Sorry, no Communities results match your search😢" />
+					<Void msg="Sorry, no Communities match your search😢" />
 				)}
 			</TabsContent>
 		</Tabs>
