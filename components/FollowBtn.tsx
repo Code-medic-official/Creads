@@ -56,7 +56,7 @@ export default function FollowBtn({ _user }: { _user: iUser }) {
 	};
 
 	// console.log(!isLoaded && !user)
-	if (isFollowing === undefined)
+	if (!user || isFollowing === undefined)
 		return <Skeleton className="w-20 h-6 rounded-3xl" />;
 
 	return (

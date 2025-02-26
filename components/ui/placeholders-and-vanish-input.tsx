@@ -20,12 +20,7 @@ export function PlaceholdersAndVanishInput({
 	const intervalRef = useRef<NodeJS.Timeout | null>(null);
 	const startAnimation = () => {
 		intervalRef.current = setInterval(() => {
-			// ? Modified to show loading state
-			if (isPending) {
-				setCurrentPlaceholder(0); // loading placeholder was set at Zero index in the parent
-			} else {
-				setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
-			}
+			setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
 		}, 3000);
 	};
 	const handleVisibilityChange = () => {

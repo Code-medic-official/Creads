@@ -30,8 +30,6 @@ export default async function Home() {
 	const user = await getActiveUser();
 	const feedbacks = await getFeedbacks();
 
-	console.log("running on server");
-
 	return (
 		<>
 			{/* Hero Navbar */}
@@ -124,7 +122,7 @@ export default async function Home() {
 					}
 				>
 					<Image
-						src={"/lead/eg.ong"}
+						src={"/assets/screenshots/feeds-page.png"}
 						alt="hero"
 						height={720}
 						width={1400}

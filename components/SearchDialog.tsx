@@ -32,8 +32,7 @@ export default function SearchDialog() {
 			`🔎Searching for "${q}"...`,
 			"🔃Filtering results...",
 			"📅Sorting results...",
-			"🌐Slow internet😭...",
-			"📡Tying to access the server...",
+			"📡Accessing the server...",
 		]);
 
 		e.preventDefault();

@@ -7,7 +7,6 @@ import feedbackModel, { iFeedback } from "../database/models/feedback.model";
 export const createFeedback = async (feedback: iFeedback): Promise<void> => {
 	try {
 		await connectDb();
-
 		await feedbackModel.create(feedback);
 
 		revalidatePath("/");

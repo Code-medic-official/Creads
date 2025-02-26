@@ -4,15 +4,15 @@ import { getActiveUser } from "@/lib/actions/user.actions";
 import { iUser } from "@/lib/database/models/user.model";
 import { useUser } from "@clerk/nextjs";
 import { EditIcon } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import BlockBtn from "../BlockBtn";
 import FollowBtn from "../FollowBtn";
+import PopularityList from "../PopularityList";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import PopularityList from "../PopularityList";
 
 export default function UserCard({
 	variant,
@@ -24,11 +24,8 @@ export default function UserCard({
 	followings?: iUser[];
 }) {
 	const [user, setUser] = useState<iUser>();
-
 	const { isLoaded } = useUser();
-
 	const router = useRouter();
-	const pathname = usePathname();
 
 	useEffect(() => {
 		const fetchActiveUser = async (): Promise<void> => {
@@ -103,9 +100,10 @@ export default function UserCard({
 
 					<div className="">
 						{_user._id === user?._id ? (
-							<Button size="icon">
-								<EditIcon />
-							</Button>
+							// <Button size="icon">
+							// 	<EditIcon />
+							// </Button>
+							null
 						) : (
 							<>
 								<div className="absolute top-0 right-0">

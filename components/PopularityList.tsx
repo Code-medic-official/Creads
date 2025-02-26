@@ -169,7 +169,7 @@ const ListContent = ({
 			<TabsContent value="FOLLOWERS" className="space-y-2">
 				{followers?.length > 0 ? (
 					followers.map((user) => (
-						<UserCard key={user._id} _user={user} variant="lg" />
+						<UserCard key={user?._id} _user={user} variant="lg" />
 					))
 				) : (
 					<Void msg="No followers yet😢" />
@@ -179,7 +179,7 @@ const ListContent = ({
 			<TabsContent value="FOLLOWING" className="space-y-2">
 				{following?.length > 0 ? (
 					following.map((user) => (
-						<UserCard key={user._id} _user={user} variant="lg" />
+						<UserCard key={user?._id} _user={user} variant="lg" />
 					))
 				) : (
 					<Void msg="U gotta follow more people👀 Don't be selfish🤣" />
@@ -189,7 +189,7 @@ const ListContent = ({
 			<TabsContent value="BLOCKED" className="space-y-2">
 				{blockList?.length > 0 ? (
 					blockList.map((user) => (
-						<UserCard key={user._id} _user={user} variant="lg" />
+						<UserCard key={user?._id} _user={user} variant="lg" />
 					))
 				) : (
 					<Void msg="You have have no enemies, YET❗Keep up😉" />
