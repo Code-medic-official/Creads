@@ -86,7 +86,7 @@ export default function ThreadForm({
 			{community && (
 				<div className="flex items-center gap-x-2">
 					<p>Posting on:</p>
-					<CommunityCard community={community} variant="xs" isMember />
+					<CommunityCard community={community} variant="xs"/>
 				</div>
 			)}
 			<Form {...form}>

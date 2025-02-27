@@ -3,7 +3,6 @@ import ProfileFeeds from "@/components/ProfileFeeds";
 import { getCommunityComments } from "@/lib/actions/comment.action";
 import { getCommunity } from "@/lib/actions/community.actions";
 import { getCommunityThreads } from "@/lib/actions/thread.actions";
-import React from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -21,7 +20,7 @@ export default async function page({
 	return (
 		<div>
 			<section>
-				<CommunityCard community={community} variant="lg" isMember />
+				<CommunityCard community={community} variant="lg" />
 			</section>
 
 			<section className="mt-4">

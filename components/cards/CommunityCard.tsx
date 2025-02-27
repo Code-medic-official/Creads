@@ -10,19 +10,33 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
+import { useState, useEffect } from "react";
+import { getActiveUser } from "@/lib/actions/user.actions";
 
 export default function CommunityCard({
 	variant,
 	community,
-	isMember,
 }: {
 	variant: "sm" | "lg" | "xs";
 	community: iCommunity;
-	isMember: boolean;
 }) {
+	const [isMember, setIsMember] = useState<boolean>(false);
+
 	const router = useRouter();
 	const isMdDevice = useMediaQuery("min-width: 768px");
 	const isSmDevice = useMediaQuery("min-width: 640px");
+
+	useEffect(() => {
+		const checkActiveUser = async () => {
+			const user = await getActiveUser();
+
+			setIsMember(
+				!!community.members?.find((member) => member._id === user?._id)
+			);
+		};
+
+		checkActiveUser();
+	}, [community]);
 
 	if (variant === "xs") {
 		return (
@@ -111,15 +125,15 @@ export default function CommunityCard({
 								@{community.creator.username}
 							</Link>
 						</p>
-						<p className="text-xs text-muted-foreground">
+						<div className="text-xs text-muted-foreground">
 							Since:{" "}
 							<span className="font-medium">
 								{moment(community.createdAt).format("h:ma - MMM D,YYYY")}
 							</span>
-							<div className="absolute hidden sm:block top-0 right-0">
+							<span className="absolute hidden sm:block top-0 right-0">
 								<OrganizationSwitcher />
-							</div>
-						</p>
+							</span>
+						</div>
 
 						{/* Actions */}
 						<div>
