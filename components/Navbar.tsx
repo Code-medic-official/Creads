@@ -12,16 +12,21 @@ import GithubBtn from "./GithubBtn";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { dark } from "@clerk/themes";
+import { iCommunity } from "@/lib/database/models/community.model";
 
-export default function Navbar() {
+export default function Navbar({
+	userCommunities,
+	otherCommunities,
+}: {
+	userCommunities: iCommunity[];
+	otherCommunities: iCommunity[];
+}) {
 	const { online } = useNetworkState();
 	const { theme, systemTheme } = useTheme();
 
 	const [clerkTheme, setClerkTheme] = useState<typeof dark>();
 
 	if (!online) toast.error("Offline🌐 Brokie❗🤣", { id: "asdf42" });
-
-	console.log(clerkTheme);
 
 	useEffect(() => {
 		if (theme === "dark") {
@@ -49,7 +54,10 @@ export default function Navbar() {
 
 			<div className="flex items-center gap-x-1 sm:gap-x-2">
 				<ThemeToggle />
-				<RightPannelSheet />
+				<RightPannelSheet
+					userCommunities={userCommunities}
+					otherCommunities={otherCommunities}
+				/>
 				<SearchDialog />
 
 				<SignedIn>

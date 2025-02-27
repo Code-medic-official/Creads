@@ -13,7 +13,11 @@ import { redirect } from "next/navigation";
 import { Toaster } from "react-hot-toast";
 import StoreProvider from "../(root)/StoreProvider";
 import "../globals.css";
-import { getCommunities } from "@/lib/actions/community.actions";
+import {
+	getCommunities,
+	getOtherCommunities,
+	getUserCommunities,
+} from "@/lib/actions/community.actions";
 
 const poppinsFont = Poppins({
 	subsets: ["latin"],
@@ -93,6 +97,8 @@ export default async function RootLayout({
 	const communities = await getCommunities();
 
 	if (communities) console.log("Communities Fetched");
+	const userCommunities = await getUserCommunities(user._id!);
+	const otherCommunities = await getOtherCommunities(user._id!);
 
 	// ! Ensure User is onboarded
 	if (user && !user?.onboarded) redirect("/onboarding");
@@ -113,7 +119,10 @@ export default async function RootLayout({
 							>
 								<Toaster />
 								<ScrollArea className="h-screen">
-									<Navbar />
+									<Navbar
+										userCommunities={userCommunities}
+										otherCommunities={otherCommunities}
+									/>
 									<main className="flex">
 										<section>
 											<LeftPannel />
@@ -122,7 +131,10 @@ export default async function RootLayout({
 											{children}
 										</section>
 										<section className="hidden sm:block  sm:flex-[.4] ">
-											<RightPannel user={user} />
+											<RightPannel
+												userCommunities={userCommunities}
+												otherCommunities={otherCommunities}
+											/>
 										</section>
 									</main>
 									<BottomNav />

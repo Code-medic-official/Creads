@@ -1,32 +1,20 @@
 "use client";
 
-import {
-	getOtherCommunities,
-	getUserCommunities,
-} from "@/lib/actions/community.actions";
 import { iCommunity } from "@/lib/database/models/community.model";
-import { iUser } from "@/lib/database/models/user.model";
 import { TabsContent } from "@radix-ui/react-tabs";
-import { useEffect, useState } from "react";
 import CommunityCard from "./cards/CommunityCard";
 import { Label } from "./ui/label";
 import { Skeleton } from "./ui/skeleton";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 
-export default function RightPannel({ user }: { user: iUser }) {
-	const [userCommunities, setUserCommunities] = useState<iCommunity[]>();
-	const [otherCommunities, setOtherCommunities] = useState<iCommunity[]>();
-
-	useEffect(() => {
-		const fetchUserCommunities = async (): Promise<void> =>
-			setUserCommunities(await getUserCommunities(user._id!));
-
-		const fetchOtherCommunities = async (): Promise<void> =>
-			setOtherCommunities(await getOtherCommunities(user._id!));
-
-		fetchUserCommunities();
-		fetchOtherCommunities();
-	}, [user?._id]);
+export default function RightPannel({
+	userCommunities,
+	otherCommunities,
+}: {
+	userCommunities: iCommunity[];
+	otherCommunities: iCommunity[];
+}) {
+	
 
 	return (
 		<div className="bg-secondary p-2 h-[calc(100vh-3.5rem)] w-full sticky top-14">
@@ -47,13 +35,12 @@ export default function RightPannel({ user }: { user: iUser }) {
 										key={community._id}
 										variant="sm"
 										community={community}
-										isMember
 									/>
 								))}
 							</div>
 						) : (
-							[1, 2, 3].map((n) => (
-								<Skeleton key={n} className="w-full rounded-xl h-10 mb-2" />
+							[...Array(3)].map((n, i) => (
+								<Skeleton key={i} className="w-full rounded-xl h-14 mb-2" />
 							))
 						)}
 					</section>
@@ -68,13 +55,12 @@ export default function RightPannel({ user }: { user: iUser }) {
 										key={community._id}
 										variant="sm"
 										community={community}
-										isMember={false}
 									/>
 								))}
 							</div>
 						) : (
-							[1, 2, 3].map((n) => (
-								<Skeleton key={n} className="w-full rounded-xl h-10 mb-2" />
+							[...Array(5)].map((n, i) => (
+								<Skeleton key={i} className="w-full rounded-xl h-14 mb-2" />
 							))
 						)}
 					</section>
@@ -86,7 +72,3 @@ export default function RightPannel({ user }: { user: iUser }) {
 		</div>
 	);
 }
-
-const LoadingState = () => {
-	return <div className="p-3">Loading...</div>;
-};
