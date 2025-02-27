@@ -11,14 +11,13 @@ import { usePathname } from "next/navigation";
 
 export default function FollowBtn({ _user }: { _user: iUser }) {
 	const [isFollowing, setIsFollowing] = useState<boolean>();
+	const [_userFollowers, _setUserFollowers] = useState<string[]>(
+		_user.followers.map((follower) => follower._id)
+	);
 	const [isPending, startTransition] = useTransition();
 	const [user, setUser] = useState<iUser>();
 	const pathname = usePathname();
 	const { isLoaded } = useUser();
-
-	const _userFollowers: string[] = _user.followers.map(
-		(follower) => follower._id
-	);
 
 	useEffect(() => {
 		setIsFollowing(!!_userFollowers.find((userId) => userId == user?._id));
@@ -28,34 +27,26 @@ export default function FollowBtn({ _user }: { _user: iUser }) {
 		};
 
 		if (isLoaded && !user) fetchActiveUser();
-	}, [_user, isLoaded, user?._id]);
+	}, [_user, isLoaded, user?._id, `${_userFollowers}`]);
 
 	const followHandler = async (action: "FOLLOW" | "UNFOLLOW") => {
 		if (action === "FOLLOW") {
-			startTransition(
-				async () =>
-					await upsertUser(
-						{ ..._user, followers: [..._userFollowers, user?._id] },
-						pathname
-					)
-			);
+			const updatedList: string[] = [..._userFollowers, user?._id];
+			_setUserFollowers(updatedList);
+			console.log("sending", updatedList);
+
+			await upsertUser({ ..._user, followers: updatedList }, pathname);
 		} else {
-			startTransition(
-				async () =>
-					await upsertUser(
-						{
-							..._user,
-							followers: _userFollowers.filter(
-								(followerId) => followerId !== user?._id
-							),
-						},
-						pathname
-					)
+			const updatedList: string[] = _userFollowers.filter(
+				(followerId) => followerId !== user?._id
 			);
+			_setUserFollowers(updatedList);
+			console.log("sending", updatedList);
+
+			await upsertUser({ ..._user, followers: updatedList }, pathname);
 		}
 	};
 
-	// console.log(!isLoaded && !user)
 	if (!user || isFollowing === undefined)
 		return <Skeleton className="w-20 h-6 rounded-3xl" />;
 
@@ -64,13 +55,14 @@ export default function FollowBtn({ _user }: { _user: iUser }) {
 			{isFollowing ? (
 				<Button
 					size="sm"
-					variant="outline"
+					variant="ghost"
 					disabled={isPending}
 					onClick={() => followHandler(isFollowing ? "UNFOLLOW" : "FOLLOW")}
-					className="rounded-2xl"
+					className="rounded-2xl text-muted-foreground hover:text-primary"
 				>
 					Unfollow
-					{isPending ? <Loader2 className="animate-spin" /> : <UserMinus2 />}
+					<UserMinus2 />
+					{/* {isPending ? <Loader2 className="animate-spin" /> : <UserMinus2 />} */}
 				</Button>
 			) : (
 				<Button
@@ -80,7 +72,8 @@ export default function FollowBtn({ _user }: { _user: iUser }) {
 					className="rounded-2xl"
 				>
 					Follow
-					{isPending ? <Loader2 className="animate-spin" /> : <Plus />}
+					<Plus />
+					{/* {isPending ? <Loader2 className="animate-spin" /> : <Plus />} */}
 				</Button>
 			)}
 		</>
