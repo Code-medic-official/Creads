@@ -7,6 +7,12 @@ import {
 	Users2,
 } from "lucide-react";
 import fypPage from "@/public/assets/screenshots/feeds-page.png";
+import searchPage from "@/public/assets/screenshots/search-page.png";
+import communitiesPage from "@/public/assets/screenshots/communities-page.png";
+import communityPage from "@/public/assets/screenshots/community-page.png";
+import profilePage from "@/public/assets/screenshots/profile-page.png";
+import createPage from "@/public/assets/screenshots/create-page.png";
+import commentsPage from "@/public/assets/screenshots/comments-page.png";
 import Image from "next/image";
 
 export const LEFT_PANNEL_LINKS: {
@@ -54,7 +60,7 @@ export const DEMO_PAGES = [
 		value: "fyp",
 		content: (
 			<div className="w-full overflow-hidden relative h-full rounded-2xl p-5 md:p-10 text-xl md:text-2xl font-semibold text-foreground !bg-gradient-to-br from-purple-700 to-violet-900">
-				<p className="" >Fyp Page</p>
+				<p className="">Fyp Page</p>
 				<Image
 					src={fypPage}
 					alt="fyp-Page"
@@ -69,34 +75,13 @@ export const DEMO_PAGES = [
 		value: "communities",
 		content: (
 			<div className="w-full overflow-hidden relative h-full rounded-2xl p-5 md:p-10 text-xl md:text-2xl font-semibold text-foreground !bg-gradient-to-br from-purple-700 to-violet-900">
-				<p className="" >Communites Page</p>
-			</div>
-		),
-	},
-	{
-		title: "Comments",
-		value: "comment",
-		content: (
-			<div className="w-full overflow-hidden relative h-full rounded-2xl p-5 md:p-10 text-xl md:text-2xl font-semibold text-foreground !bg-gradient-to-br from-purple-700 to-violet-900">
-				<p className="" >Comments Page</p>
-			</div>
-		),
-	},
-	{
-		title: "Create",
-		value: "create",
-		content: (
-			<div className="w-full overflow-hidden relative h-full rounded-2xl p-5 md:p-10 text-xl md:text-2xl font-semibold text-foreground !bg-gradient-to-br from-purple-700 to-violet-900">
-				<p className="" >Create Page</p>
-			</div>
-		),
-	},
-	{
-		title: "Profile",
-		value: "profile",
-		content: (
-			<div className="w-full overflow-hidden relative h-full rounded-2xl p-5 md:p-10 text-xl md:text-2xl font-semibold text-foreground !bg-gradient-to-br from-purple-700 to-violet-900">
-				<p className="" >Profile Page</p>
+				<p className="">Communites Page</p>
+				<Image
+					src={communitiesPage}
+					alt="communities-Page"
+					priority
+					className="object-contain rounded-lg w-full"
+				/>
 			</div>
 		),
 	},
@@ -105,7 +90,60 @@ export const DEMO_PAGES = [
 		value: "community",
 		content: (
 			<div className="w-full overflow-hidden relative h-full rounded-2xl p-5 md:p-10 text-xl md:text-2xl font-semibold text-foreground !bg-gradient-to-br from-purple-700 to-violet-900">
-				<p className="" >Community Page</p>
+				<p className="">Community Page</p>
+				<Image
+					src={communityPage}
+					alt="community-Page"
+					priority
+					className="object-contain rounded-lg w-full"
+				/>
+			</div>
+		),
+	},
+	{
+		title: "Comments",
+		value: "comment",
+		content: (
+			<div className="w-full overflow-hidden relative h-full rounded-2xl p-5 md:p-10 text-xl md:text-2xl font-semibold text-foreground !bg-gradient-to-br from-purple-700 to-violet-900">
+				<p className="">Comments Page</p>
+
+				<Image
+					src={commentsPage}
+					alt="comments-Page"
+					priority
+					className="object-contain rounded-lg w-full"
+				/>
+			</div>
+		),
+	},
+	{
+		title: "Create",
+		value: "create",
+		content: (
+			<div className="w-full overflow-hidden relative h-full rounded-2xl p-5 md:p-10 text-xl md:text-2xl font-semibold text-foreground !bg-gradient-to-br from-purple-700 to-violet-900">
+				<p className="">Create Page</p>
+				<Image
+					src={createPage}
+					alt="create-Page"
+					priority
+					className="object-contain rounded-lg w-full"
+				/>
+			</div>
+		),
+	},
+	{
+		title: "Profile",
+		value: "profile",
+		content: (
+			<div className="w-full overflow-hidden relative h-full rounded-2xl p-5 md:p-10 text-xl md:text-2xl font-semibold text-foreground !bg-gradient-to-br from-purple-700 to-violet-900">
+				<p className="">Profile Page</p>
+
+				<Image
+					src={profilePage}
+					alt="profile-Page"
+					priority
+					className="object-contain rounded-lg w-full"
+				/>
 			</div>
 		),
 	},
@@ -114,7 +152,13 @@ export const DEMO_PAGES = [
 		value: "search",
 		content: (
 			<div className="w-full overflow-hidden relative h-full rounded-2xl p-5 md:p-10 text-xl md:text-2xl font-semibold text-foreground !bg-gradient-to-br from-purple-700 to-violet-900">
-				<p className="" >Search Page</p>
+				<p className="">Search Page</p>
+				<Image
+					src={searchPage}
+					alt="search-Page"
+					priority
+					className="object-contain rounded-lg w-full"
+				/>
 			</div>
 		),
 	},
