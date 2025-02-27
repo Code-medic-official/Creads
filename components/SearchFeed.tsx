@@ -31,8 +31,34 @@ export default function SearchFeed({
 	const accountResults: iUser[] = results?.accountResults ?? [];
 	const communityResults: iCommunity[] = results?.communityResults ?? [];
 
+	const getPriorityTab = () => {
+		let maxLength = 0;
+		let longestKey: string | null = null;
+		for (const key in results) {
+			if (results[key].length > maxLength) {
+				maxLength = results[key].length;
+
+				longestKey = key;
+			}
+		}
+
+		switch (longestKey) {
+			case "threadResults":
+				return "Threads";
+			case "replyResults":
+				return "Replies";
+			case "accountResults":
+				return "Accounts";
+			case "communityResults":
+				return "Communities";
+
+			default:
+				return "Threads";
+		}
+	};
+
 	return (
-		<Tabs defaultValue="Threads">
+		<Tabs defaultValue={getPriorityTab()}>
 			<TabsList className="sticky top-[3.6rem] z-30">
 				<TabsTrigger
 					value="Threads"
@@ -93,7 +119,7 @@ export default function SearchFeed({
 				) : (
 					<Void msg="Sorry, no Threads match your search😢" />
 				)}
-		</TabsContent>
+			</TabsContent>
 
 			<TabsContent value="Accounts" className="space-y-3">
 				{accountResults?.length > 0 ? (
@@ -118,12 +144,7 @@ export default function SearchFeed({
 			<TabsContent value="Communities" className="space-y-4">
 				{communityResults?.length > 0 ? (
 					communityResults?.map((community, i) => (
-						<CommunityCard
-							key={i}
-							community={community}
-							variant="sm"
-							isMember
-						/>
+						<CommunityCard key={i} community={community} variant="sm" />
 					))
 				) : (
 					<Void msg="Sorry, no Communities match your search😢" />
