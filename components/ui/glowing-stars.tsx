@@ -92,9 +92,12 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
 		>
 			{[...Array(stars)].map((_, starIdx) => {
 				const isGlowing = glowingStars.includes(starIdx);
-				// const delay = (starIdx % 7) * 0.1;
-				const delay =
-					((starIdx % Math.floor(Math.random() * (10 - 3 + 1))) + 3) * 0.1;
+				const delay = (starIdx % 7) * 0.1;
+
+				// ! Removed since it affects page performance
+				// const delay =
+				// 	((starIdx % Math.floor(Math.random() * (10 - 3 + 1))) + 3) * 0.1;
+
 				const staticDelay = starIdx * 0.01;
 				return (
 					<div

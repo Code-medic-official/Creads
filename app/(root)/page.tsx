@@ -108,7 +108,7 @@ export default async function Home() {
 			</section>
 
 			{/* Screen shot */}
-			<section>
+			<section className="flex flex-col overflow-hidden" >
 				<ContainerScroll
 					titleComponent={
 						<>
