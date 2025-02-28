@@ -12,6 +12,8 @@ import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { useState, useEffect } from "react";
 import { getActiveUser } from "@/lib/actions/user.actions";
+import { useTheme } from "next-themes";
+import { dark } from "@clerk/themes";
 
 export default function CommunityCard({
 	variant,
@@ -25,6 +27,7 @@ export default function CommunityCard({
 	const router = useRouter();
 	const isMdDevice = useMediaQuery("min-width: 768px");
 	const isSmDevice = useMediaQuery("min-width: 640px");
+	const { theme } = useTheme();
 
 	useEffect(() => {
 		const checkActiveUser = async () => {
@@ -98,6 +101,7 @@ export default function CommunityCard({
 				<div className="flex gap-x-2">
 					<Image
 						src={community.imageUrl}
+
 						width={isMdDevice ? 128 : isSmDevice ? 96 : 80}
 						height={isMdDevice ? 128 : isSmDevice ? 96 : 80}
 						quality={100}
@@ -130,15 +134,15 @@ export default function CommunityCard({
 							<span className="font-medium">
 								{moment(community.createdAt).format("h:ma - MMM D,YYYY")}
 							</span>
-							<span className="absolute hidden sm:block top-0 right-0">
-								<OrganizationSwitcher />
+							<span className="absolute hidden md:block top-0 right-0">
+								<OrganizationSwitcher appearance={{baseTheme: theme === "dark" ? dark : undefined}} />
 							</span>
 						</div>
 
 						{/* Actions */}
 						<div>
-							<div className="absolute sm:hidden block -bottom-2 -left-1">
-								<OrganizationSwitcher />
+							<div className="absolute md:hidden block -bottom-2 -left-1">
+								<OrganizationSwitcher  appearance={{baseTheme: theme === "dark" ? dark : undefined}} />
 							</div>
 							{isMember && (
 								<Button

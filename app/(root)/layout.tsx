@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 	},
 	description:
 		"Social media app clone that is built for heroes by Victoruel; Alias Code medic",
-	applicationName: "Ruel-threads-clone",
+	applicationName: "Creads",
 	keywords: [
 		"Creads",
 		"Ruel-threads-clone",
@@ -99,20 +99,8 @@ export const metadata: Metadata = {
 			"max-snippet": -1,
 		},
 	},
-	icons: {
-		icon: "/favicon.ico",
-	},
-	themeColor: "#893af2",
-	metadataBase: new URL("https://creads.vercel.app"),
-	alternates: {
-		canonical: "https://creads.vercel.app",
-		languages: {
-			"en-US": "https://creads.vercel.app",
-		},
-	},
-	other: {
-		"canvas:version": "1.0.0", // Custom canvas prop for dynamic rendering
-	},
+
+	
 };
 
 const jsonLd = {
@@ -152,11 +140,11 @@ export default async function layout({ children }: { children: ReactNode }) {
 							<main className="p-3 sm:p-5 md:p-7">{children}</main>
 						</ScrollArea>
 					</ThemeProvider>
-				</body>
-				<script
+					{/* <script
 					type="application/ld+json"
 					dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-				/>
+				/> */}
+				</body>
 			</html>
 		</ClerkProvider>
 	);

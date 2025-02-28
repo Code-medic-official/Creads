@@ -93,7 +93,6 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",    
   },
-  themeColor: "#893af2",
   metadataBase: new URL("https://creads.vercel.app"),
   alternates: {
     canonical: "https://creads.vercel.app",

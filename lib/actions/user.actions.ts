@@ -1,8 +1,7 @@
 "use server";
 
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { connectDb } from "../database/db";
 import userModel, { iUser } from "../database/models/user.model";
 

@@ -129,20 +129,8 @@ export const metadata: Metadata = {
 			"max-snippet": -1,
 		},
 	},
-	icons: {
-		icon: "/favicon.ico",
-	},
-	themeColor: "#893af2",
-	metadataBase: new URL("https://creads.vercel.app"),
-	alternates: {
-		canonical: "https://creads.vercel.app",
-		languages: {
-			"en-US": "https://creads.vercel.app",
-		},
-	},
-	other: {
-		"canvas:version": "1.0.0", // Custom canvas prop for dynamic rendering
-	},
+
+
 };
 
 const jsonLd = {
@@ -213,11 +201,12 @@ export default async function RootLayout({
 								</ScrollArea>
 							</ThemeProvider>
 						</body>
-					</TooltipProvider>
-					<script
+						{/* <script
+					
 						type="application/ld+json"
 						dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-					/>
+					/> */}
+					</TooltipProvider>
 				</html>
 			</StoreProvider>
 		</ClerkProvider>

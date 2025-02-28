@@ -5,6 +5,7 @@ import Link from "next/link";
 import OnlineBadge from "../OnlineBadge";
 import { Card, CardContent } from "../ui/card";
 import UserCard from "./UserCard";
+import { clerkClient } from "@clerk/nextjs/server";
 
 export default async function ChatCard({
 	_user,
@@ -15,6 +16,10 @@ export default async function ChatCard({
 	lastMsg?: iMessage;
 	variant?: "default" | "header";
 }) {
+
+	// const _clerkUser = await (await clerkClient()).users.getUser(_user.clerkId).
+	
+
 	if (variant === "default") {
 		return (
 			<Link href={`/chat/${_user.username}`} className="block">
