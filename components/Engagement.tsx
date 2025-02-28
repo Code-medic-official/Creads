@@ -20,19 +20,15 @@ export default function Engagement({
 	item: iThread | iComment;
 	variant: "THREAD" | "COMMENT";
 }) {
-	const [isPending, startTransition] = useTransition();
 	const [hasLiked, setHasLiked] = useState<boolean>(false);
 	const [hasDisliked, setHasDisliked] = useState<boolean>(false);
+	const [itemLikes, setItemLikes] = useState<string[]>(item.likes);
+	const [itemDislikes, setItemDisLikes] = useState<string[]>(item.dislikes);
 	const pathname = usePathname();
-
 
 	const { isLoaded } = useUser();
 
 	const [user, setUser] = useState<iUser>();
-
-
-	const itemLikes: string[] = item.likes;
-	const itemDislikes: string[] = item.dislikes;
 
 	useEffect(() => {
 		setHasLiked(!!itemLikes.find((userId) => userId === user?._id));
@@ -43,26 +39,27 @@ export default function Engagement({
 		};
 
 		if (isLoaded && !user) fetchActiveUser();
-	}, [item, isLoaded, user?._id]);
+	}, [item, isLoaded, user?._id, itemLikes, itemDislikes]);
 
 	const likeHandler = async (): Promise<void> => {
 		const likesUpdate = hasLiked
 			? itemLikes.filter((userId) => userId !== user?._id)
 			: [...itemLikes, user?._id];
 
-		startTransition(async () =>  {
-			if (variant === "COMMENT") {
-				return await upsertComment(
-					{ ...item, likes: likesUpdate } as iComment,
-					pathname
-				);
-			} else {
-				return await upsertThread(
-					{ ...item, likes: likesUpdate } as iThread,
-					pathname
-				);
-			}
-		});
+		// ! Manualy update item likes
+		setItemLikes(likesUpdate!);
+
+		if (variant === "COMMENT") {
+			return await upsertComment(
+				{ ...item, likes: likesUpdate } as iComment,
+				pathname
+			);
+		} else {
+			return await upsertThread(
+				{ ...item, likes: likesUpdate } as iThread,
+				pathname
+			);
+		}
 	};
 
 	const dislikeHandler = async (): Promise<void> => {
@@ -70,19 +67,20 @@ export default function Engagement({
 			? itemDislikes.filter((userId) => userId !== user?._id)
 			: [...itemDislikes, user?._id];
 
-		startTransition(async () =>  {
-			if (variant === "COMMENT") {
-				return await upsertComment(
-					{ ...item, dislikes: dislikesUpdate } as iComment,
-					pathname
-				);
-			} else {
-				return await upsertThread(
-					{ ...item, dislikes: dislikesUpdate } as iThread,
-					pathname
-				);
-			}
-		});
+		// ! Manually update item Dislikes
+		setItemDisLikes(dislikesUpdate);
+
+		if (variant === "COMMENT") {
+			return await upsertComment(
+				{ ...item, dislikes: dislikesUpdate } as iComment,
+				pathname
+			);
+		} else {
+			return await upsertThread(
+				{ ...item, dislikes: dislikesUpdate } as iThread,
+				pathname
+			);
+		}
 	};
 
 	return (
@@ -90,12 +88,14 @@ export default function Engagement({
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<Button
-						disabled={isPending || hasDisliked}
+						disabled={hasDisliked}
 						variant="ghost"
 						onClick={likeHandler}
 						className=" w-8 text-muted-foreground"
 					>
-						<ThumbsUp fill={hasLiked ? "#874ced" : "#ffffff00"} />
+						<ThumbsUp
+							fill={hasLiked ? "#874ced" : "transparent"}
+						/>
 						{itemLikes.length}
 					</Button>
 				</TooltipTrigger>
@@ -105,7 +105,7 @@ export default function Engagement({
 			<Tooltip>
 				<TooltipTrigger asChild>
 					<Button
-						disabled={isPending || hasLiked}
+						disabled={hasLiked}
 						variant="ghost"
 						onClick={dislikeHandler}
 						className="  w-8 text-muted-foreground"

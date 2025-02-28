@@ -4,8 +4,6 @@ import { getActiveUser } from "@/lib/actions/user.actions";
 export default async function page() {
 	const user = await getActiveUser();
 
-	
-
 	return (
 		<div>
 			<h1 className="font-semibold text-xl mb-5 ">Onboarding</h1>
