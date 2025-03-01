@@ -18,6 +18,7 @@ import {
 	Code2,
 	Component,
 	MessageCircleHeartIcon,
+	Star,
 	Stars,
 	TreePine,
 } from "lucide-react";
@@ -260,6 +261,9 @@ export default async function Home() {
 				<h3 className="mb-3 text-xl sm:text-2xl md:text-4xl font-medium flex items-center gap-x-1">
 					<MessageCircleHeartIcon />
 					<span>Testimonials</span>
+						{/* <span>
+							<Star size={20} />
+						</span> */}
 				</h3>
 
 				<AnimatedTestimonials testimonials={feedbacks} autoplay />
