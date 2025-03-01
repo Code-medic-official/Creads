@@ -3,6 +3,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { connectDb } from "../database/db";
+import { unstable_cache as cache } from "next/cache";
 import userModel, { iUser } from "../database/models/user.model";
 
 // ! AUTH Server Actions
@@ -33,20 +34,24 @@ export const getActiveUser = async (): Promise<iUser> => {
 	}
 };
 
-export const getUsers = async (): Promise<iUser[]> => {
-	try {
-		await connectDb();
+export const getUsers = cache(
+	async (): Promise<iUser[]> => {
+		try {
+			await connectDb();
 
-		const users = await userModel.find().populate(["followers", "blockList"]);
+			const users = await userModel.find().populate(["followers", "blockList"]);
 
-		// return users
-		return JSON.parse(JSON.stringify(users));
-	} catch (error: any) {
-		throw new Error(error);
-	}
-};
+			// return users
+			return JSON.parse(JSON.stringify(users));
+		} catch (error: any) {
+			throw new Error(error);
+		}
+	},
+	["users"],
+	{ revalidate: 3600, tags: ["users"] }
+);
 
-export const getUser = async (
+export const getUser = cache(async (
 	username?: string,
 	clerkId?: string
 ): Promise<iUser> => {
@@ -62,7 +67,7 @@ export const getUser = async (
 	} catch (error: any) {
 		throw new Error(error);
 	}
-};
+}, ["user"], {revalidate:1800, tags: ["user", "db-user"]});
 
 export const getUserFollowings = async (userId: string): Promise<iUser[]> => {
 	try {

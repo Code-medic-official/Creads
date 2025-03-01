@@ -18,24 +18,21 @@ import { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
-import { Metadata } from 'next';
-
 export const metadata: Metadata = {
-  title: "Creads - Your Ultimate Social Media Experience | FYP Project",
-  description: "Creads is a revolutionary social media platform designed to connect people through creativity, collaboration, and community. Explore our Final Year Project (FYP) to learn how we're redefining social interactions.",
-  keywords: [
-    "Creads",
-    "social media app",
-    "FYP project",
-    "creative social network",
-    "community building",
-    "social media platform",
-    "Next.js social media app",
-    "Final Year Project",
-    "social media innovation",
-  ],
-  authors: [{ name: "Code Medic", url: "https://creads.vercel.app" }],
- 
+	title: "FYP",
+	description:
+		"Creads is a revolutionary social media platform designed to connect people through creativity, collaboration, and community. Explore our Final Year Project (FYP) to learn how we're redefining social interactions.",
+	keywords: [
+		"Creads",
+		"social media app",
+		"FYP project",
+		"creative social network",
+		"community building",
+		"social media platform",
+		"Next.js social media app",
+		"Final Year Project",
+		"social media innovation",
+	],
 };
 
 export default async function page() {
