@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import RightPannel from "@/components/RightPannel";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { getActiveUser } from "@/lib/actions/user.actions";
+import { getActiveUser, getRandomUsers } from "@/lib/actions/user.actions";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
@@ -149,6 +149,7 @@ export default async function RootLayout({
 	if (communities) console.log("Communities Fetched");
 	const userCommunities = await getUserCommunities(user._id!);
 	const otherCommunities = await getOtherCommunities(user._id!);
+	const suggestedAccounts = await getRandomUsers();
 
 	// ! Ensure User is onboarded
 	if (user && !user?.onboarded) redirect("/onboarding");
@@ -172,6 +173,7 @@ export default async function RootLayout({
 									<Navbar
 										userCommunities={userCommunities}
 										otherCommunities={otherCommunities}
+										suggestedAccounts={suggestedAccounts}
 									/>
 									<main className="flex">
 										<section>
@@ -184,6 +186,7 @@ export default async function RootLayout({
 											<RightPannel
 												userCommunities={userCommunities}
 												otherCommunities={otherCommunities}
+												suggestedAccounts={suggestedAccounts}
 											/>
 										</section>
 									</main>

@@ -51,23 +51,40 @@ export const getUsers = cache(
 	{ revalidate: 3600, tags: ["users"] }
 );
 
-export const getUser = cache(async (
-	username?: string,
-	clerkId?: string
-): Promise<iUser> => {
+export const getUser = cache(
+	async (username?: string, clerkId?: string): Promise<iUser> => {
+		try {
+			await connectDb();
+
+			const user = await userModel
+				.findOne()
+				.or([{ username }, { clerkId }])
+				.populate(["followers", "blockList"]);
+
+			return JSON.parse(JSON.stringify(user));
+		} catch (error: any) {
+			throw new Error(error);
+		}
+	},
+	["user"],
+	{ revalidate: 1800, tags: ["user", "db-user"] }
+);
+
+export const getRandomUsers = async (): Promise<iUser[]> => {
 	try {
 		await connectDb();
+		const { userId } = await auth();
 
-		const user = await userModel
-			.findOne()
-			.or([{ username }, { clerkId }])
-			.populate(["followers", "blockList"]);
+		const randomUsers = await userModel.aggregate([
+			{ $match: { clerkId: { $ne: userId } } },
+			{ $sample: { size: 3 } },
+		]);
 
-		return JSON.parse(JSON.stringify(user));
+		return JSON.parse(JSON.stringify(randomUsers));
 	} catch (error: any) {
 		throw new Error(error);
 	}
-}, ["user"], {revalidate:1800, tags: ["user", "db-user"]});
+};
 
 export const getUserFollowings = async (userId: string): Promise<iUser[]> => {
 	try {

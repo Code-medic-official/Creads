@@ -4,13 +4,16 @@ import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { iCommunity } from "@/lib/database/models/community.model";
+import { iUser } from "@/lib/database/models/user.model";
 
 export default function RightPannelSheet({
 	userCommunities,
 	otherCommunities,
+	suggestedAccounts,
 }: {
 	userCommunities: iCommunity[];
 	otherCommunities: iCommunity[];
+	suggestedAccounts: iUser[];
 }) {
 	return (
 		<Sheet>
@@ -30,6 +33,7 @@ export default function RightPannelSheet({
 				<RightPannel
 					userCommunities={userCommunities}
 					otherCommunities={otherCommunities}
+					suggestedAccounts={suggestedAccounts}
 				/>
 			</SheetContent>
 		</Sheet>

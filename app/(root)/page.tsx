@@ -10,7 +10,7 @@ import TechCarousel from "@/components/TechCarousel";
 import { LinkPreview } from "@/components/ui/link-preview";
 import { SparklesCore } from "@/components/ui/sparkles";
 import { DEMO_PAGES } from "@/constants";
-import { getFeedbacks } from "@/lib/actions/feedback.action";
+import { getFeedbacks, getFeedbackStats } from "@/lib/actions/feedback.action";
 import { getActiveUser } from "@/lib/actions/user.actions";
 import devLogo from "@/public/assets/CM_logo.png";
 import { SignInButton, SignUpButton } from "@clerk/nextjs";
@@ -24,12 +24,16 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
 	const user = await getActiveUser();
 	const feedbacks = await getFeedbacks();
+	const feedbackStats = await getFeedbackStats();
+
+	console.log(feedbackStats);
 
 	return (
 		<>
@@ -109,7 +113,7 @@ export default async function Home() {
 			</section>
 
 			{/* Screen shot */}
-			<section className="flex flex-col overflow-hidden" >
+			<section className="flex flex-col overflow-hidden">
 				<ContainerScroll
 					titleComponent={
 						<>
@@ -258,13 +262,22 @@ export default async function Home() {
 
 			{/* Testimonials (uncomment after we have some more contents */}
 			<section className="mt-10">
-				<h3 className="mb-3 text-xl sm:text-2xl md:text-4xl font-medium flex items-center gap-x-1">
-					<MessageCircleHeartIcon />
-					<span>Testimonials</span>
-						{/* <span>
-							<Star size={20} />
-						</span> */}
-				</h3>
+				<div className="flex items-center gap-x-1">
+					<h3 className="mb-3 text-xl sm:text-2xl md:text-4xl font-medium flex items-center gap-2">
+						<MessageCircleHeartIcon />
+						<span>Testimonials</span>
+					</h3>
+
+					<Badge variant="secondary" className="space-x-1"  >
+						<span className="text-primary"  >{feedbackStats.totalFeedbacks}</span>
+						<span> Reviews</span>
+					</Badge>
+
+					<Badge>
+						<Star size={18} stroke="#fbce41" fill="#fbce41" />
+						<span>{feedbackStats.avgRating}</span>
+					</Badge>
+				</div>
 
 				<AnimatedTestimonials testimonials={feedbacks} autoplay />
 			</section>

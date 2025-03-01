@@ -6,27 +6,29 @@ import CommunityCard from "./cards/CommunityCard";
 import { Label } from "./ui/label";
 import { Skeleton } from "./ui/skeleton";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
+import { iUser } from "@/lib/database/models/user.model";
+import UserCard from "./cards/UserCard";
 
 export default function RightPannel({
 	userCommunities,
 	otherCommunities,
+	suggestedAccounts,
 }: {
 	userCommunities: iCommunity[];
 	otherCommunities: iCommunity[];
+	suggestedAccounts: iUser[];
 }) {
-	
-
 	return (
 		<div className="bg-secondary p-2 h-[calc(100vh-3.5rem)] w-full sticky top-14">
 			<Tabs defaultValue="Communities">
 				<TabsList className="mb-3">
 					<TabsTrigger value="Communities">Communities</TabsTrigger>
-					<TabsTrigger value="Activities">Activities</TabsTrigger>
+					<TabsTrigger value="Suggestions">Suggestions</TabsTrigger>
 				</TabsList>
 
 				<TabsContent value="Communities">
 					<section className="mb-3">
-						<Label>You Communities</Label>
+						<Label>Your Communities</Label>
 
 						{userCommunities ? (
 							<div className="space-y-2">
@@ -65,8 +67,18 @@ export default function RightPannel({
 						)}
 					</section>
 				</TabsContent>
-				<TabsContent value="Activities">
-					<h2>Activities</h2>
+				<TabsContent value="Suggestions">
+					<h2 className="mb-3">Suggested Accounts</h2>
+
+					<section className="space-y-2">
+						{suggestedAccounts.length > 0
+							? suggestedAccounts.map((user, i) => (
+									<UserCard key={i} _user={user} variant="lg" />
+							  ))
+							: [...Array(3)].map((n, i) => (
+									<Skeleton key={i} className="w-full rounded-xl h-14 mb-2" />
+							  ))}
+					</section>
 				</TabsContent>
 			</Tabs>
 		</div>

@@ -13,13 +13,16 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { dark } from "@clerk/themes";
 import { iCommunity } from "@/lib/database/models/community.model";
+import { iUser } from "@/lib/database/models/user.model";
 
 export default function Navbar({
 	userCommunities,
 	otherCommunities,
+	suggestedAccounts,
 }: {
 	userCommunities: iCommunity[];
 	otherCommunities: iCommunity[];
+	suggestedAccounts: iUser[];
 }) {
 	const { online } = useNetworkState();
 	const { theme, systemTheme } = useTheme();
@@ -57,6 +60,7 @@ export default function Navbar({
 				<RightPannelSheet
 					userCommunities={userCommunities}
 					otherCommunities={otherCommunities}
+					suggestedAccounts={suggestedAccounts}
 				/>
 				<SearchDialog />
 
