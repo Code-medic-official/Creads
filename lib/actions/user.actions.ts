@@ -75,10 +75,14 @@ export const getRandomUsers = async (): Promise<iUser[]> => {
 		await connectDb();
 		const { userId } = await auth();
 
-		const randomUsers = await userModel.aggregate([
+		const _randomUsers = await userModel.aggregate([
 			{ $match: { clerkId: { $ne: userId } } },
 			{ $sample: { size: 3 } },
 		]);
+
+		const randomUsers = await userModel.populate(_randomUsers, {
+			path: "followers blockList",
+		});
 
 		return JSON.parse(JSON.stringify(randomUsers));
 	} catch (error: any) {
