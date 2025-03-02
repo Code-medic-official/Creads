@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { connectDb } from "../database/db";
 import { unstable_cache as cache } from "next/cache";
 import userModel, { iUser } from "../database/models/user.model";
+import { redirect } from "next/navigation";
 
 // ! AUTH Server Actions
 export const createUser = async (newUser: iUser): Promise<void> => {
@@ -15,7 +16,8 @@ export const createUser = async (newUser: iUser): Promise<void> => {
 	try {
 		await userModel.create(newUser);
 
-		// redirect("/onboarding");
+		// ! Redirect user to onboarding page after creating account Immediately
+		redirect("/onboarding");
 	} catch (error: any) {
 		throw new Error(error);
 	}
@@ -24,11 +26,19 @@ export const createUser = async (newUser: iUser): Promise<void> => {
 // ? Directly get active User
 export const getActiveUser = async (): Promise<iUser> => {
 	try {
-		const { userId } = await auth();
+		await connectDb();
+		const { userId: clerkId } = await auth();
 
-		const activeUser = await getUser(undefined, userId!);
+		const fetchActiveUser = cache(
+			async (): Promise<iUser> =>
+				await userModel
+					.findOne({ clerkId })
+					.populate(["followers", "blockList"]),
+			["current-user"],
+			{ revalidate: 60, tags: ["current-user"] }
+		);
 
-		return JSON.parse(JSON.stringify(activeUser));
+		return JSON.parse(JSON.stringify(await fetchActiveUser()));
 	} catch (error: any) {
 		throw new Error(error);
 	}

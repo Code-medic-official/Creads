@@ -15,8 +15,8 @@ export const createThread = async (
 		await connectDb();
 		await threadModel.create(thread);
 
-		revalidatePath("/feeds");
 		revalidateTag("threads");
+		revalidatePath("/feeds");
 	} catch (error: any) {
 		console.error(error);
 	}
