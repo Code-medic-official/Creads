@@ -154,6 +154,8 @@ export default async function RootLayout({
 	// ! Ensure User is onboarded
 	if (user && !user?.onboarded) redirect("/onboarding");
 
+	console.log(user)
+
 	return (
 		<ClerkProvider afterSignOutUrl="/" dynamic>
 			<StoreProvider>

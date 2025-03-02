@@ -34,22 +34,35 @@ export const getActiveUser = async (): Promise<iUser> => {
 	}
 };
 
-export const getUsers = cache(
-	async (): Promise<iUser[]> => {
-		try {
-			await connectDb();
+// export const getUsers = cache(
+// 	async (): Promise<iUser[]> => {
+// 		try {
+// 			await connectDb();
 
-			const users = await userModel.find().populate(["followers", "blockList"]);
+// 			const users = await userModel.find().populate(["followers", "blockList"]);
 
-			// return users
-			return JSON.parse(JSON.stringify(users));
-		} catch (error: any) {
-			throw new Error(error);
-		}
-	},
-	["users"],
-	{ revalidate: 3600, tags: ["users"] }
-);
+// 			// return users
+// 			return JSON.parse(JSON.stringify(users));
+// 		} catch (error: any) {
+// 			throw new Error(error);
+// 		}
+// 	},
+// 	["users"],
+// 	{ revalidate: 3600, tags: ["users"] }
+// );
+
+export const getUsers = async (): Promise<iUser[]> => {
+	try {
+		await connectDb();
+
+		const users = await userModel.find().populate(["followers", "blockList"]);
+
+		// return users
+		return JSON.parse(JSON.stringify(users));
+	} catch (error: any) {
+		throw new Error(error);
+	}
+};
 
 export const getUser = cache(
 	async (username?: string, clerkId?: string): Promise<iUser> => {
