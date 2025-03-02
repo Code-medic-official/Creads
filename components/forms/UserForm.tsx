@@ -44,7 +44,6 @@ export default function UserForm({
 		startTransition(async () => await upsertUser({ ...user, ...data }));
 
 		form.reset();
-		console.log("onboarding..");
 
 		toast.success("Onboarding Successfull");
 		redirect("/feeds");

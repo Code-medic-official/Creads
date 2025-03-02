@@ -123,21 +123,6 @@ export const metadata: Metadata = {
 	},
 };
 
-const jsonLd = {
-	"@context": "https://schema.org",
-	"@type": "SoftwareApplication",
-	name: "Creads",
-	description:
-		"A revolutionary social media platform for creative collaboration.",
-	applicationCategory: "SocialMedia",
-	operatingSystem: "Web, iOS, Android",
-	offers: {
-		"@type": "Offer",
-		price: "0",
-		priceCurrency: "USD",
-	},
-};
-
 export default async function RootLayout({
 	children,
 }: Readonly<{
@@ -152,7 +137,7 @@ export default async function RootLayout({
 	const suggestedAccounts = await getRandomUsers();
 
 	// ! Ensure User is onboarded
-	if (user && !user?.onboarded) redirect("/onboarding");
+	if (user && !user.onboarded) redirect("/onboarding");
 
 	console.log(user)
 

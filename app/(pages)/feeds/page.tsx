@@ -37,21 +37,19 @@ export const metadata: Metadata = {
 
 export default async function page() {
 	const user = await getActiveUser();
-	const users = await getUsers();
-	const communities = await getCommunities();
-
-	if (users && communities) console.log("users & communities fetched");
+	await getUsers();
+	await getCommunities();
 
 	const threads: iThread[] = await getThreads();
 	const userFollowings: string[] = (await (
-		await getUserFollowings(user?._id)
+		await getUserFollowings(user._id!)
 	).map((_user) => _user?._id)) as string[];
 	const followingsThreads: iThread[] = await getFollowingsTreads(
 		userFollowings
 	);
 
 	const UserFriends: string[] = (
-		await getUserFriends(user.followers as string[], user?._id)
+		await getUserFriends(user.followers as string[], user._id!)
 	).map((_user) => _user?._id) as string[];
 	const friendThreads = await getFriendThreads(UserFriends);
 

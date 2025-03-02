@@ -66,14 +66,6 @@ export const metadata: Metadata = {
 			"Creads is a revolutionary social media platform designed to connect people through creativity, collaboration, and community. Explore our Final Year Project (FYP) to learn how we're redefining social interactions.",
 		url: "https://creads.vercel.app",
 		siteName: "Creads",
-		// images: [
-		// 	{
-		// 		url: "/assets/logo.png",
-		// 		width: 1200,
-		// 		height: 630,
-		// 		alt: "Creads - Social Media Redefined",
-		// 	},
-		// ],
 		locale: "en_US",
 		type: "website",
 	},
@@ -82,7 +74,6 @@ export const metadata: Metadata = {
 		title: "Creads - Your Ultimate Social Media Experience | FYP Project",
 		description:
 			"Creads is a revolutionary social media platform designed to connect people through creativity, collaboration, and community. Explore our Final Year Project (FYP) to learn how we're redefining social interactions.",
-		// images: ["/assets/logo.png"],
 		site: "@creadsapp",
 		creator: "@ruelTieni",
 	},
@@ -98,23 +89,6 @@ export const metadata: Metadata = {
 			"max-image-preview": "large",
 			"max-snippet": -1,
 		},
-	},
-
-	
-};
-
-const jsonLd = {
-	"@context": "https://schema.org",
-	"@type": "SoftwareApplication",
-	name: "Creads",
-	description:
-		"A revolutionary social media platform for creative collaboration.",
-	applicationCategory: "SocialMedia",
-	operatingSystem: "Web, iOS, Android",
-	offers: {
-		"@type": "Offer",
-		price: "0",
-		priceCurrency: "USD",
 	},
 };
 

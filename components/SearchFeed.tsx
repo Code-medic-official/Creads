@@ -113,7 +113,6 @@ export default function SearchFeed({
 			<TabsContent value="Threads" className="space-y-3">
 				{threadResults?.length > 0 ? (
 					threadResults?.map((thread, i) => {
-						// console.log(thread);
 						return <ThreadCard key={i} thread={thread} />;
 					})
 				) : (

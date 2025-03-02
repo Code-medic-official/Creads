@@ -33,7 +33,6 @@ export default function FollowBtn({ _user }: { _user: iUser }) {
 		if (action === "FOLLOW") {
 			const updatedList: string[] = [..._userFollowers, user?._id];
 			_setUserFollowers(updatedList);
-			console.log("sending", updatedList);
 
 			await upsertUser({ ..._user, followers: updatedList }, pathname);
 		} else {
@@ -41,7 +40,6 @@ export default function FollowBtn({ _user }: { _user: iUser }) {
 				(followerId) => followerId !== user?._id
 			);
 			_setUserFollowers(updatedList);
-			console.log("sending", updatedList);
 
 			await upsertUser({ ..._user, followers: updatedList }, pathname);
 		}

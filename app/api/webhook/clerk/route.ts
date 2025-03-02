@@ -11,6 +11,7 @@ import {
 	upsertUser,
 } from "@/lib/actions/user.actions";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { revalidateTag } from "next/cache";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { Webhook } from "svix";
@@ -246,6 +247,18 @@ export const POST = async (req: Request) => {
 			console.error(error);
 			return NextResponse.json({ msg: "Delete User Failed!" }, { status: 500 });
 		}
+	}
+
+	if (
+		evt.type === "session.created" ||
+		evt.type === "session.ended" ||
+		evt.type === "session.revoked"
+	) {
+		revalidateTag("current-user");
+		return NextResponse.json(
+			{ msg: "Current user Cache revalidated" },
+			{ status: 200 }
+		);
 	}
 	return NextResponse.json({ success: true }, { status: 200 });
 };
