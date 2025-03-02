@@ -44,15 +44,15 @@ export default async function page() {
 
 	const threads: iThread[] = await getThreads();
 	const userFollowings: string[] = (await (
-		await getUserFollowings(user._id!)
-	).map((_user) => _user._id)) as string[];
+		await getUserFollowings(user?._id)
+	).map((_user) => _user?._id)) as string[];
 	const followingsThreads: iThread[] = await getFollowingsTreads(
 		userFollowings
 	);
 
 	const UserFriends: string[] = (
-		await getUserFriends(user.followers as string[], user._id!)
-	).map((_user) => _user._id) as string[];
+		await getUserFriends(user.followers as string[], user?._id)
+	).map((_user) => _user?._id) as string[];
 	const friendThreads = await getFriendThreads(UserFriends);
 
 	return (
