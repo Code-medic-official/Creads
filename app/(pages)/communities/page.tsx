@@ -31,16 +31,10 @@ export default async function page() {
 	return (
 		<div>
 			<Tabs defaultValue="Member">
-				<div className="flex items-center justify-between sticky top-[3.6rem] z-20">
-					<TabsList className="mx-0">
-						<TabsTrigger value="Member">Member</TabsTrigger>
-						<TabsTrigger value="Others">Others</TabsTrigger>
-					</TabsList>
-
-					<div className="border rounded-xl shadow bg-secondary/15 backdrop-blur-md">
-						<OrganizationSwitcher />
-					</div>
-				</div>
+				<TabsList className="sticky top-[3.7rem]" >
+					<TabsTrigger value="Member">Member</TabsTrigger>
+					<TabsTrigger value="Others">Others</TabsTrigger>
+				</TabsList>
 
 				<TabsContent value="Member" className="space-y-3">
 					{memberCommunityThreads?.length > 0 ? (
@@ -48,7 +42,7 @@ export default async function page() {
 							<ThreadCard key={i} thread={thread} />
 						))
 					) : (
-						<Void msg="Looks like you're part of any community yet😢. Please considure joining one to see their Posts🤗" />
+						<Void msg="Looks like you're not part of any community yet😢. Please considure joining one to see their Posts🤗" />
 					)}
 				</TabsContent>
 				<TabsContent value="Others" className="space-y-3">

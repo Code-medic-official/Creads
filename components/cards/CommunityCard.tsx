@@ -134,14 +134,14 @@ export default function CommunityCard({
 							<span className="font-medium">
 								{moment(community.createdAt).format("h:ma - MMM D,YYYY")}
 							</span>
-							<span className="absolute hidden md:block top-0 right-0">
+							{/* <span className="absolute hidden md:block top-0 right-0">
 								<OrganizationSwitcher appearance={{baseTheme: theme === "dark" ? dark : undefined}} />
-							</span>
+							</span> */}
 						</div>
 
 						{/* Actions */}
 						<div>
-							<div className="absolute md:hidden block -bottom-2 -left-1">
+							<div className="absolute sm:hidden block -bottom-2 -left-1">
 								<OrganizationSwitcher  appearance={{baseTheme: theme === "dark" ? dark : undefined}} />
 							</div>
 							{isMember && (
