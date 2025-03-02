@@ -19,7 +19,7 @@ export default function UserCard({
 	_user,
 	followings,
 }: {
-	variant: "sm" | "md" | "lg" | "profile";
+	variant: "sm" | "md" | "lg" | "profile" | "simple-card";
 	_user: iUser;
 	followings?: iUser[];
 }) {
@@ -99,12 +99,7 @@ export default function UserCard({
 					</div>
 
 					<div className="">
-						{_user._id === user?._id ? (
-							// <Button size="icon">
-							// 	<EditIcon />
-							// </Button>
-							null
-						) : (
+						{_user._id === user?._id ? null : ( // </Button> // 	<EditIcon /> // <Button size="icon">
 							<>
 								<div className="absolute top-0 right-0">
 									<FollowBtn _user={_user} />
@@ -152,7 +147,7 @@ export default function UserCard({
 						onClick={() => router.push(`/profile/${_user.username}`)}
 						className="flex-1 flex items-center gap-1 cursor-pointer"
 					>
-						<Avatar className="size-16  md:size-20">
+						<Avatar className="size-16  md:size-20 rounded-xl">
 							<AvatarImage src={_user?.imageUrl || ""} />
 							<AvatarFallback className="bg-[#aa50ff] text-xl font-medium">
 								{_user?.username[0].toUpperCase()}
@@ -167,11 +162,11 @@ export default function UserCard({
 								{_user?.emailAdress}
 							</p>
 							{_user.followers && (
-								<p className="text-xs">
+								<p className="text-xs text-muted-foreground">
 									<span className="text-primary font-medium">
 										{_user.followers.length}
 									</span>{" "}
-									Followers
+									followers
 								</p>
 							)}
 						</div>
@@ -187,6 +182,46 @@ export default function UserCard({
 								<FollowBtn _user={_user} />
 								<BlockBtn _user={_user} />
 							</>
+						)}
+					</div>
+				</CardContent>
+			</Card>
+		);
+	} else if (variant === "simple-card") {
+		return (
+			<Card className="rounded-2xl relative">
+				<CardContent className="p-2">
+					<div className="flex items-center gap-x-2 cursor-pointer">
+						<Avatar className="size-10  md:size-12">
+							<AvatarImage src={_user?.imageUrl || ""} />
+							<AvatarFallback className="bg-[#9b30ff] text-xl font-medium">
+								{_user?.username[0].toUpperCase()}
+							</AvatarFallback>
+						</Avatar>
+
+						<div
+							onClick={() => router.push(`/profile/${_user.username}`)}
+							className="leading-tight"
+						>
+							<p className="text-lg font-medium ">{_user.username}</p>
+							{_user.followers && (
+								<p className="text-xs text-muted-foreground">
+									<span className="text-primary font-medium">
+										{_user.followers.length}
+									</span>{" "}
+									followers
+								</p>
+							)}
+						</div>
+					</div>
+
+					<div className="absolute bottom-1 right-1">
+						{_user._id === user?._id ? (
+							<Button size="icon">
+								<EditIcon />
+							</Button>
+						) : (
+							<FollowBtn _user={_user} />
 						)}
 					</div>
 				</CardContent>

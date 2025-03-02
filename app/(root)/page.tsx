@@ -32,9 +32,7 @@ export default async function Home() {
 	const user = await getActiveUser();
 	const feedbacks = await getFeedbacks();
 	const feedbackStats = await getFeedbackStats();
-
-	console.log(feedbackStats);
-
+	
 	return (
 		<>
 			{/* Hero Navbar */}

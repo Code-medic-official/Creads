@@ -24,10 +24,10 @@ export default function Navbar({
 	otherCommunities: iCommunity[];
 	suggestedAccounts: iUser[];
 }) {
+	const [clerkTheme, setClerkTheme] = useState<typeof dark>();
 	const { online } = useNetworkState();
 	const { theme, systemTheme } = useTheme();
 
-	const [clerkTheme, setClerkTheme] = useState<typeof dark>();
 
 	if (!online) toast.error("Offline🌐 Brokie❗🤣", { id: "asdf42" });
 
