@@ -17,7 +17,7 @@ export const createComment = async (
 
 		await commentModel.create(comment);
 
-		revalidatePath(path);
+		// revalidatePath(path);
 		revalidateTag("comments");
 	} catch (error: any) {
 		throw new Error(error);
@@ -186,7 +186,7 @@ export const upsertComment = async (
 			{ upsert: true }
 		);
 
-		revalidatePath(pathname);
+		// revalidatePath(pathname);
 		revalidateTag("comments");
 	} catch (error: any) {
 		throw new Error(error);

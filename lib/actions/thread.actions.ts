@@ -16,7 +16,7 @@ export const createThread = async (
 		await threadModel.create(thread);
 
 		revalidateTag("threads");
-		revalidatePath("/feeds");
+		// revalidatePath("/feeds");
 	} catch (error: any) {
 		console.error(error);
 	}
@@ -256,7 +256,7 @@ export const upsertThread = async (
 			{ upsert: true }
 		);
 
-		revalidatePath(pathname);
+		// revalidatePath(pathname);
 		revalidateTag("threads"); // ! Revalidate all the cached threads with tag "threads"
 	} catch (error: any) {
 		throw new Error(error);

@@ -214,6 +214,8 @@ export const POST = async (req: Request) => {
 				clerkId,
 			});
 
+			
+
 			return NextResponse.json({ msg: "New User Created" }, { status: 201 });
 		} catch (error: any) {
 			console.error(error);
@@ -252,7 +254,8 @@ export const POST = async (req: Request) => {
 	if (
 		evt.type === "session.created" ||
 		evt.type === "session.ended" ||
-		evt.type === "session.revoked"
+		evt.type === "session.removed" ||
+		evt.type === "session.revoked" 
 	) {
 		revalidateTag("current-user");
 		return NextResponse.json(

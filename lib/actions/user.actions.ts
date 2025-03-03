@@ -17,9 +17,9 @@ export const createUser = async (newUser: iUser): Promise<void> => {
 	try {
 		await userModel.create(newUser);
 
-		revalidateTag("user")
-		revalidateTag("users")
-		revalidateTag("current-user")
+		revalidateTag("user");
+		revalidateTag("users");
+		revalidateTag("current-user");
 		// ! Redirect user to onboarding page after creating account Immediately
 		redirect("/onboarding");
 	} catch (error: any) {
@@ -32,7 +32,7 @@ export const getActiveUser = async (): Promise<iUser> => {
 	try {
 		await connectDb();
 
-		const {userId:clerkId} = await auth()
+		const { userId: clerkId } = await auth();
 
 		const fetchActiveUser = cache(
 			async (): Promise<iUser> =>
@@ -189,8 +189,9 @@ export const upsertUser = async (
 		);
 
 		// Revalidate profile page only on updating.
-		revalidatePath(pathname || "/profile");
-		revalidateTag("user", "users");
+		// revalidatePath(pathname || "/profile");
+		revalidateTag("user");
+		revalidateTag("users");
 	} catch (error: any) {
 		throw new Error(error);
 	}
