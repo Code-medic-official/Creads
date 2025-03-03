@@ -1,8 +1,11 @@
 import UserForm from "@/components/forms/UserForm";
 import { getActiveUser } from "@/lib/actions/user.actions";
+import { redirect } from "next/navigation";
 
 export default async function page() {
 	const user = await getActiveUser();
+
+	// if (user.onboarded) redirect("/feeds");
 
 	return (
 		<div>

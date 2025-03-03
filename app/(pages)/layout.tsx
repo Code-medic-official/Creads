@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import RightPannel from "@/components/RightPannel";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { getActiveUser, getRandomUsers } from "@/lib/actions/user.actions";
+import { getActiveUser, getRandomUsers, getUsers } from "@/lib/actions/user.actions";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
@@ -128,10 +128,11 @@ export default async function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	await getUsers();
 	const user = await getActiveUser();
-	const communities = await getCommunities();
+	await getCommunities();
 
-	if (communities) console.log("Communities Fetched");
+
 	const userCommunities = await getUserCommunities(user._id!);
 	const otherCommunities = await getOtherCommunities(user._id!);
 	const suggestedAccounts = await getRandomUsers();
@@ -139,7 +140,7 @@ export default async function RootLayout({
 	// ! Ensure User is onboarded
 	if (user && !user.onboarded) redirect("/onboarding");
 
-	console.log(user)
+	console.log("layout PG: ", user);
 
 	return (
 		<ClerkProvider afterSignOutUrl="/" dynamic>

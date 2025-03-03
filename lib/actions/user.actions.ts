@@ -40,7 +40,7 @@ export const getActiveUser = async (): Promise<iUser> => {
 					.findOne({ clerkId })
 					.populate(["followers", "blockList"]),
 			["current-user"],
-			{ revalidate: 1800, tags: ["current-user"] }
+			{ revalidate: 1800, tags: ["current-user", "users", "user"] }
 		);
 
 		return JSON.parse(JSON.stringify(await fetchActiveUser()));

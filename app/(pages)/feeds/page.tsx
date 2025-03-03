@@ -1,7 +1,6 @@
 import ThreadCard from "@/components/cards/ThreadCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Void from "@/components/Void";
-import { getCommunities } from "@/lib/actions/community.actions";
 import {
 	getFollowingsTreads,
 	getFriendThreads,
@@ -10,8 +9,7 @@ import {
 import {
 	getActiveUser,
 	getUserFollowings,
-	getUserFriends,
-	getUsers,
+	getUserFriends
 } from "@/lib/actions/user.actions";
 import { iThread } from "@/lib/database/models/thread.model";
 import { Metadata } from "next";
@@ -37,8 +35,9 @@ export const metadata: Metadata = {
 
 export default async function page() {
 	const user = await getActiveUser();
-	await getUsers();
-	await getCommunities();
+
+
+	console.log("Feeds Pg: ", user)
 
 	const threads: iThread[] = await getThreads();
 	const userFollowings: string[] = (await (
