@@ -33,24 +33,20 @@ export const getActiveUser = async (): Promise<iUser> => {
 		await connectDb();
 
 		const clerkUser = (await currentUser()) as User;
-
+		
 		// ? Applying the caching concepts
 		const fetchActiveUser = cache(
 			async (): Promise<iUser> =>
 				await userModel
-					.findOne({ username: clerkUser?.username })
-					.populate(["followers", "blockList"]),
+			.findOne({ username: clerkUser?.username })
+			.populate(["followers", "blockList"]),
 			["current-user"],
 			{ revalidate: 1800, tags: ["current-user", "users", "user"] }
 		);
-
+		
+		console.log(`${clerkUser?.username} : `,await fetchActiveUser())
 		return JSON.parse(JSON.stringify(await fetchActiveUser()));
 
-		// const user = await userModel
-		// 	.findOne({ username })
-		// 	.populate(["followers", "blockList"]);
-
-		// return JSON.parse(JSON.stringify(user));
 	} catch (error: any) {
 		throw new Error(error);
 	}
