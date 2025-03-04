@@ -132,15 +132,15 @@ export default async function RootLayout({
 	const user = await getActiveUser();
 	await getCommunities();
 
+	console.log("layout PG: ", user);
 
-	const userCommunities = await getUserCommunities(user._id!);
-	const otherCommunities = await getOtherCommunities(user._id!);
+	const userCommunities = user && await getUserCommunities(user._id!);
+	const otherCommunities = user && await getOtherCommunities(user._id!);
 	const suggestedAccounts = await getRandomUsers();
 
 	// ! Ensure User is onboarded
 	if (user && !user.onboarded) redirect("/onboarding");
 
-	console.log("layout PG: ", user);
 
 	return (
 		<ClerkProvider afterSignOutUrl="/" dynamic>

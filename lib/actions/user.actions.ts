@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser, User } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { connectDb } from "../database/db";
 import { unstable_cache as cache } from "next/cache";
@@ -32,18 +32,26 @@ export const getActiveUser = async (): Promise<iUser> => {
 	try {
 		await connectDb();
 
-		const { userId: clerkId } = await auth();
+		const { username } = await currentUser() as User;
 
+		// ? Applying the caching concepts
 		const fetchActiveUser = cache(
 			async (): Promise<iUser> =>
 				await userModel
-					.findOne({ clerkId })
+					.findOne({ username })
 					.populate(["followers", "blockList"]),
 			["current-user"],
 			{ revalidate: 1800, tags: ["current-user", "users", "user"] }
 		);
 
 		return JSON.parse(JSON.stringify(await fetchActiveUser()));
+
+		// const user = await userModel
+		// 	.findOne({ username })
+		// 	.populate(["followers", "blockList"]);
+
+
+		// return JSON.parse(JSON.stringify(user));
 	} catch (error: any) {
 		throw new Error(error);
 	}

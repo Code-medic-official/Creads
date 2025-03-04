@@ -1,15 +1,9 @@
-// "use client"
-
 import { getThreadComments } from "@/lib/actions/comment.action";
 import { getActiveUser } from "@/lib/actions/user.actions";
-import { iComment } from "@/lib/database/models/comment.model";
 import { iThread } from "@/lib/database/models/thread.model";
-import { iUser } from "@/lib/database/models/user.model";
-import { useUser } from "@clerk/nextjs";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import AvatarGroup from "../AvatarGroup";
 import Engagement from "../Engagement";
 import FollowBtn from "../FollowBtn";
@@ -19,25 +13,7 @@ import UserCard from "./UserCard";
 export default async function ThreadCard({ thread }: { thread: iThread }) {
 	const user = await getActiveUser();
 	const comments = await getThreadComments(thread._id);
-	// const [user, setUser] = useState<iUser>();
-	// const [comments, setComments] = useState<iComment[]>();
-
-	// const { isLoaded } = useUser();
 	
-
-	// useEffect(() => {
-	// 	const fetchActiveUser = async (): Promise<void> => {
-	// 		setUser(await getActiveUser());
-	// 	};
-
-	// 	const fetchThreadComment = async () => {
-	// 		setComments(await getThreadComments(thread._id));
-	// 	};
-
-	// 	if (!comments) fetchThreadComment();
-	// 	if (isLoaded) fetchActiveUser();
-	// }, [isLoaded]);
-
 	return (
 		<Card className="bg-secondary hover:shadow-md">
 			<CardContent className="p-3">
@@ -59,7 +35,6 @@ export default async function ThreadCard({ thread }: { thread: iThread }) {
 						<Engagement item={thread} variant="THREAD" />
 
 						<span className="text-xs text-muted-foreground">
-							{/* {moment(thread.createdAt).fromNow()} */}
 							{moment(thread.createdAt).format("h:ma - MMM D,YYYY")}
 						</span>
 					</div>

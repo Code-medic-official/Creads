@@ -214,8 +214,6 @@ export const POST = async (req: Request) => {
 				clerkId,
 			});
 
-			
-
 			return NextResponse.json({ msg: "New User Created" }, { status: 201 });
 		} catch (error: any) {
 			console.error(error);
@@ -229,7 +227,10 @@ export const POST = async (req: Request) => {
 
 			const user = await getUser(undefined, clerkId);
 
-			await upsertUser({ ...user, imageUrl, username }, `/profile/${username}`);
+			await upsertUser(
+				{ ...user, imageUrl, username: username! },
+				`/profile/${username}`
+			);
 
 			return NextResponse.json({ msg: "User Updated" }, { status: 200 });
 		} catch (error: any) {
@@ -255,7 +256,7 @@ export const POST = async (req: Request) => {
 		evt.type === "session.created" ||
 		evt.type === "session.ended" ||
 		evt.type === "session.removed" ||
-		evt.type === "session.revoked" 
+		evt.type === "session.revoked"
 	) {
 		revalidateTag("current-user");
 		return NextResponse.json(
