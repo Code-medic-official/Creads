@@ -38,7 +38,7 @@ export const getActiveUser = async (): Promise<iUser> => {
 		const fetchActiveUser = cache(
 			async (): Promise<iUser> =>
 				await userModel
-					.findOne({ username: clerkUser.username })
+					.findOne({ username: clerkUser?.username })
 					.populate(["followers", "blockList"]),
 			["current-user"],
 			{ revalidate: 1800, tags: ["current-user", "users", "user"] }
