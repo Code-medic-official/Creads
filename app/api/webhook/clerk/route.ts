@@ -227,10 +227,7 @@ export const POST = async (req: Request) => {
 
 			const user = await getUser(undefined, clerkId);
 
-			await upsertUser(
-				{ ...user, imageUrl, username: username! },
-				`/profile/${username}`
-			);
+			await upsertUser({ ...user, imageUrl, username }, `/profile/${username}`);
 
 			return NextResponse.json({ msg: "User Updated" }, { status: 200 });
 		} catch (error: any) {
