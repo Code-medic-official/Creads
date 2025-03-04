@@ -33,20 +33,26 @@ export const getActiveUser = async (): Promise<iUser> => {
 		await connectDb();
 
 		const clerkUser = (await currentUser()) as User;
-		
-		// ? Applying the caching concepts
-		const fetchActiveUser = cache(
-			async (): Promise<iUser> =>
-				await userModel
-			.findOne({ username: clerkUser?.username })
-			.populate(["followers", "blockList"]),
-			["current-user"],
-			{ revalidate: 1800, tags: ["current-user", "users", "user"] }
-		);
-		
-		console.log(`${clerkUser?.username} : `,await fetchActiveUser())
-		return JSON.parse(JSON.stringify(await fetchActiveUser()));
 
+		// ? Applying the caching concepts (! suspended)
+		// const fetchActiveUser = cache(
+		// 	async (): Promise<iUser> =>
+		// 		await userModel
+		// 	.findOne({ username: clerkUser?.username })
+		// 	.populate(["followers", "blockList"]),
+		// 	["current-user"],
+		// 	{ revalidate: 1800, tags: ["current-user", "users", "user"] }
+		// );
+
+		// return JSON.parse(JSON.stringify(await fetchActiveUser()));
+
+		const user = await userModel
+			.findOne({ username: clerkUser?.username })
+			.populate(["followers", "blockList"]);
+
+		console.log(`${clerkUser?.username} : `, user);
+
+		return JSON.parse(JSON.stringify(user));
 	} catch (error: any) {
 		throw new Error(error);
 	}
@@ -68,19 +74,6 @@ export const getUsers = cache(
 	["users"],
 	{ revalidate: 3600, tags: ["users"] }
 );
-
-// export const getUsers = async (): Promise<iUser[]> => {
-// 	try {
-// 		await connectDb();
-
-// 		const users = await userModel.find().populate(["followers", "blockList"]);
-
-// 		// return users
-// 		return JSON.parse(JSON.stringify(users));
-// 	} catch (error: any) {
-// 		throw new Error(error);
-// 	}
-// };
 
 export const getUser = cache(
 	async (username?: string, clerkId?: string): Promise<iUser> => {

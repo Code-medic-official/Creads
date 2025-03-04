@@ -18,6 +18,7 @@ import {
 	getOtherCommunities,
 	getUserCommunities,
 } from "@/lib/actions/community.actions";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const poppinsFont = Poppins({
 	subsets: ["latin"],
@@ -146,6 +147,8 @@ export default async function RootLayout({
 		<ClerkProvider afterSignOutUrl="/" dynamic>
 			<StoreProvider>
 				<html suppressHydrationWarning lang="en">
+					{/* Testing out vercel speed insights */}
+					<SpeedInsights />
 					<TooltipProvider>
 						<body
 							className={`${poppinsFont.className} antialiased bg-background text-foreground`}
